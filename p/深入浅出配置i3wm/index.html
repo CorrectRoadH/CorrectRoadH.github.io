@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='什么是I3WM 我可以从本文中学习到什么? 学习完本文,你将学会配置一个漂亮的 I3WM 桌面.
+有什么要求吗?
+本文需要你拥有一点 Linux 基础,比如会使用 VIM.
+让我猜猜你!
+你可能会不少 Linux 命令,但是你用起来没有如 Windows 那个顺手,你知道去安装一个『软件』但是不知道如何去打开一个『软件』,或者不知道去设置『开机自启』.
+你还可能是一个资深的 Linux 用户,已经用过『KDE』或者『Gnome』,但是你想了解一下 I3WM,但是你在使用别人的配置时遇上各种问题,你想了解一下 I3WM 的相关好去排错.
+本文是在『Manjaro』上做的,但是 I3WM 是 Linux 的『窗口管理器』而并非只属于哪个特定的 Linux 版本,所以理论上本文的内容是可以在其它版本的 Linux 上使用的.
+有多漂亮呢?
+这是一张成品图
+它来自github用户『levinit』所分享的配置,项目链接.十分感谢他分享自己的配置.
+我只想快一点搞个好看的 I3 主题怎么办?
+那请你使用本主题作者所使用的脚本与看他的教程,本文更多是阐述I3WM 与其相关软件更深入的一面和教导你如何使用与配置.
+如何配置 那我应该怎么做?
+现在这是我们现在最初的样子
+我们可以看见,与上面所提到的成本品的区别,我将分别介绍如何实现它们.
+怎么打开终端?
+同时按下『Win 键』和『回车键』.
+壁纸 我该如何设置一张壁纸?
+I3WM 异或者是 Linux 均没有提供壁纸功能,所以我需要使用一款软件『feh』.
+我该如何得到它?
+如果你是『Arch』或者『Manjaro』的用户,可以使用sudo pacman -S feh
+如果是其它的 Linux 发行版,请使用 相应的包管理器安装该软件.
+我该如何设置一张图片做我的壁纸
+feh --bg-scale &amp;quot;图片的路径&amp;quot;
+其中--bg-scale参数将会缩放你的图片,使其填满你的桌面.
+如果你不想把缩放,请使用--bg-fill
+为什么我重启电脑之后我的壁纸就没有了?
+如果你有过一些电脑基础,你应该知道『程序自启』这个概念,我们的壁纸程序并没有设置『自启』,我将在下一小节中讲述如何使用.
+I3WM 的配置 由 Mike Gancarz 所提出的 UNIX 哲学中的第五条'><title>深入浅出配置I3WM</title>
+
+<link rel='canonical' href='https://example.com/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/'>
+
+<link rel="stylesheet" href="/scss/style.min.b949db8bead9abdc40291b93383b8da6abc3aa62e74f5580356c06ddbb792dab.css"><meta property='og:title' content='深入浅出配置I3WM'>
+<meta property='og:description' content='什么是I3WM 我可以从本文中学习到什么? 学习完本文,你将学会配置一个漂亮的 I3WM 桌面.
+有什么要求吗?
+本文需要你拥有一点 Linux 基础,比如会使用 VIM.
+让我猜猜你!
+你可能会不少 Linux 命令,但是你用起来没有如 Windows 那个顺手,你知道去安装一个『软件』但是不知道如何去打开一个『软件』,或者不知道去设置『开机自启』.
+你还可能是一个资深的 Linux 用户,已经用过『KDE』或者『Gnome』,但是你想了解一下 I3WM,但是你在使用别人的配置时遇上各种问题,你想了解一下 I3WM 的相关好去排错.
+本文是在『Manjaro』上做的,但是 I3WM 是 Linux 的『窗口管理器』而并非只属于哪个特定的 Linux 版本,所以理论上本文的内容是可以在其它版本的 Linux 上使用的.
+有多漂亮呢?
+这是一张成品图
+它来自github用户『levinit』所分享的配置,项目链接.十分感谢他分享自己的配置.
+我只想快一点搞个好看的 I3 主题怎么办?
+那请你使用本主题作者所使用的脚本与看他的教程,本文更多是阐述I3WM 与其相关软件更深入的一面和教导你如何使用与配置.
+如何配置 那我应该怎么做?
+现在这是我们现在最初的样子
+我们可以看见,与上面所提到的成本品的区别,我将分别介绍如何实现它们.
+怎么打开终端?
+同时按下『Win 键』和『回车键』.
+壁纸 我该如何设置一张壁纸?
+I3WM 异或者是 Linux 均没有提供壁纸功能,所以我需要使用一款软件『feh』.
+我该如何得到它?
+如果你是『Arch』或者『Manjaro』的用户,可以使用sudo pacman -S feh
+如果是其它的 Linux 发行版,请使用 相应的包管理器安装该软件.
+我该如何设置一张图片做我的壁纸
+feh --bg-scale &amp;quot;图片的路径&amp;quot;
+其中--bg-scale参数将会缩放你的图片,使其填满你的桌面.
+如果你不想把缩放,请使用--bg-fill
+为什么我重启电脑之后我的壁纸就没有了?
+如果你有过一些电脑基础,你应该知道『程序自启』这个概念,我们的壁纸程序并没有设置『自启』,我将在下一小节中讲述如何使用.
+I3WM 的配置 由 Mike Gancarz 所提出的 UNIX 哲学中的第五条'>
+<meta property='og:url' content='https://example.com/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/'>
+<meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2020-04-22T08:29:23&#43;08:00'/><meta property='article:modified_time' content='2020-04-22T08:29:23&#43;08:00'/>
+<meta name="twitter:title" content="深入浅出配置I3WM">
+<meta name="twitter:description" content="什么是I3WM 我可以从本文中学习到什么? 学习完本文,你将学会配置一个漂亮的 I3WM 桌面.
+有什么要求吗?
+本文需要你拥有一点 Linux 基础,比如会使用 VIM.
+让我猜猜你!
+你可能会不少 Linux 命令,但是你用起来没有如 Windows 那个顺手,你知道去安装一个『软件』但是不知道如何去打开一个『软件』,或者不知道去设置『开机自启』.
+你还可能是一个资深的 Linux 用户,已经用过『KDE』或者『Gnome』,但是你想了解一下 I3WM,但是你在使用别人的配置时遇上各种问题,你想了解一下 I3WM 的相关好去排错.
+本文是在『Manjaro』上做的,但是 I3WM 是 Linux 的『窗口管理器』而并非只属于哪个特定的 Linux 版本,所以理论上本文的内容是可以在其它版本的 Linux 上使用的.
+有多漂亮呢?
+这是一张成品图
+它来自github用户『levinit』所分享的配置,项目链接.十分感谢他分享自己的配置.
+我只想快一点搞个好看的 I3 主题怎么办?
+那请你使用本主题作者所使用的脚本与看他的教程,本文更多是阐述I3WM 与其相关软件更深入的一面和教导你如何使用与配置.
+如何配置 那我应该怎么做?
+现在这是我们现在最初的样子
+我们可以看见,与上面所提到的成本品的区别,我将分别介绍如何实现它们.
+怎么打开终端?
+同时按下『Win 键』和『回车键』.
+壁纸 我该如何设置一张壁纸?
+I3WM 异或者是 Linux 均没有提供壁纸功能,所以我需要使用一款软件『feh』.
+我该如何得到它?
+如果你是『Arch』或者『Manjaro』的用户,可以使用sudo pacman -S feh
+如果是其它的 Linux 发行版,请使用 相应的包管理器安装该软件.
+我该如何设置一张图片做我的壁纸
+feh --bg-scale &amp;quot;图片的路径&amp;quot;
+其中--bg-scale参数将会缩放你的图片,使其填满你的桌面.
+如果你不想把缩放,请使用--bg-fill
+为什么我重启电脑之后我的壁纸就没有了?
+如果你有过一些电脑基础,你应该知道『程序自启』这个概念,我们的壁纸程序并没有设置『自启』,我将在下一小节中讲述如何使用.
+I3WM 的配置 由 Mike Gancarz 所提出的 UNIX 哲学中的第五条">
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/">深入浅出配置I3WM</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Apr 22, 2020</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="什么是i3wm">什么是I3WM</h2>
+<p><strong>我可以从本文中学习到什么</strong>?
+学习完本文,你将学会配置一个漂亮的 I3WM 桌面.</p>
+<p><strong>有什么要求吗?</strong></p>
+<p>本文需要你拥有一点 Linux 基础,比如会使用 VIM.</p>
+<p>让我猜猜你!</p>
+<p>你可能会不少 Linux 命令,但是你用起来没有如 Windows 那个顺手,你知道去安装一个『软件』但是不知道如何去打开一个『软件』,或者不知道去设置『开机自启』.</p>
+<p>你还可能是一个资深的 Linux 用户,已经用过『KDE』或者『Gnome』,但是你想了解一下 I3WM,但是你在使用别人的配置时遇上各种问题,你想了解一下 I3WM 的相关好去排错.</p>
+<p>本文是在『Manjaro』上做的,但是 I3WM 是 Linux 的『窗口管理器』而并非只属于哪个特定的 Linux 版本,所以理论上本文的内容是可以在其它版本的 Linux 上使用的.</p>
+<p><strong>有多漂亮呢?</strong></p>
+<p>这是一张成品图</p>
+<p><img src="/images/I3WM/finish.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="finish"
+	
+	
+></p>
+<p>它来自github用户『levinit』所分享的配置,<a class="link" href="https://github.com/levinit/i3wm-config"  target="_blank" rel="noopener"
+    >项目链接</a>.十分感谢他分享自己的配置.</p>
+<p><strong>我只想快一点搞个好看的 I3 主题怎么办?</strong></p>
+<p>那请你使用本主题作者所使用的<a class="link" href="https://github.com/levinit/i3wm-config"  target="_blank" rel="noopener"
+    >脚本</a>与看他的<a class="link" href="https://levinit.github.io/i3wm-config/"  target="_blank" rel="noopener"
+    >教程</a>,本文更多是阐述I3WM 与其相关软件更深入的一面和教导你如何使用与配置.</p>
+<h2 id="如何配置">如何配置</h2>
+<p><strong>那我应该怎么做</strong>?</p>
+<p>现在这是我们现在最初的样子</p>
+<p><img src="/images/I3WM/initial.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Initial"
+	
+	
+></p>
+<p>我们可以看见,与上面所提到的成本品的区别,我将分别介绍如何实现它们.</p>
+<p><strong>怎么打开终端?</strong></p>
+<p>同时按下『Win 键』和『回车键』.</p>
+<h3 id="壁纸">壁纸</h3>
+<p><strong>我该如何设置一张壁纸?</strong></p>
+<p>I3WM 异或者是 Linux 均没有提供壁纸功能,所以我需要使用一款软件『feh』.</p>
+<p><strong>我该如何得到它?</strong></p>
+<p>如果你是『Arch』或者『Manjaro』的用户,可以使用<code>sudo  pacman -S  feh</code></p>
+<p>如果是其它的 Linux 发行版,请使用 相应的包管理器安装该软件.</p>
+<p><strong>我该如何设置一张图片做我的壁纸</strong></p>
+<p><code>feh --bg-scale &quot;图片的路径&quot;</code></p>
+<p>其中<code>--bg-scale</code>参数将会缩放你的图片,使其填满你的桌面.</p>
+<p>如果你不想把缩放,请使用<code>--bg-fill</code></p>
+<p><strong>为什么我重启电脑之后我的壁纸就没有了</strong>?</p>
+<p>如果你有过一些电脑基础,你应该知道『程序自启』这个概念,我们的壁纸程序并没有设置『自启』,我将在下一小节中讲述如何使用.</p>
+<h3 id="i3wm-的配置">I3WM 的配置</h3>
+<p>由 Mike Gancarz 所提出的 UNIX 哲学中的第五条</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">5.Store data in flat text files.
+五.数据应该保存为纯文本文件。
+</code></pre></td></tr></table>
+</div>
+</div><p>所以 I3WM 的配置也是保存在一个文本文件之中,你应该使用『VIM』或者其它文本编程器去编辑它们,并没有一个像『Windows』异或者是『MacOS』那样拥有一个『设置面板』.</p>
+<p><strong>那 I3WM 的配置文件在哪里呢?</strong></p>
+<p>它在你的<code>home</code>目录的<code>config</code>的<code>i3</code>文件夹中.如果你知道一点 Linux 知识的话,那你应该知道可以用<code>~</code>代指你的<code>home</code>目录.</p>
+<p>所以你可以使用<code>cd ~/config/i3</code> 来进入你的 I3WM 配置文件目录.</p>
+<p>其中的个名为<code>config</code>的文件就是你的I3WM 的配置文件.</p>
+<p><strong>所以我应该如何让我的壁纸在重启之后不会消失呢?</strong></p>
+<p>I3WM 在启动时就会读取它的配置文件,我们当然希望我们的壁纸跟 I3 一起启动.正好 I3WM 提供了这个功能!</p>
+<p>现在回想一下我们设计壁纸的命令是什么?</p>
+<p>对!是<code>feh --bg-scale &quot;图片的路径&quot;</code></p>
+<p>我们将这段话添加到<code>config</code>文件之中,最好是在末尾!</p>
+<p><code>exec --no-startup-id feh --bg-scale &quot;图片的路径&quot;</code></p>
+<p><strong>我还可以做些什么?</strong></p>
+<p>我觉得你可以举一反三了,<code>exec --no-startup-id 你需要执行的命令</code>,你可以把你想执行的命令加在<code>config</code>这样你的命令就会随着 I3WM 启动所执行了.</p>
+<p>当然如果你的命令很多很长,你可以写在一个 shell文件 之中,然后通过 <code>exec</code>去执行你这个 shell文件 ,同时你可以在后面加上<code>&amp;</code>,让你的 Shell文件 或者 命令 转入到后台执行.不会把 I3WM 阻塞住.</p>
+<p>例如:<code>exec --no-startup-id  ~/请换成shell的名字.sh &amp;</code></p>
+<p><strong><code>--no-startup-id</code> 是什么意思啊?</strong></p>
+<p>有些『脚本』或者『程序』并没有『启动提醒』,就是说它们启动之后并不会告诉系统,我启动好了.这会让你的系统认为我卡住了.导致你的鼠标指针处于忙碌状态.</p>
+<p>这个参数可以解决这种情况.</p>
+<h3 id="终端透明">终端透明</h3>
+<p><strong>我怎么才能把我的终端变成透明的?</strong></p>
+<p>我们在设置壁纸时使用了『feh』,这次我们使用『xcompmgr』这款软件.</p>
+<p><strong>为什么要用到这么多软件啊,有没有『全家桶』呀</strong>?</p>
+<p>我们又要说到 UNIX 哲学了. Doug Mcllroy 这个人,和上面那个不是一个人呀,他提出了三条,其中第一条就是:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"> 1.Write programs that do one thing and do it well
+ 一.写一个程序做一件事和把它做好.
+</code></pre></td></tr></table>
+</div>
+</div><p>Linux 有太多小而美的软件,几乎没有大而全的软件.因为这一点也不 UNIX.</p>
+<p><strong>我装好了,怎么用呢?</strong></p>
+<p>请在终端中输入<code>xcompmgr &amp;</code>,<code>&amp;</code>是做什么用的,上文提到过了,你可以尝试把<code>&amp;</code>去掉,你就会发现程序运行在 前台 ,导致你的终端不能再输入其它命令了!</p>
+<p><strong>也需要加入到<code>config</code>中让它自启吗?</strong></p>
+<p>完美的一次举一反三!没错!请把这个加入其中<code>exec --no-startup-id xcompmgr &amp;</code></p>
+<p><strong>我可以选择什么终端?</strong></p>
+<p>这里推荐<code>roxterm</code>、<code>xfce-terminal</code>和<code>terminator</code>,因为它们更方便设置透明度.</p>
+<p><strong>我使用的是 Manjaro I3,我的 xcompmgr(或者 compton) 不能启动,提示<code>Anoter composite manager is already running(picom)</code>.</strong></p>
+<p>想学会『独立解决问题』就必须学会认真的看提示信息,报错写的非常清楚<code>Anoter composite manager is already running(picom)</code>,『其它的窗口管理器已经在运行(picom)』.显然易见因为已经在运行了一款叫做『picom』的软件.</p>
+<p>如果你尝试去卸载它时,你还会发现报错,因为它和 i3WM 居然是依赖!这是 Manjaro I3 给你们预先装好的环境.出现什么问题,当然都不奇怪.既然都是窗口管理器<code>xcompmgr</code>能做的事<code>picom</code>也能做,那我们就可以去使用它把终端变透明吧!</p>
+<p><strong>我要使用 urxvt 终端,怎么才能让它变透明?</strong></p>
+<p>或许你的版本不能安装<code>terminator</code>,异或者你就是想使用<code>urxvt</code>.但是这个不是什么问题.并且能轻易在网上找到解决方案,你可以点击<a class="link" href="https://www.cnblogs.com/vachester/p/5649813.html"  target="_blank" rel="noopener"
+    >这里参看一片关于配置 urxvt 的透明的教程, 它使用的是 compton(也叫 picom)</a>.感谢每位在无私在互联网上分享自己经验的人.</p>
+<h3 id="快捷键">快捷键</h3>
+<p><strong>我可以不用快捷键吗?</strong></p>
+<p>如果你使用的是『KDE』或者『Gnome』这些『窗口管理器』,你或许还可以不学,但是 I3WM 如你所见,并没有什么按钮供你去点击.所以你必须去学习与使用</p>
+<p><strong>我需要要去背很长的快捷键表吗?</strong></p>
+<p>当然不是! 我要教你的是如何设置与查看快捷键.</p>
+<p>继续编辑我们的<code>config</code>,往上走.在最上面我们就能看见</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">set $mod Mod4
+</code></pre></td></tr></table>
+</div>
+</div><p>这句话是指把 Mod4 键设置$mod.</p>
+<p><strong>Mod4 是哪个键?</strong></p>
+<p>正常情况下是你键盘上那个『Win键』.</p>
+<p><strong><code>$mod</code>是什么?</strong></p>
+<p>我们称之为『Super key』,我通常把这个键和其它键来组成使用快捷键.</p>
+<p><strong>里面有哪些设置好的快捷键?</strong></p>
+<p>我们往下翻翻,就会看见</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+c layout toggle split
+</code></pre></td></tr></table>
+</div>
+</div><p>如果你没有改动上面所说的$mod,那这里的意思就是说同时按下『Win 键』和『S 键』时,将窗口堆叠模式改成『堆叠式』(stacking).按下『Win 键』和『 T 键』 就是『标签式』(tabbed),而『Win 键』加上『C 键』可以让你在 垂直平铺和水平平铺之间 来回切换.</p>
+<p>动手试试吧,不要光看不用!你会爱上这种操作方式的!绝对会!</p>
+<p><strong>我可以让某个快捷键启动一个程序吗?</strong></p>
+<p>当然!我希望你能在这里继续举一反三!我们把这句添加进去.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">bindsym $mod+F2 exec firefox
+</code></pre></td></tr></table>
+</div>
+</div><p>我觉得你已经能够理解了!当按下『Win 键』和『 F2 键』时, Firefox 就会启动了!把按键和软件换成你想换的吧!</p>
+<h3 id="举一反三">举一反三</h3>
+<p><strong>所以启动 Linux 软件就是在终端输入它的名字吗?</strong></p>
+<p>在上面的学习过程中,你应该知道『软件』和启动是和 执行命令 是一样,就像你启动<code>firefox</code>和执行其它命令是一样的.</p>
+<p><strong>可以在软件名后面加上<code>&amp;</code>让它不阻塞我的终端吗?</strong></p>
+<p>是的!如果你对知识足够敏感,我觉得你已经可以从上文中学会了这种方式,在命令行中输入你软件的名字,并且在后面加个<code>&amp;</code>,软件就在会后面独立运行.否则,当你关掉终端时,你的软件也会跟着关闭.</p>
+<p><strong>软件名太长了,我也记不住啊,有没有怎么简单的办法启动软件?</strong></p>
+<p>有的!这种软件在 Linux 当中叫做『软件启动器』.</p>
+<p><img src="/images/I3WM/Synapse.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Synapse"
+	
+	
+></p>
+<p>比如图中我所使用的叫做<code>Synapse</code></p>
+<p><strong>启动软件要软件启动器,那我怎么启动软件启动器这个软件?</strong></p>
+<p>这并不是一个勃论.很简单,在上一张,我们就谈到通过快捷键启动<code>firefox</code>,你相信你已经反应过来的.如何去启动『软件启动器』.</p>
+<h2 id="heading"></h2>
+<h2 id="额外的问题">额外的问题</h2>
+<p><strong>中文输入 fcitx fcitx fcitx!</strong></p>
+<p><strong>我已经按照网上的解决办法安装<code>fcitx</code>和<code>fcitx-im</code>还有<code>fcitx-rime</code>,同时在<code>/etc/profile</code>加入那三行,可是还是不能输入中文!</strong></p>
+<p>在<code>/etc/profile</code>加入这三行.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">export XMODIFIERS=&#34;@im=fcitx&#34;
+export GTK_IM_MODULE=&#34;fcitx&#34;
+export QT_IM_MODULE=&#34;fcitx&#34;
+</code></pre></td></tr></table>
+</div>
+</div><p>几乎是网上所有能找到的不能使用 fcitx教程的解决办法. 我也照做,但是还是依然还是不能输入中文。</p>
+<p>我发现在 <code>Input Method</code>只有<code> Keyboard - English(US)</code>一个。而没有中文!</p>
+<p>所以只要在 <code>Input Method</code>中添加一个中文输入方式.</p>
+<p>点击<code>Configure</code>去添加<code>Input Method</code>，但是我一点击就闪退。查看报错信息是因为缺少程序，通过<code>pacman</code>去安装。这样就行了。</p>
+<p>这样之后输入法就正常了。</p>
+<p><strong>我看完了全文,但是除了基础的配置以外,我还是不懂得修改一个主题的外观.</strong></p>
+<p>这是一个更深入的问题,我暂时还不能提供帮助,不过你可以在<a class="link" href="https://i3wm.org/docs/userguide.html"  target="_blank" rel="noopener"
+    >这里</a>找到你想要的.如果可能,我以后将会发一篇新文章进行更深入的讲解.</p>
+<p><strong>我还想要更多的主题,我可以在哪里找到它们?</strong></p>
+<p>你可以在<a class="link" href="www.github.com" >Github</a>搜索『<a class="link" href="https://github.com/search?q=i3wm"  target="_blank" rel="noopener"
+    >i3wm</a>』,有许多人在上面发布了自己的 config.</p>
+<p>例:</p>
+<p><a class="link" href="https://github.com/Algorithm79/Dotfiles_i3"  target="_blank" rel="noopener"
+    >Dotfiles_i3</a></p>
+<p><img src="/images/I3WM/Dotfiles_i3.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Dotfiles_i3"
+	
+	
+></p>
+<p><a class="link" href="https://github.com/CSaratakij/i3-rice-rin-shelter"  target="_blank" rel="noopener"
+    >Rin : shelter</a></p>
+<p><img src="/images/I3WM/Rin-shelter.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Rin-shelter"
+	
+	
+></p>
+<p><a class="link" href="https://github.com/TxGVNN/i3-config"  target="_blank" rel="noopener"
+    >TxGVNN</a></p>
+<p><img src="/images/I3WM/TxGVNN.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="TxGVNN "
+	
+	
+></p>
+<p>著作权归作者所有。</p>
+<p>商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>作者：CorrectRoad(HXHL)</p>
+<p>链接：https://hxhl.github.io/2020/04/22/I3WM/</p>
+<p>作者：CorrectRoad&rsquo;s Blog</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 CorrectRoad&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.8.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#什么是i3wm">什么是I3WM</a></li>
+    <li><a href="#如何配置">如何配置</a>
+      <ol>
+        <li><a href="#壁纸">壁纸</a></li>
+        <li><a href="#i3wm-的配置">I3WM 的配置</a></li>
+        <li><a href="#终端透明">终端透明</a></li>
+        <li><a href="#快捷键">快捷键</a></li>
+        <li><a href="#举一反三">举一反三</a></li>
+      </ol>
+    </li>
+    <li><a href="#heading"></a></li>
+    <li><a href="#额外的问题">额外的问题</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
