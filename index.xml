@@ -202,7 +202,6 @@ bindsym $mod+c layout toggle split
 &lt;p&gt;比如图中我所使用的叫做&lt;code&gt;Synapse&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;启动软件要软件启动器,那我怎么启动软件启动器这个软件?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;这并不是一个勃论.很简单,在上一张,我们就谈到通过快捷键启动&lt;code&gt;firefox&lt;/code&gt;,你相信你已经反应过来的.如何去启动『软件启动器』.&lt;/p&gt;
-&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 &lt;h2 id=&#34;额外的问题&#34;&gt;额外的问题&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;中文输入 fcitx fcitx fcitx!&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;我已经按照网上的解决办法安装&lt;code&gt;fcitx&lt;/code&gt;和&lt;code&gt;fcitx-im&lt;/code&gt;还有&lt;code&gt;fcitx-rime&lt;/code&gt;,同时在&lt;code&gt;/etc/profile&lt;/code&gt;加入那三行,可是还是不能输入中文!&lt;/strong&gt;&lt;/p&gt;
