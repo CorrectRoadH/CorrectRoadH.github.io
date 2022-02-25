@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>CorrectRoad&#39;s Blog</title>
-        <link>https://example.com/</link>
+        <link>https://correctroadh.github.io/</link>
         <description>Recent content on CorrectRoad&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Fri, 18 Feb 2022 16:14:01 +0800</lastBuildDate><atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 18 Feb 2022 16:14:01 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>博客转移</title>
-        <link>https://example.com/p/%E5%8D%9A%E5%AE%A2%E8%BD%AC%E7%A7%BB/</link>
+        <link>https://correctroadh.github.io/p/%E5%8D%9A%E5%AE%A2%E8%BD%AC%E7%A7%BB/</link>
         <pubDate>Fri, 18 Feb 2022 16:14:01 +0800</pubDate>
         
-        <guid>https://example.com/p/%E5%8D%9A%E5%AE%A2%E8%BD%AC%E7%A7%BB/</guid>
+        <guid>https://correctroadh.github.io/p/%E5%8D%9A%E5%AE%A2%E8%BD%AC%E7%A7%BB/</guid>
         <description>&lt;p&gt;我原来有一个&lt;a class=&#34;link&#34; href=&#34;https://hxhl.github.io&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;博客站&lt;/a&gt;，但是在后来重装系统中丢失了原&lt;code&gt;markdown&lt;/code&gt;文件。&lt;/p&gt;
 &lt;p&gt;现在决定重新开始写我的博客，把之前觉得写的还算不错的3篇博客改动了一些之前觉得不好的部分。然后再重新处理成&lt;code&gt;markdown&lt;/code&gt;文件。并且这次从之前的&lt;code&gt;hexo&lt;/code&gt;转移到&lt;code&gt;hugo&lt;/code&gt;，同时以后会更加关心数据安全和备份问题。&lt;/p&gt;
@@ -19,10 +19,10 @@
         </item>
         <item>
         <title>深入浅出配置I3WM</title>
-        <link>https://example.com/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/</link>
+        <link>https://correctroadh.github.io/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/</link>
         <pubDate>Wed, 22 Apr 2020 08:29:23 +0800</pubDate>
         
-        <guid>https://example.com/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/</guid>
+        <guid>https://correctroadh.github.io/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/</guid>
         <description>&lt;h2 id=&#34;什么是i3wm&#34;&gt;什么是I3WM&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;我可以从本文中学习到什么&lt;/strong&gt;?
 学习完本文,你将学会配置一个漂亮的 I3WM 桌面.&lt;/p&gt;
@@ -34,7 +34,7 @@
 &lt;p&gt;本文是在『Manjaro』上做的,但是 I3WM 是 Linux 的『窗口管理器』而并非只属于哪个特定的 Linux 版本,所以理论上本文的内容是可以在其它版本的 Linux 上使用的.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;有多漂亮呢?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;这是一张成品图&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.com/images/I3WM/finish.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/I3WM/finish.png&#34;
 	
 	
 	
@@ -53,7 +53,7 @@
 &lt;h2 id=&#34;如何配置&#34;&gt;如何配置&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;那我应该怎么做&lt;/strong&gt;?&lt;/p&gt;
 &lt;p&gt;现在这是我们现在最初的样子&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.com/images/I3WM/initial.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/I3WM/initial.png&#34;
 	
 	
 	
@@ -189,7 +189,7 @@ bindsym $mod+c layout toggle split
 &lt;p&gt;是的!如果你对知识足够敏感,我觉得你已经可以从上文中学会了这种方式,在命令行中输入你软件的名字,并且在后面加个&lt;code&gt;&amp;amp;&lt;/code&gt;,软件就在会后面独立运行.否则,当你关掉终端时,你的软件也会跟着关闭.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;软件名太长了,我也记不住啊,有没有怎么简单的办法启动软件?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;有的!这种软件在 Linux 当中叫做『软件启动器』.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.com/images/I3WM/Synapse.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/I3WM/Synapse.png&#34;
 	
 	
 	
@@ -232,7 +232,7 @@ export QT_IM_MODULE=&amp;#34;fcitx&amp;#34;
 &lt;p&gt;例:&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/Algorithm79/Dotfiles_i3&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Dotfiles_i3&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.com/images/I3WM/Dotfiles_i3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/I3WM/Dotfiles_i3.png&#34;
 	
 	
 	
@@ -244,7 +244,7 @@ export QT_IM_MODULE=&amp;#34;fcitx&amp;#34;
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/CSaratakij/i3-rice-rin-shelter&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Rin : shelter&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.com/images/I3WM/Rin-shelter.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/I3WM/Rin-shelter.png&#34;
 	
 	
 	
@@ -256,7 +256,7 @@ export QT_IM_MODULE=&amp;#34;fcitx&amp;#34;
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/TxGVNN/i3-config&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;TxGVNN&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.com/images/I3WM/TxGVNN.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/I3WM/TxGVNN.png&#34;
 	
 	
 	
@@ -275,14 +275,14 @@ export QT_IM_MODULE=&amp;#34;fcitx&amp;#34;
         </item>
         <item>
         <title>重新发明RIP</title>
-        <link>https://example.com/p/%E9%87%8D%E6%96%B0%E5%8F%91%E6%98%8Erip/</link>
+        <link>https://correctroadh.github.io/p/%E9%87%8D%E6%96%B0%E5%8F%91%E6%98%8Erip/</link>
         <pubDate>Wed, 22 Apr 2020 08:29:23 +0800</pubDate>
         
-        <guid>https://example.com/p/%E9%87%8D%E6%96%B0%E5%8F%91%E6%98%8Erip/</guid>
+        <guid>https://correctroadh.github.io/p/%E9%87%8D%E6%96%B0%E5%8F%91%E6%98%8Erip/</guid>
         <description>&lt;p&gt;我想通过一步一步的发明出『RIP』.通过这样的方法,相信能对『RIP』的理解会深刻不少.&lt;/p&gt;
 &lt;h2 id=&#34;数据的传播方式&#34;&gt;数据的传播方式&lt;/h2&gt;
 &lt;p&gt;在这个网络中,所有的机子相连在一个『交换机』上,它们就是在一个局域网中,它们是怎么通信的呢？&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.com/images/RIP/%e5%9b%be1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/RIP/%e5%9b%be1.png&#34;
 	
 	
 	
@@ -348,7 +348,7 @@ export QT_IM_MODULE=&amp;#34;fcitx&amp;#34;
 &lt;p&gt;第一个也是最重要的功能!把自己的路由表发给别的路由器, 每过几秒就进行一次发送.&lt;/p&gt;
 &lt;p&gt;嗯,这个时间太短,网络资源消耗太大.太长会使信息更新不及时.就挑一个合适的数字吧.每30s发送一次.&lt;/p&gt;
 &lt;h3 id=&#34;遇到第一个问题&#34;&gt;遇到第一个问题&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.com/images/RIP/%e5%9b%be2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/RIP/%e5%9b%be2.png&#34;
 	
 	
 	
@@ -371,7 +371,7 @@ export QT_IM_MODULE=&amp;#34;fcitx&amp;#34;
 &lt;p&gt;一个路由可能因为各种不是本身的原因被认为失效.如果一失效就删除,似乎不太好,不如把这个路由标记为失效,不再使用它转发路由,然后给它一点机会.如果它确认失效的180s内收到它的信息,那么它就是恢复一个正常的路由,如果180s期满再删掉它.&lt;/p&gt;
 &lt;h3 id=&#34;遇到第三个问题&#34;&gt;遇到第三个问题&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;随着路由越来越大,一个路由失效每次传到一个路由里都要经过180s,太慢了!有没有什么办法可以让远程的路由知道某个路由已经失效了？&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.com/images/RIP/%e5%9b%be3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/RIP/%e5%9b%be3.png&#34;
 	
 	
 	
@@ -386,7 +386,7 @@ export QT_IM_MODULE=&amp;#34;fcitx&amp;#34;
 &lt;h3 id=&#34;新的删除功能&#34;&gt;新的删除功能&lt;/h3&gt;
 &lt;p&gt;让每个路由在发送路由表的时候,带上已知的失效路由信息.同时让通知更久一些.在原先的删除机制上发动,一个路由失效180s期满后不直接删除.而是保持期满状态.而是让每个路由失效240s之后,再直接删掉.&lt;/p&gt;
 &lt;h3 id=&#34;第四个问题&#34;&gt;第四个问题&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.com/images/RIP/%e5%9b%be4.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/RIP/%e5%9b%be4.png&#34;
 	
 	
 	
@@ -434,7 +434,7 @@ export QT_IM_MODULE=&amp;#34;fcitx&amp;#34;
 &lt;p&gt;那以后有了.那也就以后的事以后再说吧!肯定会有新的支持大型网络的路由协议出来的.&lt;/p&gt;
 &lt;p&gt;当一个路由它的Hop为16,那么就代表它是不可达的!&lt;/p&gt;
 &lt;h3 id=&#34;第六个问题&#34;&gt;第六个问题&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.com/images/RIP/%e5%9b%be7.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/RIP/%e5%9b%be7.png&#34;
 	
 	
 	
@@ -448,7 +448,7 @@ export QT_IM_MODULE=&amp;#34;fcitx&amp;#34;
 &lt;h3 id=&#34;水平分割&#34;&gt;水平分割&lt;/h3&gt;
 &lt;p&gt;我要加入一个功能『在发送路由信息时,不发送来自它发给我们的路由信息』&lt;/p&gt;
 &lt;h3 id=&#34;第七个问题&#34;&gt;第七个问题&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.com/images/RIP/%e5%9b%be5.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/RIP/%e5%9b%be5.png&#34;
 	
 	
 	
@@ -464,7 +464,7 @@ export QT_IM_MODULE=&amp;#34;fcitx&amp;#34;
 &lt;h3 id=&#34;保持关闭&#34;&gt;保持关闭&lt;/h3&gt;
 &lt;p&gt;无论哪种情况,都说明这个路由3存在争论,我们可以通过强制这个网络保持一种情况一段时间,让我们不会前后不一.&lt;/p&gt;
 &lt;p&gt;不过是保持开启还是保持关闭呢？如果网络是坏的.保持关闭,可能会通过其它方法去绕路,可能还能到达.但是保持开启.那发的数据一定会全部丢失.如果网络是好的.保持关闭,也不过绕路而;保持开启,可以到达.
-&lt;img src=&#34;https://example.com/images/RIP/%e5%9b%be6.png&#34;
+&lt;img src=&#34;https://correctroadh.github.io/images/RIP/%e5%9b%be6.png&#34;
 	
 	
 	
@@ -533,10 +533,10 @@ export QT_IM_MODULE=&amp;#34;fcitx&amp;#34;
         </item>
         <item>
         <title>什么是VLSM和为什么</title>
-        <link>https://example.com/p/%E4%BB%80%E4%B9%88%E6%98%AFvlsm%E5%92%8C%E4%B8%BA%E4%BB%80%E4%B9%88/</link>
+        <link>https://correctroadh.github.io/p/%E4%BB%80%E4%B9%88%E6%98%AFvlsm%E5%92%8C%E4%B8%BA%E4%BB%80%E4%B9%88/</link>
         <pubDate>Sun, 22 Mar 2020 21:36:24 +0800</pubDate>
         
-        <guid>https://example.com/p/%E4%BB%80%E4%B9%88%E6%98%AFvlsm%E5%92%8C%E4%B8%BA%E4%BB%80%E4%B9%88/</guid>
+        <guid>https://correctroadh.github.io/p/%E4%BB%80%E4%B9%88%E6%98%AFvlsm%E5%92%8C%E4%B8%BA%E4%BB%80%E4%B9%88/</guid>
         <description>&lt;h2 id=&#34;1what-is-vlsm&#34;&gt;1.What is VLSM&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;什么是VLSM?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;vlsm的中文名叫『可变长子网掩码』,是一种网络技术.&lt;/p&gt;
@@ -559,7 +559,7 @@ export QT_IM_MODULE=&amp;#34;fcitx&amp;#34;
 &lt;p&gt;了解了VLSM的优点和为什么要使用它,那我们就开始讲解VLSM的原理了.&lt;/p&gt;
 &lt;h3 id=&#34;vlsm的原理&#34;&gt;VLSM的原理&lt;/h3&gt;
 &lt;p&gt;IP地址是由网络号与主机号组成的,我们可以通过子网掩码与IP地址进行运算,那我们就可以把一个IP地址分成网络号与主机号.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.com/images/VLSM/%e5%ad%90%e7%bd%91%e6%8e%a9%e7%a0%81%e7%a4%ba%e6%84%8f%e5%9b%be.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/VLSM/%e5%ad%90%e7%bd%91%e6%8e%a9%e7%a0%81%e7%a4%ba%e6%84%8f%e5%9b%be.png&#34;
 	
 	
 	

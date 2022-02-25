@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on CorrectRoad&#39;s Blog</title>
-    <link>https://example.com/post/</link>
+    <link>https://correctroadh.github.io/post/</link>
     <description>Recent content in Posts on CorrectRoad&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 18 Feb 2022 16:14:01 +0800</lastBuildDate><atom:link href="https://example.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Feb 2022 16:14:01 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>博客转移</title>
-      <link>https://example.com/p/%E5%8D%9A%E5%AE%A2%E8%BD%AC%E7%A7%BB/</link>
+      <link>https://correctroadh.github.io/p/%E5%8D%9A%E5%AE%A2%E8%BD%AC%E7%A7%BB/</link>
       <pubDate>Fri, 18 Feb 2022 16:14:01 +0800</pubDate>
       
-      <guid>https://example.com/p/%E5%8D%9A%E5%AE%A2%E8%BD%AC%E7%A7%BB/</guid>
+      <guid>https://correctroadh.github.io/p/%E5%8D%9A%E5%AE%A2%E8%BD%AC%E7%A7%BB/</guid>
       <description>我原来有一个博客站，但是在后来重装系统中丢失了原markdown文件。
 现在决定重新开始写我的博客，把之前觉得写的还算不错的3篇博客改动了一些之前觉得不好的部分。然后再重新处理成markdown文件。并且这次从之前的hexo转移到hugo，同时以后会更加关心数据安全和备份问题。</description>
     </item>
     
     <item>
       <title>深入浅出配置I3WM</title>
-      <link>https://example.com/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/</link>
+      <link>https://correctroadh.github.io/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/</link>
       <pubDate>Wed, 22 Apr 2020 08:29:23 +0800</pubDate>
       
-      <guid>https://example.com/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/</guid>
+      <guid>https://correctroadh.github.io/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/</guid>
       <description>什么是I3WM 我可以从本文中学习到什么? 学习完本文,你将学会配置一个漂亮的 I3WM 桌面.
 有什么要求吗?
 本文需要你拥有一点 Linux 基础,比如会使用 VIM.
@@ -56,10 +56,10 @@ I3WM 的配置 由 Mike Gancarz 所提出的 UNIX 哲学中的第五条</descrip
     
     <item>
       <title>重新发明RIP</title>
-      <link>https://example.com/p/%E9%87%8D%E6%96%B0%E5%8F%91%E6%98%8Erip/</link>
+      <link>https://correctroadh.github.io/p/%E9%87%8D%E6%96%B0%E5%8F%91%E6%98%8Erip/</link>
       <pubDate>Wed, 22 Apr 2020 08:29:23 +0800</pubDate>
       
-      <guid>https://example.com/p/%E9%87%8D%E6%96%B0%E5%8F%91%E6%98%8Erip/</guid>
+      <guid>https://correctroadh.github.io/p/%E9%87%8D%E6%96%B0%E5%8F%91%E6%98%8Erip/</guid>
       <description>我想通过一步一步的发明出『RIP』.通过这样的方法,相信能对『RIP』的理解会深刻不少.
 数据的传播方式 在这个网络中,所有的机子相连在一个『交换机』上,它们就是在一个局域网中,它们是怎么通信的呢？
 主机A发给主机B一个数据包,但是其实这个局域网中的每一台机子都收到了这个数据包.但是它们会对数据做进行两次判断处理,来判断这个数据包,我是不是该接收.
@@ -84,10 +84,10 @@ I3WM 的配置 由 Mike Gancarz 所提出的 UNIX 哲学中的第五条</descrip
     
     <item>
       <title>什么是VLSM和为什么</title>
-      <link>https://example.com/p/%E4%BB%80%E4%B9%88%E6%98%AFvlsm%E5%92%8C%E4%B8%BA%E4%BB%80%E4%B9%88/</link>
+      <link>https://correctroadh.github.io/p/%E4%BB%80%E4%B9%88%E6%98%AFvlsm%E5%92%8C%E4%B8%BA%E4%BB%80%E4%B9%88/</link>
       <pubDate>Sun, 22 Mar 2020 21:36:24 +0800</pubDate>
       
-      <guid>https://example.com/p/%E4%BB%80%E4%B9%88%E6%98%AFvlsm%E5%92%8C%E4%B8%BA%E4%BB%80%E4%B9%88/</guid>
+      <guid>https://correctroadh.github.io/p/%E4%BB%80%E4%B9%88%E6%98%AFvlsm%E5%92%8C%E4%B8%BA%E4%BB%80%E4%B9%88/</guid>
       <description>1.What is VLSM 什么是VLSM?
 vlsm的中文名叫『可变长子网掩码』,是一种网络技术.
 2.Why is VLSM? 这章不讲原理也不讲怎么用,我们来讲讲VLSM可以帮助我们做什么.
