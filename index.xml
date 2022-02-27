@@ -282,7 +282,7 @@
         <guid>https://correctroadh.github.io/p/%E5%8D%9A%E5%AE%A2%E8%BD%AC%E7%A7%BB/</guid>
         <description>&lt;p&gt;我原来有一个&lt;a class=&#34;link&#34; href=&#34;https://hxhl.github.io&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;博客站&lt;/a&gt;，但是在后来重装系统中丢失了原&lt;code&gt;markdown&lt;/code&gt;文件。&lt;/p&gt;
-&lt;p&gt;现在决定重新开始写我的博客，把之前觉得写的还算不错的3篇博客改动了一些之前觉得不好的部分。然后再重新处理成&lt;code&gt;markdown&lt;/code&gt;文件。并且这次从之前的&lt;code&gt;hexo&lt;/code&gt;转移到&lt;code&gt;hugo&lt;/code&gt;，同时以后会更加关心数据安全和备份问题。&lt;/p&gt;
+&lt;p&gt;现在决定重新开始写我的博客，把之前觉得写的还算不错的3篇博客改动了一些觉得不好的部分。然后再重新处理成&lt;code&gt;markdown&lt;/code&gt;文件。并且这次从之前的&lt;code&gt;hexo&lt;/code&gt;转移到&lt;code&gt;hugo&lt;/code&gt;，同时以后会更加关心数据安全和备份问题。&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -314,10 +314,10 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;它来自github用户『levinit』所分享的配置,&lt;a class=&#34;link&#34; href=&#34;https://github.com/levinit/i3wm-config&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;项目链接&lt;/a&gt;.十分感谢他分享自己的配置.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;我只想快一点搞个好看的 I3 主题怎么办?&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;那请你使用本主题作者所使用的&lt;a class=&#34;link&#34; href=&#34;https://github.com/levinit/i3wm-config&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;脚本&lt;/a&gt;与看他的&lt;a class=&#34;link&#34; href=&#34;https://levinit.github.io/i3wm-config/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;教程&lt;/a&gt;,本文更多是阐述I3WM 与其相关软件更深入的一面和教导你如何使用与配置.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;直接快速搞个好看的 I3 主题怎么办?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;那请使用本主题作者所使用的&lt;a class=&#34;link&#34; href=&#34;https://github.com/levinit/i3wm-config&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;脚本&lt;/a&gt;与&lt;a class=&#34;link&#34; href=&#34;https://levinit.github.io/i3wm-config/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;教程&lt;/a&gt;。&lt;/p&gt;
 &lt;h2 id=&#34;如何配置&#34;&gt;如何配置&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;那我应该怎么做&lt;/strong&gt;?&lt;/p&gt;
 &lt;p&gt;现在这是我们现在最初的样子&lt;/p&gt;
@@ -370,12 +370,11 @@
 &lt;p&gt;我们将这段话添加到&lt;code&gt;config&lt;/code&gt;文件之中,最好是在末尾!&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;exec --no-startup-id feh --bg-scale &amp;quot;图片的路径&amp;quot;&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;我还可以做些什么?&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;我觉得你可以举一反三了,&lt;code&gt;exec --no-startup-id 你需要执行的命令&lt;/code&gt;,你可以把你想执行的命令加在&lt;code&gt;config&lt;/code&gt;这样你的命令就会随着 I3WM 启动所执行了.&lt;/p&gt;
-&lt;p&gt;当然如果你的命令很多很长,你可以写在一个 shell文件 之中,然后通过 &lt;code&gt;exec&lt;/code&gt;去执行你这个 shell文件 ,同时你可以在后面加上&lt;code&gt;&amp;amp;&lt;/code&gt;,让你的 Shell文件 或者 命令 转入到后台执行.不会把 I3WM 阻塞住.&lt;/p&gt;
+&lt;p&gt;我觉得这可以举一反三了,&lt;code&gt;exec --no-startup-id 你需要执行的命令&lt;/code&gt;,可以把想执行的命令加在&lt;code&gt;config&lt;/code&gt;这样命令就会随着 I3WM 启动所执行了.&lt;/p&gt;
+&lt;p&gt;当然如果命令很多很长,你可以写在一个 shell文件 之中,然后通过 &lt;code&gt;exec&lt;/code&gt;去执行你这个 shell文件 ,同时你可以在后面加上&lt;code&gt;&amp;amp;&lt;/code&gt;,让你的 Shell文件 或者 命令 转入到后台执行.不会把 I3WM 阻塞住.&lt;/p&gt;
 &lt;p&gt;例如:&lt;code&gt;exec --no-startup-id  ~/请换成shell的名字.sh &amp;amp;&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;--no-startup-id&lt;/code&gt; 是什么意思啊?&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;有些『脚本』或者『程序』并没有『启动提醒』,就是说它们启动之后并不会告诉系统,我启动好了.这会让你的系统认为我卡住了.导致你的鼠标指针处于忙碌状态.&lt;/p&gt;
-&lt;p&gt;这个参数可以解决这种情况.&lt;/p&gt;
+&lt;p&gt;有些『脚本』或者『程序』并没有『启动提醒』,就是说它们启动之后并不会告诉系统,我启动好了.这会让你的系统认为我卡住了.导致你的鼠标指针处于忙碌状态.这个参数可以解决这种情况.&lt;/p&gt;
 &lt;h3 id=&#34;终端透明&#34;&gt;终端透明&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;我怎么才能把我的终端变成透明的?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;我们在设置壁纸时使用了『feh』,这次我们使用『xcompmgr』这款软件.&lt;/p&gt;
@@ -440,7 +439,7 @@ bindsym $mod+c layout toggle split
 &lt;/div&gt;&lt;p&gt;如果你没有改动上面所说的$mod,那这里的意思就是说同时按下『Win 键』和『S 键』时,将窗口堆叠模式改成『堆叠式』(stacking).按下『Win 键』和『 T 键』 就是『标签式』(tabbed),而『Win 键』加上『C 键』可以让你在 垂直平铺和水平平铺之间 来回切换.&lt;/p&gt;
 &lt;p&gt;动手试试吧,不要光看不用!你会爱上这种操作方式的!绝对会!&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;我可以让某个快捷键启动一个程序吗?&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;当然!我希望你能在这里继续举一反三!我们把这句添加进去.&lt;/p&gt;
+&lt;p&gt;当然!我们把这句添加进去.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -487,13 +486,13 @@ export QT_IM_MODULE=&amp;#34;fcitx&amp;#34;
 &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;几乎是网上所有能找到的不能使用 fcitx教程的解决办法. 我也照做,但是还是依然还是不能输入中文。&lt;/p&gt;
-&lt;p&gt;我发现在 &lt;code&gt;Input Method&lt;/code&gt;只有&lt;code&gt; Keyboard - English(US)&lt;/code&gt;一个。而没有中文!&lt;/p&gt;
+&lt;p&gt;我发现在 &lt;code&gt;Input Method&lt;/code&gt;只有&lt;code&gt; Keyboard - English(US)&lt;/code&gt;一个。而没有中文。这是我遇到的问题，可能是因为太简单的所以根本没有人写过解决方法。&lt;/p&gt;
 &lt;p&gt;所以只要在 &lt;code&gt;Input Method&lt;/code&gt;中添加一个中文输入方式.&lt;/p&gt;
 &lt;p&gt;点击&lt;code&gt;Configure&lt;/code&gt;去添加&lt;code&gt;Input Method&lt;/code&gt;，但是我一点击就闪退。查看报错信息是因为缺少程序，通过&lt;code&gt;pacman&lt;/code&gt;去安装。这样就行了。&lt;/p&gt;
 &lt;p&gt;这样之后输入法就正常了。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;我看完了全文,但是除了基础的配置以外,我还是不懂得修改一个主题的外观.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;这是一个更深入的问题,我暂时还不能提供帮助,不过你可以在&lt;a class=&#34;link&#34; href=&#34;https://i3wm.org/docs/userguide.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;这里&lt;/a&gt;找到你想要的.如果可能,我以后将会发一篇新文章进行更深入的讲解.&lt;/p&gt;
+    &gt;这里&lt;/a&gt;找到你想要的.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;我还想要更多的主题,我可以在哪里找到它们?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;你可以在&lt;a class=&#34;link&#34; href=&#34;www.github.com&#34; &gt;Github&lt;/a&gt;搜索『&lt;a class=&#34;link&#34; href=&#34;https://github.com/search?q=i3wm&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;i3wm&lt;/a&gt;』,有许多人在上面发布了自己的 config.&lt;/p&gt;

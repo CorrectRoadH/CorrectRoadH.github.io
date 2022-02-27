@@ -11,8 +11,8 @@
 有多漂亮呢?
 这是一张成品图
 它来自github用户『levinit』所分享的配置,项目链接.十分感谢他分享自己的配置.
-我只想快一点搞个好看的 I3 主题怎么办?
-那请你使用本主题作者所使用的脚本与看他的教程,本文更多是阐述I3WM 与其相关软件更深入的一面和教导你如何使用与配置.
+直接快速搞个好看的 I3 主题怎么办?
+那请使用本主题作者所使用的脚本与教程。
 如何配置 那我应该怎么做?
 现在这是我们现在最初的样子
 我们可以看见,与上面所提到的成本品的区别,我将分别介绍如何实现它们.
@@ -44,8 +44,8 @@ I3WM 的配置 由 Mike Gancarz 所提出的 UNIX 哲学中的第五条'><title>
 有多漂亮呢?
 这是一张成品图
 它来自github用户『levinit』所分享的配置,项目链接.十分感谢他分享自己的配置.
-我只想快一点搞个好看的 I3 主题怎么办?
-那请你使用本主题作者所使用的脚本与看他的教程,本文更多是阐述I3WM 与其相关软件更深入的一面和教导你如何使用与配置.
+直接快速搞个好看的 I3 主题怎么办?
+那请使用本主题作者所使用的脚本与教程。
 如何配置 那我应该怎么做?
 现在这是我们现在最初的样子
 我们可以看见,与上面所提到的成本品的区别,我将分别介绍如何实现它们.
@@ -77,8 +77,8 @@ I3WM 的配置 由 Mike Gancarz 所提出的 UNIX 哲学中的第五条'>
 有多漂亮呢?
 这是一张成品图
 它来自github用户『levinit』所分享的配置,项目链接.十分感谢他分享自己的配置.
-我只想快一点搞个好看的 I3 主题怎么办?
-那请你使用本主题作者所使用的脚本与看他的教程,本文更多是阐述I3WM 与其相关软件更深入的一面和教导你如何使用与配置.
+直接快速搞个好看的 I3 主题怎么办?
+那请使用本主题作者所使用的脚本与教程。
 如何配置 那我应该怎么做?
 现在这是我们现在最初的样子
 我们可以看见,与上面所提到的成本品的区别,我将分别介绍如何实现它们.
@@ -228,10 +228,10 @@ if (!doNotTrack) {
 ></p>
 <p>它来自github用户『levinit』所分享的配置,<a class="link" href="https://github.com/levinit/i3wm-config"  target="_blank" rel="noopener"
     >项目链接</a>.十分感谢他分享自己的配置.</p>
-<p><strong>我只想快一点搞个好看的 I3 主题怎么办?</strong></p>
-<p>那请你使用本主题作者所使用的<a class="link" href="https://github.com/levinit/i3wm-config"  target="_blank" rel="noopener"
-    >脚本</a>与看他的<a class="link" href="https://levinit.github.io/i3wm-config/"  target="_blank" rel="noopener"
-    >教程</a>,本文更多是阐述I3WM 与其相关软件更深入的一面和教导你如何使用与配置.</p>
+<p><strong>直接快速搞个好看的 I3 主题怎么办?</strong></p>
+<p>那请使用本主题作者所使用的<a class="link" href="https://github.com/levinit/i3wm-config"  target="_blank" rel="noopener"
+    >脚本</a>与<a class="link" href="https://levinit.github.io/i3wm-config/"  target="_blank" rel="noopener"
+    >教程</a>。</p>
 <h2 id="如何配置">如何配置</h2>
 <p><strong>那我应该怎么做</strong>?</p>
 <p>现在这是我们现在最初的样子</p>
@@ -284,12 +284,11 @@ if (!doNotTrack) {
 <p>我们将这段话添加到<code>config</code>文件之中,最好是在末尾!</p>
 <p><code>exec --no-startup-id feh --bg-scale &quot;图片的路径&quot;</code></p>
 <p><strong>我还可以做些什么?</strong></p>
-<p>我觉得你可以举一反三了,<code>exec --no-startup-id 你需要执行的命令</code>,你可以把你想执行的命令加在<code>config</code>这样你的命令就会随着 I3WM 启动所执行了.</p>
-<p>当然如果你的命令很多很长,你可以写在一个 shell文件 之中,然后通过 <code>exec</code>去执行你这个 shell文件 ,同时你可以在后面加上<code>&amp;</code>,让你的 Shell文件 或者 命令 转入到后台执行.不会把 I3WM 阻塞住.</p>
+<p>我觉得这可以举一反三了,<code>exec --no-startup-id 你需要执行的命令</code>,可以把想执行的命令加在<code>config</code>这样命令就会随着 I3WM 启动所执行了.</p>
+<p>当然如果命令很多很长,你可以写在一个 shell文件 之中,然后通过 <code>exec</code>去执行你这个 shell文件 ,同时你可以在后面加上<code>&amp;</code>,让你的 Shell文件 或者 命令 转入到后台执行.不会把 I3WM 阻塞住.</p>
 <p>例如:<code>exec --no-startup-id  ~/请换成shell的名字.sh &amp;</code></p>
 <p><strong><code>--no-startup-id</code> 是什么意思啊?</strong></p>
-<p>有些『脚本』或者『程序』并没有『启动提醒』,就是说它们启动之后并不会告诉系统,我启动好了.这会让你的系统认为我卡住了.导致你的鼠标指针处于忙碌状态.</p>
-<p>这个参数可以解决这种情况.</p>
+<p>有些『脚本』或者『程序』并没有『启动提醒』,就是说它们启动之后并不会告诉系统,我启动好了.这会让你的系统认为我卡住了.导致你的鼠标指针处于忙碌状态.这个参数可以解决这种情况.</p>
 <h3 id="终端透明">终端透明</h3>
 <p><strong>我怎么才能把我的终端变成透明的?</strong></p>
 <p>我们在设置壁纸时使用了『feh』,这次我们使用『xcompmgr』这款软件.</p>
@@ -354,7 +353,7 @@ bindsym $mod+c layout toggle split
 </div><p>如果你没有改动上面所说的$mod,那这里的意思就是说同时按下『Win 键』和『S 键』时,将窗口堆叠模式改成『堆叠式』(stacking).按下『Win 键』和『 T 键』 就是『标签式』(tabbed),而『Win 键』加上『C 键』可以让你在 垂直平铺和水平平铺之间 来回切换.</p>
 <p>动手试试吧,不要光看不用!你会爱上这种操作方式的!绝对会!</p>
 <p><strong>我可以让某个快捷键启动一个程序吗?</strong></p>
-<p>当然!我希望你能在这里继续举一反三!我们把这句添加进去.</p>
+<p>当然!我们把这句添加进去.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -401,13 +400,13 @@ export QT_IM_MODULE=&#34;fcitx&#34;
 </code></pre></td></tr></table>
 </div>
 </div><p>几乎是网上所有能找到的不能使用 fcitx教程的解决办法. 我也照做,但是还是依然还是不能输入中文。</p>
-<p>我发现在 <code>Input Method</code>只有<code> Keyboard - English(US)</code>一个。而没有中文!</p>
+<p>我发现在 <code>Input Method</code>只有<code> Keyboard - English(US)</code>一个。而没有中文。这是我遇到的问题，可能是因为太简单的所以根本没有人写过解决方法。</p>
 <p>所以只要在 <code>Input Method</code>中添加一个中文输入方式.</p>
 <p>点击<code>Configure</code>去添加<code>Input Method</code>，但是我一点击就闪退。查看报错信息是因为缺少程序，通过<code>pacman</code>去安装。这样就行了。</p>
 <p>这样之后输入法就正常了。</p>
 <p><strong>我看完了全文,但是除了基础的配置以外,我还是不懂得修改一个主题的外观.</strong></p>
 <p>这是一个更深入的问题,我暂时还不能提供帮助,不过你可以在<a class="link" href="https://i3wm.org/docs/userguide.html"  target="_blank" rel="noopener"
-    >这里</a>找到你想要的.如果可能,我以后将会发一篇新文章进行更深入的讲解.</p>
+    >这里</a>找到你想要的.</p>
 <p><strong>我还想要更多的主题,我可以在哪里找到它们?</strong></p>
 <p>你可以在<a class="link" href="www.github.com" >Github</a>搜索『<a class="link" href="https://github.com/search?q=i3wm"  target="_blank" rel="noopener"
     >i3wm</a>』,有许多人在上面发布了自己的 config.</p>
