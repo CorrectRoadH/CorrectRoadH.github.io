@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='什么是I3WM 我可以从本文中学习到什么? 学习完本文,你将学会配置一个漂亮的 I3WM 桌面.
 有什么要求吗?
@@ -33,7 +33,7 @@ I3WM 的配置 由 Mike Gancarz 所提出的 UNIX 哲学中的第五条'><title>
 
 <link rel='canonical' href='https://correctroadh.github.io/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/'>
 
-<link rel="stylesheet" href="/scss/style.min.b949db8bead9abdc40291b93383b8da6abc3aa62e74f5580356c06ddbb792dab.css"><meta property='og:title' content='深入浅出配置I3WM'>
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='深入浅出配置I3WM'>
 <meta property='og:description' content='什么是I3WM 我可以从本文中学习到什么? 学习完本文,你将学会配置一个漂亮的 I3WM 桌面.
 有什么要求吗?
 本文需要你拥有一点 Linux 基础,比如会使用 VIM.
@@ -109,8 +109,8 @@ if (!doNotTrack) {
 
     </head>
     <body class="
-    article-page has-toc
-">
+    article-page
+    ">
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
@@ -133,25 +133,193 @@ if (!doNotTrack) {
         }
     })();
 </script>
-<div class="container main-container flex 
-    
-        extended
-    
-">
-    
-        <div id="article-toolbar">
-            <a href="/" class="back-home">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="15 6 9 12 15 18" />
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu54efa2901cde7b2b25a636d0b50ccbf1_35844_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">CorrectRoad&#39;s Blog</a></h1>
+            <h2 class="site-description">君子生非异也，善假于物也。</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CorrectRoadH'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
 </svg>
 
 
 
-                <span>返回</span>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' target="_blank">
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
             </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
         </div>
-    
+    </ol>
+</aside>
 <main class="main full-width">
     <article class="main-article">
     <header class="article-header">
@@ -159,11 +327,13 @@ if (!doNotTrack) {
     <div class="article-details">
     
 
-    <h2 class="article-title">
-        <a href="/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/">深入浅出配置I3WM</a>
-    </h2>
-
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/">深入浅出配置I3WM</a>
+        </h2>
     
+        
+    </div>
 
     
     <footer class="article-time">
@@ -198,6 +368,8 @@ if (!doNotTrack) {
             </div>
         
     </footer>
+    
+
     
 </div>
 </header>
@@ -268,9 +440,9 @@ if (!doNotTrack) {
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">5.Store data in flat text files.
-五.数据应该保存为纯文本文件。
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">5.Store data in flat text files.
+</span></span><span class="line"><span class="cl">五.数据应该保存为纯文本文件。
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>所以 I3WM 的配置也是保存在一个文本文件之中,你应该使用『VIM』或者其它文本编程器去编辑它们,并没有一个像『Windows』异或者是『MacOS』那样拥有一个『设置面板』.</p>
 <p><strong>那 I3WM 的配置文件在哪里呢?</strong></p>
@@ -300,9 +472,9 @@ if (!doNotTrack) {
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"> 1.Write programs that do one thing and do it well
- 一.写一个程序做一件事和把它做好.
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> 1.Write programs that do one thing and do it well
+</span></span><span class="line"><span class="cl"> 一.写一个程序做一件事和把它做好.
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Linux 有太多小而美的软件,几乎没有大而全的软件.因为这一点也不 UNIX.</p>
 <p><strong>我装好了,怎么用呢?</strong></p>
@@ -328,8 +500,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">set $mod Mod4
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">set $mod Mod4
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这句话是指把 Mod4 键设置$mod.</p>
 <p><strong>Mod4 是哪个键?</strong></p>
@@ -345,10 +517,10 @@ if (!doNotTrack) {
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">bindsym $mod+s layout stacking
-bindsym $mod+t layout tabbed
-bindsym $mod+c layout toggle split
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">bindsym $mod+s layout stacking
+</span></span><span class="line"><span class="cl">bindsym $mod+t layout tabbed
+</span></span><span class="line"><span class="cl">bindsym $mod+c layout toggle split
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果你没有改动上面所说的$mod,那这里的意思就是说同时按下『Win 键』和『S 键』时,将窗口堆叠模式改成『堆叠式』(stacking).按下『Win 键』和『 T 键』 就是『标签式』(tabbed),而『Win 键』加上『C 键』可以让你在 垂直平铺和水平平铺之间 来回切换.</p>
 <p>动手试试吧,不要光看不用!你会爱上这种操作方式的!绝对会!</p>
@@ -359,8 +531,8 @@ bindsym $mod+c layout toggle split
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">bindsym $mod+F2 exec firefox
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">bindsym $mod+F2 exec firefox
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>我觉得你已经能够理解了!当按下『Win 键』和『 F2 键』时, Firefox 就会启动了!把按键和软件换成你想换的吧!</p>
 <h3 id="举一反三">举一反三</h3>
@@ -394,10 +566,10 @@ bindsym $mod+c layout toggle split
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">export XMODIFIERS=&#34;@im=fcitx&#34;
-export GTK_IM_MODULE=&#34;fcitx&#34;
-export QT_IM_MODULE=&#34;fcitx&#34;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">export XMODIFIERS=&#34;@im=fcitx&#34;
+</span></span><span class="line"><span class="cl">export GTK_IM_MODULE=&#34;fcitx&#34;
+</span></span><span class="line"><span class="cl">export QT_IM_MODULE=&#34;fcitx&#34;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>几乎是网上所有能找到的不能使用 fcitx教程的解决办法. 我也照做,但是还是依然还是不能输入中文。</p>
 <p>我发现在 <code>Input Method</code>只有<code> Keyboard - English(US)</code>一个。而没有中文。这是我遇到的问题，可能是因为太简单的所以根本没有人写过解决方法。</p>
@@ -479,35 +651,13 @@ export QT_IM_MODULE=&#34;fcitx&#34;
 
     
 
-    <aside class="related-contents--wrapper">
     
-    
-</aside>
 
      
     
         
     <div class="disqus-container">
-    <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
     
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 </div>
 
 <style>
@@ -542,7 +692,7 @@ export QT_IM_MODULE=&#34;fcitx&#34;
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.8.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 
@@ -626,11 +776,13 @@ export QT_IM_MODULE=&#34;fcitx&#34;
             >
 
             </main>
-    
-        <aside class="sidebar right-sidebar sticky">
-            <section class="widget archives">
-                <div class="widget-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <line x1="5" y1="9" x2="19" y2="9" />
   <line x1="5" y1="15" x2="19" y2="15" />
@@ -640,11 +792,11 @@ export QT_IM_MODULE=&#34;fcitx&#34;
 
 
 
-                </div>
-                <h2 class="widget-title section-title">目录</h2>
-                
-                <div class="widget--toc">
-                    <nav id="TableOfContents">
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
   <ol>
     <li><a href="#什么是i3wm">什么是I3WM</a></li>
     <li><a href="#如何配置">如何配置</a>
@@ -659,10 +811,13 @@ export QT_IM_MODULE=&#34;fcitx&#34;
     <li><a href="#额外的问题">额外的问题</a></li>
   </ol>
 </nav>
-                </div>
-            </section>
-        </aside>
-    
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
         </div>
         <script 

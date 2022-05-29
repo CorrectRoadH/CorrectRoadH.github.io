@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='制作一个表格生成器 前言 本文为本人发布gitbook的书籍，但是因为gitbook一直没有被谷歌索引，我也没有办法提交给谷歌(无法证明所有权)。无奈只能把该本的章节逐步搬运过来，提高SEO。希望那些想学习logseq plugins 开发的同学们能直接通过搜索引擎看到此书。
 原书本章地址：https://correctroad.gitbook.io/logseq-plugins-in-action/chapter-1/make-markdown-table-creator
@@ -12,7 +12,7 @@
 
 <link rel='canonical' href='https://correctroadh.github.io/p/logseq-plugins-%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%974.%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%A1%A8%E6%A0%BC%E7%94%9F%E6%88%90%E5%99%A8/'>
 
-<link rel="stylesheet" href="/scss/style.min.b949db8bead9abdc40291b93383b8da6abc3aa62e74f5580356c06ddbb792dab.css"><meta property='og:title' content='Logseq Plugins 开发实战系列：4.制作一个表格生成器'>
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Logseq Plugins 开发实战系列：4.制作一个表格生成器'>
 <meta property='og:description' content='制作一个表格生成器 前言 本文为本人发布gitbook的书籍，但是因为gitbook一直没有被谷歌索引，我也没有办法提交给谷歌(无法证明所有权)。无奈只能把该本的章节逐步搬运过来，提高SEO。希望那些想学习logseq plugins 开发的同学们能直接通过搜索引擎看到此书。
 原书本章地址：https://correctroad.gitbook.io/logseq-plugins-in-action/chapter-1/make-markdown-table-creator
 这次我们来创建一个快捷创建markdown的表格。当我们输入/create table时，显示出一个create table窗口，填入我们想要的row和col就往logseq插入我们想要的markdown表格。
@@ -46,8 +46,8 @@ if (!doNotTrack) {
 
     </head>
     <body class="
-    article-page has-toc
-">
+    article-page
+    ">
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
@@ -70,25 +70,193 @@ if (!doNotTrack) {
         }
     })();
 </script>
-<div class="container main-container flex 
-    
-        extended
-    
-">
-    
-        <div id="article-toolbar">
-            <a href="/" class="back-home">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="15 6 9 12 15 18" />
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu54efa2901cde7b2b25a636d0b50ccbf1_35844_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">CorrectRoad&#39;s Blog</a></h1>
+            <h2 class="site-description">君子生非异也，善假于物也。</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CorrectRoadH'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
 </svg>
 
 
 
-                <span>返回</span>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' target="_blank">
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
             </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
         </div>
-    
+    </ol>
+</aside>
 <main class="main full-width">
     <article class="main-article">
     <header class="article-header">
@@ -96,11 +264,13 @@ if (!doNotTrack) {
     <div class="article-details">
     
 
-    <h2 class="article-title">
-        <a href="/p/logseq-plugins-%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%974.%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%A1%A8%E6%A0%BC%E7%94%9F%E6%88%90%E5%99%A8/">Logseq Plugins 开发实战系列：4.制作一个表格生成器</a>
-    </h2>
-
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/logseq-plugins-%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%974.%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%A1%A8%E6%A0%BC%E7%94%9F%E6%88%90%E5%99%A8/">Logseq Plugins 开发实战系列：4.制作一个表格生成器</a>
+        </h2>
     
+        
+    </div>
 
     
     <footer class="article-time">
@@ -136,6 +306,8 @@ if (!doNotTrack) {
         
     </footer>
     
+
+    
 </div>
 </header>
 
@@ -162,12 +334,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"> <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">registerSlashCommand</span><span class="p">(</span>
-      <span class="s1">&#39;create table&#39;</span><span class="p">,</span> <span class="kr">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="nx">logseq</span><span class="p">.</span><span class="nx">showMainUI</span><span class="p">()</span>
-      <span class="p">},</span>
-  <span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"> <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">registerSlashCommand</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="s1">&#39;create table&#39;</span><span class="p">,</span> <span class="kr">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">logseq</span><span class="p">.</span><span class="nx">showMainUI</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="写窗口">写窗口</h2>
 <p>新建<code>table.tsx</code>和<code>table.css</code></p>
@@ -235,67 +407,67 @@ if (!doNotTrack) {
 </span><span class="lnt">60
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span><span class="nx">useEffect</span><span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="s2">&#34;./table.css&#34;</span>
-
-<span class="kr">const</span> <span class="nx">createTable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">row</span>:<span class="kt">number</span><span class="p">,</span> <span class="nx">col</span>:<span class="kt">number</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span> <span class="c1">// 生成markdown表格的内容
-</span><span class="c1"></span>    <span class="kd">let</span> <span class="nx">content</span> <span class="o">=</span> <span class="s2">&#34;|&#34;</span>
-    <span class="kd">let</span> <span class="nx">rowContent</span> <span class="o">=</span> <span class="s2">&#34;|&#34;</span>
-
-    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">col</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
-        <span class="nx">content</span> <span class="o">+=</span> <span class="sb">` Col </span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb"> |`</span>
-    <span class="p">}</span>
-    <span class="nx">content</span> <span class="o">+=</span> <span class="s2">&#34;\n&#34;</span>
-    <span class="nx">content</span> <span class="o">+=</span> <span class="s2">&#34;|&#34;</span>
-
-    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">col</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
-        <span class="nx">content</span> <span class="o">+=</span> <span class="s2">&#34; --- |&#34;</span>
-    <span class="p">}</span>
-    <span class="nx">content</span> <span class="o">+=</span> <span class="s2">&#34;\n&#34;</span>
-
-    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">col</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
-        <span class="nx">rowContent</span> <span class="o">+=</span> <span class="s2">&#34;   |&#34;</span>
-    <span class="p">}</span>
-    <span class="nx">rowContent</span> <span class="o">+=</span> <span class="s2">&#34;\n&#34;</span>
-
-    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">row</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
-        <span class="nx">content</span> <span class="o">+=</span>
-            <span class="nx">rowContent</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">content</span>
-<span class="p">}</span>
-
-<span class="kr">const</span> <span class="nx">insertContent</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">content</span>:<span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span><span class="p">{</span> <span class="c1">// 把内容插入到logseq
-</span><span class="c1"></span>    <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">hideMainUI</span><span class="p">({</span> <span class="nx">restoreEditingCursor</span>: <span class="kt">true</span> <span class="p">});</span>
-    <span class="k">await</span> <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">insertAtEditingCursor</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span>
-    <span class="c1">// 
-</span><span class="c1"></span><span class="p">}</span>
-
-<span class="c1">// eslint-disable-next-line react/display-name,no-empty-pattern
-</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">Table</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(({},</span> <span class="nx">ref</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">row</span><span class="p">,</span> <span class="nx">setRow</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="s2">&#34;3&#34;</span><span class="p">);</span>
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">col</span><span class="p">,</span> <span class="nx">setCol</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="s2">&#34;4&#34;</span><span class="p">);</span>
-
-    <span class="k">return</span><span class="p">(</span>
-        <span class="p">&lt;</span><span class="nt">div</span>
-            <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">ref</span><span class="p">}</span>
-            <span class="na">className</span><span class="o">=</span><span class="s">&#34;table-root&#34;</span>
-            <span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-                    <span class="nx">Rows</span><span class="o">:</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">row</span><span class="p">}</span> <span class="na">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span><span class="o">=&gt;</span><span class="nx">setRow</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}/&gt;</span>
-                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-                    <span class="nx">Cols</span><span class="o">:</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">col</span><span class="p">}</span> <span class="na">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span><span class="o">=&gt;</span><span class="nx">setCol</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}</span> <span class="p">/&gt;</span>
-                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-                    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{()</span><span class="o">=&gt;</span><span class="p">{</span><span class="nx">insertContent</span><span class="p">(</span><span class="nx">createTable</span><span class="p">(</span><span class="nb">Number</span><span class="p">(</span><span class="nx">row</span><span class="p">),</span><span class="nb">Number</span><span class="p">(</span><span class="nx">col</span><span class="p">)))}}&gt;</span><span class="nx">Insert</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">);</span>
-<span class="p">});</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span><span class="nx">useEffect</span><span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="s2">&#34;./table.css&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">createTable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">row</span>:<span class="kt">number</span><span class="p">,</span> <span class="nx">col</span>:<span class="kt">number</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span> <span class="c1">// 生成markdown表格的内容
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">let</span> <span class="nx">content</span> <span class="o">=</span> <span class="s2">&#34;|&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">rowContent</span> <span class="o">=</span> <span class="s2">&#34;|&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">col</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">content</span> <span class="o">+=</span> <span class="sb">` Col </span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb"> |`</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">content</span> <span class="o">+=</span> <span class="s2">&#34;\n&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">content</span> <span class="o">+=</span> <span class="s2">&#34;|&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">col</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">content</span> <span class="o">+=</span> <span class="s2">&#34; --- |&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">content</span> <span class="o">+=</span> <span class="s2">&#34;\n&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">col</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">rowContent</span> <span class="o">+=</span> <span class="s2">&#34;   |&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">rowContent</span> <span class="o">+=</span> <span class="s2">&#34;\n&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">row</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">content</span> <span class="o">+=</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">rowContent</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">content</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">insertContent</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">content</span>:<span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span><span class="p">{</span> <span class="c1">// 把内容插入到logseq
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">hideMainUI</span><span class="p">({</span> <span class="nx">restoreEditingCursor</span>: <span class="kt">true</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">insertAtEditingCursor</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// eslint-disable-next-line react/display-name,no-empty-pattern
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">Table</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(({},</span> <span class="nx">ref</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">row</span><span class="p">,</span> <span class="nx">setRow</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="s2">&#34;3&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">col</span><span class="p">,</span> <span class="nx">setCol</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="s2">&#34;4&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span>
+</span></span><span class="line"><span class="cl">            <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">ref</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="na">className</span><span class="o">=</span><span class="s">&#34;table-root&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">Rows</span><span class="o">:</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">row</span><span class="p">}</span> <span class="na">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span><span class="o">=&gt;</span><span class="nx">setRow</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}/&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">Cols</span><span class="o">:</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">col</span><span class="p">}</span> <span class="na">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span><span class="o">=&gt;</span><span class="nx">setCol</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{()</span><span class="o">=&gt;</span><span class="p">{</span><span class="nx">insertContent</span><span class="p">(</span><span class="nx">createTable</span><span class="p">(</span><span class="nb">Number</span><span class="p">(</span><span class="nx">row</span><span class="p">),</span><span class="nb">Number</span><span class="p">(</span><span class="nx">col</span><span class="p">)))}}&gt;</span><span class="nx">Insert</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -314,20 +486,20 @@ if (!doNotTrack) {
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="p">.</span><span class="nc">table-root</span> <span class="p">{</span>
-    <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
-    <span class="k">background-color</span><span class="p">:</span> <span class="mh">#e5e7eb</span><span class="p">;</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
-    <span class="k">width</span><span class="p">:</span> <span class="mi">250</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">height</span><span class="p">:</span> <span class="mi">150</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="p">.</span><span class="nc">center</span><span class="p">{</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
-    <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
-    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">table-root</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background-color</span><span class="p">:</span> <span class="mh">#e5e7eb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">width</span><span class="p">:</span> <span class="mi">250</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">height</span><span class="p">:</span> <span class="mi">150</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">center</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>main.tsx</code>和上一章基本一样，导入的组件变了而已。</p>
 <div class="highlight"><div class="chroma">
@@ -360,33 +532,33 @@ if (!doNotTrack) {
 </span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">useRef</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">useAppVisible</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;./utils&#34;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Table</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;./table&#34;</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nx">App() {</span>
-  <span class="kr">const</span> <span class="nx">innerRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(</span><span class="kc">null</span><span class="p">);</span>
-  <span class="kr">const</span> <span class="nx">visible</span> <span class="o">=</span> <span class="nx">useAppVisible</span><span class="p">();</span>
-
-  <span class="k">if</span> <span class="p">(</span><span class="nx">visible</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="p">(</span>
-      <span class="p">&lt;</span><span class="nt">main</span>
-        <span class="na">className</span><span class="o">=</span><span class="s">&#34;absolute inset-0&#34;</span>
-        <span class="na">onClick</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-          <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">innerRef</span><span class="p">.</span><span class="nx">current</span><span class="o">?</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span> <span class="kr">as</span> <span class="kt">any</span><span class="p">))</span> <span class="p">{</span>
-            <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">hideMainUI</span><span class="p">();</span>
-          <span class="p">}</span>
-        <span class="p">}}</span>
-      <span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">Table</span> <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">innerRef</span><span class="p">}</span>  <span class="p">/&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
-    <span class="p">);</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kr">export</span> <span class="k">default</span> <span class="nx">App</span><span class="p">;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">useRef</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">useAppVisible</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;./utils&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Table</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;./table&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">App() {</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">innerRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(</span><span class="kc">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">visible</span> <span class="o">=</span> <span class="nx">useAppVisible</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">visible</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">main</span>
+</span></span><span class="line"><span class="cl">        <span class="na">className</span><span class="o">=</span><span class="s">&#34;absolute inset-0&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">onClick</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">innerRef</span><span class="p">.</span><span class="nx">current</span><span class="o">?</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span> <span class="kr">as</span> <span class="kt">any</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">hideMainUI</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">          <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">Table</span> <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">innerRef</span><span class="p">}</span>  <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="nx">App</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>现在已经能调出<code>create table</code>窗口了，但是窗口出现在<code>logseq</code>的左上角。我们要调整一下窗口出现的位置。</p>
 <h2 id="让窗口出现在光标处">让窗口出现在光标处</h2>
@@ -437,48 +609,48 @@ if (!doNotTrack) {
 </span><span class="lnt">41
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">Table</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(({},</span> <span class="nx">ref</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">row</span><span class="p">,</span> <span class="nx">setRow</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="s2">&#34;3&#34;</span><span class="p">);</span>
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">col</span><span class="p">,</span> <span class="nx">setCol</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="s2">&#34;4&#34;</span><span class="p">);</span>
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">left</span><span class="p">,</span> <span class="nx">setLeft</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">top</span><span class="p">,</span> <span class="nx">setTop</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">rect</span><span class="p">,</span> <span class="nx">setReact</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">({</span><span class="nx">top</span>:<span class="kt">0</span><span class="p">,</span><span class="nx">left</span>:<span class="kt">0</span><span class="p">});</span>
-
-    <span class="nx">useEffect</span><span class="p">(</span> <span class="p">()</span><span class="o">=&gt;</span><span class="p">{</span>
-        <span class="c1">// 获取当前光标的位置
-</span><span class="c1"></span>        <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">getEditingCursorPosition</span><span class="p">().</span><span class="nx">then</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
-            <span class="c1">// @ts-ignore
-</span><span class="c1"></span>            <span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="p">,</span> <span class="nx">top</span><span class="p">,</span> <span class="nx">rect</span><span class="p">}</span> <span class="o">=</span> <span class="nx">res</span><span class="p">;</span>
-            <span class="nx">setLeft</span><span class="p">(</span><span class="nx">left</span><span class="p">);</span>
-            <span class="nx">setTop</span><span class="p">(</span><span class="nx">top</span><span class="p">);</span>
-            <span class="nx">setReact</span><span class="p">(</span><span class="nx">rect</span><span class="p">);</span>
-        <span class="p">});</span>
-    <span class="p">},[])</span>
-
-    <span class="k">return</span><span class="p">(</span>
-        <span class="p">&lt;</span><span class="nt">div</span>
-            <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">ref</span><span class="p">}</span>
-            <span class="na">className</span><span class="o">=</span><span class="s">&#34;table-root&#34;</span>
-              <span class="err">//</span> <span class="na">动态修改css</span><span class="err">，</span><span class="na">让位置与光标位置一致</span>
-             <span class="na">style</span><span class="o">=</span><span class="p">{{</span> <span class="nx">top</span>: <span class="kt">top</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">top</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">,</span>
-                 <span class="nx">left</span>: <span class="kt">left</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">left</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">,</span> <span class="p">}}</span>
-            <span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-                    <span class="nx">Rows</span><span class="o">:</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">row</span><span class="p">}</span> <span class="na">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span><span class="o">=&gt;</span><span class="nx">setRow</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}/&gt;</span>
-                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-                    <span class="nx">Cols</span><span class="o">:</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">col</span><span class="p">}</span> <span class="na">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span><span class="o">=&gt;</span><span class="nx">setCol</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}</span> <span class="p">/&gt;</span>
-                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-                    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{()</span><span class="o">=&gt;</span><span class="p">{</span><span class="nx">insertContent</span><span class="p">(</span><span class="nx">createTable</span><span class="p">(</span><span class="nb">Number</span><span class="p">(</span><span class="nx">row</span><span class="p">),</span><span class="nb">Number</span><span class="p">(</span><span class="nx">col</span><span class="p">)))}}&gt;</span><span class="nx">Insert</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">);</span>
-<span class="p">});</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">Table</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(({},</span> <span class="nx">ref</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">row</span><span class="p">,</span> <span class="nx">setRow</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="s2">&#34;3&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">col</span><span class="p">,</span> <span class="nx">setCol</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="s2">&#34;4&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">left</span><span class="p">,</span> <span class="nx">setLeft</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">top</span><span class="p">,</span> <span class="nx">setTop</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">rect</span><span class="p">,</span> <span class="nx">setReact</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">({</span><span class="nx">top</span>:<span class="kt">0</span><span class="p">,</span><span class="nx">left</span>:<span class="kt">0</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">useEffect</span><span class="p">(</span> <span class="p">()</span><span class="o">=&gt;</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 获取当前光标的位置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">getEditingCursorPosition</span><span class="p">().</span><span class="nx">then</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// @ts-ignore
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="p">,</span> <span class="nx">top</span><span class="p">,</span> <span class="nx">rect</span><span class="p">}</span> <span class="o">=</span> <span class="nx">res</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">setLeft</span><span class="p">(</span><span class="nx">left</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">setTop</span><span class="p">(</span><span class="nx">top</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">setReact</span><span class="p">(</span><span class="nx">rect</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},[])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span>
+</span></span><span class="line"><span class="cl">            <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">ref</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="na">className</span><span class="o">=</span><span class="s">&#34;table-root&#34;</span>
+</span></span><span class="line"><span class="cl">              <span class="err">//</span> <span class="na">动态修改css</span><span class="err">，</span><span class="na">让位置与光标位置一致</span>
+</span></span><span class="line"><span class="cl">             <span class="na">style</span><span class="o">=</span><span class="p">{{</span> <span class="nx">top</span>: <span class="kt">top</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">top</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                 <span class="nx">left</span>: <span class="kt">left</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">left</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">,</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">Rows</span><span class="o">:</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">row</span><span class="p">}</span> <span class="na">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span><span class="o">=&gt;</span><span class="nx">setRow</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}/&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">Cols</span><span class="o">:</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">col</span><span class="p">}</span> <span class="na">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span><span class="o">=&gt;</span><span class="nx">setCol</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{()</span><span class="o">=&gt;</span><span class="p">{</span><span class="nx">insertContent</span><span class="p">(</span><span class="nx">createTable</span><span class="p">(</span><span class="nb">Number</span><span class="p">(</span><span class="nx">row</span><span class="p">),</span><span class="nb">Number</span><span class="p">(</span><span class="nx">col</span><span class="p">)))}}&gt;</span><span class="nx">Insert</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>效果不错!</p>
 <p><img src="/../.gitbook/assets/21.gif"
@@ -506,18 +678,18 @@ if (!doNotTrack) {
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html">            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;row&#34;</span><span class="p">&gt;</span>
-                    Rows: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="s">{row}</span> <span class="na">onChange</span><span class="o">=</span><span class="s">{(e)=</span><span class="p">&gt;</span>setRow(e.target.value)}/&gt;
-                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;col&#34;</span><span class="p">&gt;</span>
-                    Cols: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="s">{col}</span> <span class="na">onChange</span><span class="o">=</span><span class="s">{(e)=</span><span class="p">&gt;</span>setCol(e.target.value)} /&gt;
-                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-                    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;button&#34;</span> <span class="na">onClick</span><span class="o">=</span><span class="s">{()=</span><span class="p">&gt;</span>{insertContent(createTable(Number(row),Number(col)))}}&gt;Insert<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;row&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                    Rows: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="s">{row}</span> <span class="na">onChange</span><span class="o">=</span><span class="s">{(e)=</span><span class="p">&gt;</span>setRow(e.target.value)}/&gt;
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;col&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                    Cols: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="s">{col}</span> <span class="na">onChange</span><span class="o">=</span><span class="s">{(e)=</span><span class="p">&gt;</span>setCol(e.target.value)} /&gt;
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;button&#34;</span> <span class="na">onClick</span><span class="o">=</span><span class="s">{()=</span><span class="p">&gt;</span>{insertContent(createTable(Number(row),Number(col)))}}&gt;Insert<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -554,38 +726,38 @@ if (!doNotTrack) {
 </span><span class="lnt">31
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="p">.</span><span class="nc">table-root</span> <span class="p">{</span>
-    <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
-    <span class="k">background-color</span><span class="p">:</span> <span class="mh">#e5e7eb</span><span class="p">;</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
-    <span class="k">width</span><span class="p">:</span> <span class="mi">250</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">height</span><span class="p">:</span> <span class="mi">150</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">border-radius</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
-
-<span class="p">}</span>
-
-<span class="p">.</span><span class="nc">center</span><span class="p">{</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
-    <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
-    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="p">.</span><span class="nc">button</span><span class="p">{</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
-    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
-    <span class="k">border-radius</span><span class="p">:</span> <span class="mi">5</span><span class="kt">%</span><span class="p">;</span>
-    <span class="k">background-color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
-    <span class="k">padding</span><span class="p">:</span> <span class="mi">2</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="p">.</span><span class="nc">row</span><span class="p">{</span>
-    <span class="k">padding</span><span class="p">:</span> <span class="mi">2</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="p">.</span><span class="nc">col</span><span class="p">{</span>
-    <span class="k">padding</span><span class="p">:</span> <span class="mi">3</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">table-root</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background-color</span><span class="p">:</span> <span class="mh">#e5e7eb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">width</span><span class="p">:</span> <span class="mi">250</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">height</span><span class="p">:</span> <span class="mi">150</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">border-radius</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">center</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">button</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">border-radius</span><span class="p">:</span> <span class="mi">5</span><span class="kt">%</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background-color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">padding</span><span class="p">:</span> <span class="mi">2</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">row</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">padding</span><span class="p">:</span> <span class="mi">2</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">col</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">padding</span><span class="p">:</span> <span class="mi">3</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/../.gitbook/assets/22.png"
 	
@@ -611,13 +783,13 @@ if (!doNotTrack) {
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript">  <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;keydown&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">===</span> <span class="mi">27</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">logseq</span><span class="p">.</span><span class="nx">hideMainUI</span><span class="p">({</span> <span class="nx">restoreEditingCursor</span>: <span class="kt">true</span> <span class="p">})</span>
-    <span class="p">}</span>
-    <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()</span>
-  <span class="p">},</span> <span class="kc">false</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl">  <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;keydown&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">===</span> <span class="mi">27</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">logseq</span><span class="p">.</span><span class="nx">hideMainUI</span><span class="p">({</span> <span class="nx">restoreEditingCursor</span>: <span class="kt">true</span> <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span> <span class="kc">false</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/../.gitbook/assets/23.gif"
 	
@@ -648,19 +820,19 @@ if (!doNotTrack) {
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript">  <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;keydown&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">===</span> <span class="mi">27</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">logseq</span><span class="p">.</span><span class="nx">hideMainUI</span><span class="p">({</span> <span class="nx">restoreEditingCursor</span>: <span class="kt">true</span> <span class="p">})</span>
-    <span class="p">}</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">===</span> <span class="mi">13</span><span class="p">)</span> <span class="p">{</span>
-      <span class="c1">// @ts-ignore
-</span><span class="c1"></span>      <span class="nx">logseq</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;table_enter_down&#39;</span><span class="p">,</span> <span class="nx">e</span><span class="p">)</span>
-    <span class="p">}</span>
-
-    <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()</span>
-  <span class="p">},</span> <span class="kc">false</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl">  <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;keydown&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">===</span> <span class="mi">27</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">logseq</span><span class="p">.</span><span class="nx">hideMainUI</span><span class="p">({</span> <span class="nx">restoreEditingCursor</span>: <span class="kt">true</span> <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">===</span> <span class="mi">13</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// @ts-ignore
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">logseq</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;table_enter_down&#39;</span><span class="p">,</span> <span class="nx">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span> <span class="kc">false</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>监听<code>Enter</code>事件。这里用到了<code>logseq</code>的<code>event</code>机制。通过<code>logseq.emit</code>提交事件。</p>
 <p>在<code>table.tsx</code>组件里监听<code>logseq</code>其它地方发来的可能的监听事件。</p>
@@ -678,16 +850,16 @@ if (!doNotTrack) {
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript">    <span class="nx">useEffect</span><span class="p">(()</span><span class="o">=&gt;</span><span class="p">{</span>
-        <span class="c1">// @ts-ignore
-</span><span class="c1"></span>        <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&#34;table_enter_down&#34;</span><span class="p">);</span>
-
-        <span class="c1">// @ts-ignore
-</span><span class="c1"></span>        <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">once</span><span class="p">(</span><span class="s2">&#34;table_enter_down&#34;</span><span class="p">,</span> <span class="p">()</span><span class="o">=&gt;</span><span class="p">{</span>
-            <span class="nx">insertContent</span><span class="p">(</span><span class="nx">createTable</span><span class="p">(</span><span class="nb">Number</span><span class="p">(</span><span class="nx">row</span><span class="p">),</span><span class="nb">Number</span><span class="p">(</span><span class="nx">col</span><span class="p">)));</span>
-        <span class="p">})</span>
-    <span class="p">},[</span><span class="nx">row</span><span class="p">,</span> <span class="nx">col</span><span class="p">])</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl">    <span class="nx">useEffect</span><span class="p">(()</span><span class="o">=&gt;</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// @ts-ignore
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&#34;table_enter_down&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// @ts-ignore
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">once</span><span class="p">(</span><span class="s2">&#34;table_enter_down&#34;</span><span class="p">,</span> <span class="p">()</span><span class="o">=&gt;</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">insertContent</span><span class="p">(</span><span class="nx">createTable</span><span class="p">(</span><span class="nb">Number</span><span class="p">(</span><span class="nx">row</span><span class="p">),</span><span class="nb">Number</span><span class="p">(</span><span class="nx">col</span><span class="p">)));</span>
+</span></span><span class="line"><span class="cl">        <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},[</span><span class="nx">row</span><span class="p">,</span> <span class="nx">col</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/../.gitbook/assets/24.gif"
 	
@@ -725,24 +897,24 @@ if (!doNotTrack) {
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kd">function</span> <span class="nx">useIconPosition() {</span>
-  <span class="kr">const</span> <span class="nx">windowSize</span> <span class="o">=</span> <span class="nx">useWindowSize</span><span class="p">();</span>
-  <span class="k">return</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useMemo</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">right</span> <span class="o">=</span> <span class="nx">windowSize</span><span class="p">.</span><span class="nx">width</span> <span class="o">-</span> <span class="mi">10</span><span class="p">;</span>
-    <span class="kd">let</span> <span class="nx">bottom</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">top</span><span class="o">?</span><span class="p">.</span><span class="nb">document</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kr">const</span> <span class="nx">iconRect</span> <span class="o">=</span> <span class="nx">top</span><span class="o">?</span><span class="p">.</span><span class="nb">document</span>
-        <span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="sb">`.</span><span class="si">${</span><span class="nx">triggerIconName</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
-        <span class="o">?</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-      <span class="k">if</span> <span class="p">(</span><span class="nx">iconRect</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">right</span> <span class="o">=</span> <span class="nx">iconRect</span><span class="p">.</span><span class="nx">right</span><span class="p">;</span>
-        <span class="nx">bottom</span> <span class="o">=</span> <span class="nx">iconRect</span><span class="p">.</span><span class="nx">bottom</span><span class="p">;</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="p">{</span> <span class="nx">right</span><span class="p">,</span> <span class="nx">bottom</span> <span class="p">};</span>
-  <span class="p">},</span> <span class="p">[</span><span class="nx">windowSize</span><span class="p">]);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">useIconPosition() {</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">windowSize</span> <span class="o">=</span> <span class="nx">useWindowSize</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useMemo</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">right</span> <span class="o">=</span> <span class="nx">windowSize</span><span class="p">.</span><span class="nx">width</span> <span class="o">-</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">bottom</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">top</span><span class="o">?</span><span class="p">.</span><span class="nb">document</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">iconRect</span> <span class="o">=</span> <span class="nx">top</span><span class="o">?</span><span class="p">.</span><span class="nb">document</span>
+</span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="sb">`.</span><span class="si">${</span><span class="nx">triggerIconName</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">?</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">iconRect</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">right</span> <span class="o">=</span> <span class="nx">iconRect</span><span class="p">.</span><span class="nx">right</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">bottom</span> <span class="o">=</span> <span class="nx">iconRect</span><span class="p">.</span><span class="nx">bottom</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span> <span class="nx">right</span><span class="p">,</span> <span class="nx">bottom</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span> <span class="p">[</span><span class="nx">windowSize</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>useWindowSize</code>是<code>react-use</code>提供的<code>hook</code>，为我们提供当前窗口的大小。</p>
 <p>这里获得right、bottom的意义不必多说。</p>
@@ -759,16 +931,16 @@ if (!doNotTrack) {
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">if (top?.document) {
-      const iconRect = top?.document
-        .querySelector(`.${triggerIconName}`)
-        ?.getBoundingClientRect();
-      if (iconRect) {
-        right = iconRect.right;
-        bottom = iconRect.bottom;
-      }
-    }
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">if (top?.document) {
+</span></span><span class="line"><span class="cl">      const iconRect = top?.document
+</span></span><span class="line"><span class="cl">        .querySelector(`.${triggerIconName}`)
+</span></span><span class="line"><span class="cl">        ?.getBoundingClientRect();
+</span></span><span class="line"><span class="cl">      if (iconRect) {
+</span></span><span class="line"><span class="cl">        right = iconRect.right;
+</span></span><span class="line"><span class="cl">        bottom = iconRect.bottom;
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这段代码的意义是</p>
 <p>未完待续</p>
@@ -795,25 +967,25 @@ if (!doNotTrack) {
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">registerSlashCommand</span><span class="p">(</span>
-    <span class="s1">&#39;😀 Emoji picker&#39;</span><span class="p">,</span> <span class="kr">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="kr">const</span> <span class="p">{</span>
-        <span class="nx">left</span><span class="p">,</span>
-        <span class="nx">top</span><span class="p">,</span>
-        <span class="nx">rect</span><span class="p">,</span>
-      <span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">getEditingCursorPosition</span><span class="p">()</span>
-      <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">emojiPickerEl</span><span class="p">.</span><span class="nx">style</span><span class="p">,</span> <span class="p">{</span>
-        <span class="nx">top</span>: <span class="kt">top</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">top</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">,</span>
-        <span class="nx">left</span>: <span class="kt">left</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">left</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">,</span>
-      <span class="p">})</span>
-      <span class="nx">logseq</span><span class="p">.</span><span class="nx">showMainUI</span><span class="p">()</span>
-
-      <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="nx">makePicker</span><span class="p">().</span><span class="nx">showPicker</span><span class="p">(</span><span class="nx">emojiPickerEl</span><span class="p">)</span>
-      <span class="p">},</span> <span class="mi">100</span><span class="p">)</span>
-    <span class="p">},</span>
-  <span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">registerSlashCommand</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;😀 Emoji picker&#39;</span><span class="p">,</span> <span class="kr">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">left</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">top</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">rect</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">getEditingCursorPosition</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">      <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">emojiPickerEl</span><span class="p">.</span><span class="nx">style</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">top</span>: <span class="kt">top</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">top</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">left</span>: <span class="kt">left</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">left</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="p">})</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">logseq</span><span class="p">.</span><span class="nx">showMainUI</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">makePicker</span><span class="p">().</span><span class="nx">showPicker</span><span class="p">(</span><span class="nx">emojiPickerEl</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span> <span class="mi">100</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>logseq.Editor.getEditingCursorPosition</code>获取当前光标所在位置的api。</p>
 <p>返回值示例：</p>
@@ -836,22 +1008,22 @@ if (!doNotTrack) {
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
-    <span class="err">left:</span> <span class="err">0,</span>
-    <span class="err">pos:</span> <span class="err">0,</span>
-    <span class="err">rect:</span> <span class="err">{</span>
-        <span class="err">bottom:</span> <span class="err">211,</span>
-        <span class="err">height:</span> <span class="err">25,</span>
-        <span class="err">left:</span> <span class="err">88,</span>
-        <span class="err">right:</span> <span class="err">747,</span>
-        <span class="err">top:</span> <span class="err">186,</span>
-        <span class="err">width:</span> <span class="err">659,</span>
-        <span class="err">x:</span> <span class="err">88,</span>
-        <span class="err">y:</span> <span class="err">186</span>
-    <span class="p">}</span><span class="err">,</span>
-    <span class="err">top:</span> <span class="mi">1</span>
-<span class="err">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">left:</span> <span class="err">0,</span>
+</span></span><span class="line"><span class="cl">    <span class="err">pos:</span> <span class="err">0,</span>
+</span></span><span class="line"><span class="cl">    <span class="err">rect:</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">        <span class="err">bottom:</span> <span class="err">211,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">height:</span> <span class="err">25,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">left:</span> <span class="err">88,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">right:</span> <span class="err">747,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">top:</span> <span class="err">186,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">width:</span> <span class="err">659,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">x:</span> <span class="err">88,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">y:</span> <span class="err">186</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="err">,</span>
+</span></span><span class="line"><span class="cl">    <span class="err">top:</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>与我们窗口有关的属性在<code>rect</code>之中。</p>
 <p>未完待续</p>
@@ -882,35 +1054,13 @@ if (!doNotTrack) {
 
     
 
-    <aside class="related-contents--wrapper">
     
-    
-</aside>
 
      
     
         
     <div class="disqus-container">
-    <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
     
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 </div>
 
 <style>
@@ -945,7 +1095,7 @@ if (!doNotTrack) {
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.8.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 
@@ -1029,11 +1179,13 @@ if (!doNotTrack) {
             >
 
             </main>
-    
-        <aside class="sidebar right-sidebar sticky">
-            <section class="widget archives">
-                <div class="widget-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <line x1="5" y1="9" x2="19" y2="9" />
   <line x1="5" y1="15" x2="19" y2="15" />
@@ -1043,11 +1195,11 @@ if (!doNotTrack) {
 
 
 
-                </div>
-                <h2 class="widget-title section-title">目录</h2>
-                
-                <div class="widget--toc">
-                    <nav id="TableOfContents">
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
   <ol>
     <li><a href="#前言">前言</a></li>
     <li><a href="#搭建">搭建</a></li>
@@ -1066,10 +1218,13 @@ if (!doNotTrack) {
     </li>
   </ol>
 </nav>
-                </div>
-            </section>
-        </aside>
-    
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
         </div>
         <script 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='制作一个toolbar仪表盘 前言 本文为本人发布gitbook的书籍，但是因为gitbook一直没有被谷歌索引，我也没有办法提交给谷歌(无法证明所有权)。无奈只能把该本的章节逐步搬运过来，提高SEO。希望那些想学习logseq plugins 开发的同学们能直接通过搜索引擎看到此书。
 原书本章地址：https://correctroad.gitbook.io/logseq-plugins-in-action/chapter-1/make-a-toolbar-dashboard
@@ -11,7 +11,7 @@ pnpm install安装依赖
 
 <link rel='canonical' href='https://correctroadh.github.io/p/logseq-plugins-%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%973.%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAtoolbar%E4%BB%AA%E8%A1%A8%E7%9B%98/'>
 
-<link rel="stylesheet" href="/scss/style.min.b949db8bead9abdc40291b93383b8da6abc3aa62e74f5580356c06ddbb792dab.css"><meta property='og:title' content='Logseq Plugins 开发实战系列：3.制作一个toolbar仪表盘'>
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Logseq Plugins 开发实战系列：3.制作一个toolbar仪表盘'>
 <meta property='og:description' content='制作一个toolbar仪表盘 前言 本文为本人发布gitbook的书籍，但是因为gitbook一直没有被谷歌索引，我也没有办法提交给谷歌(无法证明所有权)。无奈只能把该本的章节逐步搬运过来，提高SEO。希望那些想学习logseq plugins 开发的同学们能直接通过搜索引擎看到此书。
 原书本章地址：https://correctroad.gitbook.io/logseq-plugins-in-action/chapter-1/make-a-toolbar-dashboard
 环境搭建 我们使用logseq-plugin-template-react为项目基础。
@@ -43,8 +43,8 @@ if (!doNotTrack) {
 
     </head>
     <body class="
-    article-page has-toc
-">
+    article-page
+    ">
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
@@ -67,25 +67,193 @@ if (!doNotTrack) {
         }
     })();
 </script>
-<div class="container main-container flex 
-    
-        extended
-    
-">
-    
-        <div id="article-toolbar">
-            <a href="/" class="back-home">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="15 6 9 12 15 18" />
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu54efa2901cde7b2b25a636d0b50ccbf1_35844_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">CorrectRoad&#39;s Blog</a></h1>
+            <h2 class="site-description">君子生非异也，善假于物也。</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CorrectRoadH'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
 </svg>
 
 
 
-                <span>返回</span>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' target="_blank">
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
             </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
         </div>
-    
+    </ol>
+</aside>
 <main class="main full-width">
     <article class="main-article">
     <header class="article-header">
@@ -93,11 +261,13 @@ if (!doNotTrack) {
     <div class="article-details">
     
 
-    <h2 class="article-title">
-        <a href="/p/logseq-plugins-%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%973.%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAtoolbar%E4%BB%AA%E8%A1%A8%E7%9B%98/">Logseq Plugins 开发实战系列：3.制作一个toolbar仪表盘</a>
-    </h2>
-
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/logseq-plugins-%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%973.%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAtoolbar%E4%BB%AA%E8%A1%A8%E7%9B%98/">Logseq Plugins 开发实战系列：3.制作一个toolbar仪表盘</a>
+        </h2>
     
+        
+    </div>
 
     
     <footer class="article-time">
@@ -132,6 +302,8 @@ if (!doNotTrack) {
             </div>
         
     </footer>
+    
+
     
 </div>
 </header>
@@ -172,25 +344,25 @@ if (!doNotTrack) {
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">➜  logseq-plugin-template-react git:(master) tree -L 2
-.
-├── CHANGELOG.md
-├── index.html
-├── logo.svg
-├── package.json
-├── pnpm-lock.yaml
-├── readme.md
-├── release.config.js
-├── renovate.json
-├── src
-│   ├── App.tsx # 页面代码写这，但是组件一般新建tsx。
-│   ├── main.tsx # toolbar代码写这
-│   └── utils.ts
-├── tsconfig.json
-└── vite.config.ts
-
-1 directory, 13 files
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">➜  logseq-plugin-template-react git:(master) tree -L 2
+</span></span><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── CHANGELOG.md
+</span></span><span class="line"><span class="cl">├── index.html
+</span></span><span class="line"><span class="cl">├── logo.svg
+</span></span><span class="line"><span class="cl">├── package.json
+</span></span><span class="line"><span class="cl">├── pnpm-lock.yaml
+</span></span><span class="line"><span class="cl">├── readme.md
+</span></span><span class="line"><span class="cl">├── release.config.js
+</span></span><span class="line"><span class="cl">├── renovate.json
+</span></span><span class="line"><span class="cl">├── src
+</span></span><span class="line"><span class="cl">│   ├── App.tsx # 页面代码写这，但是组件一般新建tsx。
+</span></span><span class="line"><span class="cl">│   ├── main.tsx # toolbar代码写这
+</span></span><span class="line"><span class="cl">│   └── utils.ts
+</span></span><span class="line"><span class="cl">├── tsconfig.json
+</span></span><span class="line"><span class="cl">└── vite.config.ts
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1 directory, 13 files
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="注册toolbar">注册toolbar</h2>
 <p>在 <code>main.tsx</code> 删掉原本的<code>logseq.provideUI</code>和<code>logseq.provideStyle</code>。</p>
@@ -221,30 +393,30 @@ if (!doNotTrack) {
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="nx">logseq</span><span class="p">.</span><span class="nx">provideStyle</span><span class="p">(</span><span class="nx">css</span><span class="sb">`
-</span><span class="sb">    div[data-injected-ui=</span><span class="si">${</span><span class="nx">openIconName</span><span class="si">}</span><span class="sb">-</span><span class="si">${</span><span class="nx">pluginId</span><span class="si">}</span><span class="sb">] {
-</span><span class="sb">      display: inline-flex;
-</span><span class="sb">      align-items: center;
-</span><span class="sb">      opacity: 0.55;
-</span><span class="sb">      font-weight: 500;
-</span><span class="sb">      padding: 0 5px;
-</span><span class="sb">      position: relative;
-</span><span class="sb">    }
-</span><span class="sb">
-</span><span class="sb">    div[data-injected-ui=</span><span class="si">${</span><span class="nx">openIconName</span><span class="si">}</span><span class="sb">-</span><span class="si">${</span><span class="nx">pluginId</span><span class="si">}</span><span class="sb">]:hover {
-</span><span class="sb">      opacity: 0.9;
-</span><span class="sb">    }
-</span><span class="sb">  `</span><span class="p">);</span>
-
-  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
-    <span class="nx">key</span>: <span class="kt">openIconName</span><span class="p">,</span>
-    <span class="nx">path</span><span class="o">:</span> <span class="s2">&#34;#search&#34;</span><span class="p">,</span>
-    <span class="nx">template</span><span class="o">:</span> <span class="sb">`
-</span><span class="sb">      &lt;a data-on-click=&#34;show&#34;
-</span><span class="sb">         style=&#34;opacity: .6; display: inline-flex;&#34;&gt;⚙️&lt;/a&gt;
-</span><span class="sb">    `</span><span class="p">,</span>
-  <span class="p">})</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="nx">logseq</span><span class="p">.</span><span class="nx">provideStyle</span><span class="p">(</span><span class="nx">css</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">    div[data-injected-ui=</span><span class="si">${</span><span class="nx">openIconName</span><span class="si">}</span><span class="sb">-</span><span class="si">${</span><span class="nx">pluginId</span><span class="si">}</span><span class="sb">] {
+</span></span></span><span class="line"><span class="cl"><span class="sb">      display: inline-flex;
+</span></span></span><span class="line"><span class="cl"><span class="sb">      align-items: center;
+</span></span></span><span class="line"><span class="cl"><span class="sb">      opacity: 0.55;
+</span></span></span><span class="line"><span class="cl"><span class="sb">      font-weight: 500;
+</span></span></span><span class="line"><span class="cl"><span class="sb">      padding: 0 5px;
+</span></span></span><span class="line"><span class="cl"><span class="sb">      position: relative;
+</span></span></span><span class="line"><span class="cl"><span class="sb">    }
+</span></span></span><span class="line"><span class="cl"><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">    div[data-injected-ui=</span><span class="si">${</span><span class="nx">openIconName</span><span class="si">}</span><span class="sb">-</span><span class="si">${</span><span class="nx">pluginId</span><span class="si">}</span><span class="sb">]:hover {
+</span></span></span><span class="line"><span class="cl"><span class="sb">      opacity: 0.9;
+</span></span></span><span class="line"><span class="cl"><span class="sb">    }
+</span></span></span><span class="line"><span class="cl"><span class="sb">  `</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">key</span>: <span class="kt">openIconName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">path</span><span class="o">:</span> <span class="s2">&#34;#search&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;a data-on-click=&#34;show&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sb">         style=&#34;opacity: .6; display: inline-flex;&#34;&gt;⚙️&lt;/a&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">    `</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>替换成：</p>
 <div class="highlight"><div class="chroma">
@@ -270,26 +442,26 @@ if (!doNotTrack) {
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideStyle</span><span class="p">(</span><span class="nx">css</span><span class="sb">`
-</span><span class="sb">    .</span><span class="si">${</span><span class="nx">openIconName</span><span class="si">}</span><span class="sb"> {
-</span><span class="sb">      width: 18px;
-</span><span class="sb">      height: 18px;
-</span><span class="sb">      margin: 2px 0.4em 0 0.4em;
-</span><span class="sb">      background-color: blue;
-</span><span class="sb">      border-radius: 4px;
-</span><span class="sb">      border: 1px solid #eee;
-</span><span class="sb">    }
-</span><span class="sb">  `</span><span class="p">);</span>
-
-  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">registerUIItem</span><span class="p">(</span><span class="s2">&#34;toolbar&#34;</span><span class="p">,</span> <span class="p">{</span>
-    <span class="nx">key</span><span class="o">:</span> <span class="s2">&#34;show-plugin-open&#34;</span><span class="p">,</span>
-    <span class="nx">template</span><span class="o">:</span> <span class="sb">`
-</span><span class="sb">    &lt;a data-on-click=&#34;show&#34;&gt;
-</span><span class="sb">      &lt;div class=&#34;</span><span class="si">${</span><span class="nx">openIconName</span><span class="si">}</span><span class="sb">&#34;&gt;&lt;/div&gt;
-</span><span class="sb">    &lt;/a&gt;
-</span><span class="sb">  `</span><span class="p">,</span>
-  <span class="p">});</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideStyle</span><span class="p">(</span><span class="nx">css</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">    .</span><span class="si">${</span><span class="nx">openIconName</span><span class="si">}</span><span class="sb"> {
+</span></span></span><span class="line"><span class="cl"><span class="sb">      width: 18px;
+</span></span></span><span class="line"><span class="cl"><span class="sb">      height: 18px;
+</span></span></span><span class="line"><span class="cl"><span class="sb">      margin: 2px 0.4em 0 0.4em;
+</span></span></span><span class="line"><span class="cl"><span class="sb">      background-color: blue;
+</span></span></span><span class="line"><span class="cl"><span class="sb">      border-radius: 4px;
+</span></span></span><span class="line"><span class="cl"><span class="sb">      border: 1px solid #eee;
+</span></span></span><span class="line"><span class="cl"><span class="sb">    }
+</span></span></span><span class="line"><span class="cl"><span class="sb">  `</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">registerUIItem</span><span class="p">(</span><span class="s2">&#34;toolbar&#34;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">key</span><span class="o">:</span> <span class="s2">&#34;show-plugin-open&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">    &lt;a data-on-click=&#34;show&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;div class=&#34;</span><span class="si">${</span><span class="nx">openIconName</span><span class="si">}</span><span class="sb">&#34;&gt;&lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">    &lt;/a&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">  `</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>logseq.App.registerUIItem</code>让我们向<code>toolbar</code>注册组件。</p>
 <p>代码部分来源于<code>logseq-plugin-heatmap</code>项目。</p>
@@ -341,20 +513,20 @@ if (!doNotTrack) {
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="nx">React</span> <span class="kr">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="s2">&#34;./dashboard.css&#34;</span>
-
-<span class="c1">// eslint-disable-next-line react/display-name
-</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">Dashboard</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(({},</span> <span class="nx">ref</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="k">return</span><span class="p">(</span>
-        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;dashboard-root&#34;</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">logseq</span> <span class="nx">borad</span><span class="o">!!!</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">);</span>
-<span class="p">});</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">React</span> <span class="kr">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="s2">&#34;./dashboard.css&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// eslint-disable-next-line react/display-name
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">Dashboard</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(({},</span> <span class="nx">ref</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;dashboard-root&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">logseq</span> <span class="nx">borad</span><span class="o">!!!</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>dashborad.css</code></p>
 <div class="highlight"><div class="chroma">
@@ -373,19 +545,19 @@ if (!doNotTrack) {
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="p">.</span><span class="nc">dashboard-root</span> <span class="p">{</span>
-    <span class="k">height</span><span class="p">:</span> <span class="mi">8</span><span class="kt">vh</span><span class="p">;</span>
-    <span class="k">width</span><span class="p">:</span> <span class="mi">16</span><span class="kt">vh</span><span class="p">;</span>
-    <span class="k">border-radius</span><span class="p">:</span> <span class="mi">5</span><span class="kt">%</span><span class="p">;</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
-    <span class="k">background-color</span><span class="p">:</span> <span class="mh">#e5e7eb</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="p">.</span><span class="nc">center</span><span class="p">{</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
-    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">dashboard-root</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">height</span><span class="p">:</span> <span class="mi">8</span><span class="kt">vh</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">width</span><span class="p">:</span> <span class="mi">16</span><span class="kt">vh</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">border-radius</span><span class="p">:</span> <span class="mi">5</span><span class="kt">%</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background-color</span><span class="p">:</span> <span class="mh">#e5e7eb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">center</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>修改<code>App.tsx</code></p>
 <div class="highlight"><div class="chroma">
@@ -417,32 +589,32 @@ if (!doNotTrack) {
 </span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">useRef</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">useAppVisible</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;./utils&#34;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Dashboard</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;./dashboard&#34;</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nx">App() {</span>
-  <span class="kr">const</span> <span class="nx">innerRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(</span><span class="kc">null</span><span class="p">);</span>
-  <span class="kr">const</span> <span class="nx">visible</span> <span class="o">=</span> <span class="nx">useAppVisible</span><span class="p">();</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">visible</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="p">(</span>
-      <span class="p">&lt;</span><span class="nt">main</span>
-        <span class="na">className</span><span class="o">=</span><span class="s">&#34;fixed inset-0 flex items-center justify-center&#34;</span>
-        <span class="na">onClick</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-          <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">innerRef</span><span class="p">.</span><span class="nx">current</span><span class="o">?</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span> <span class="kr">as</span> <span class="kt">any</span><span class="p">))</span> <span class="p">{</span>
-            <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">hideMainUI</span><span class="p">();</span>
-          <span class="p">}</span>
-        <span class="p">}}</span>
-      <span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">Dashboard</span> <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">innerRef</span><span class="p">}</span>  <span class="p">/&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
-    <span class="p">);</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kr">export</span> <span class="k">default</span> <span class="nx">App</span><span class="p">;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">useRef</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">useAppVisible</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;./utils&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Dashboard</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;./dashboard&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">App() {</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">innerRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(</span><span class="kc">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">visible</span> <span class="o">=</span> <span class="nx">useAppVisible</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">visible</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">main</span>
+</span></span><span class="line"><span class="cl">        <span class="na">className</span><span class="o">=</span><span class="s">&#34;fixed inset-0 flex items-center justify-center&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">onClick</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">innerRef</span><span class="p">.</span><span class="nx">current</span><span class="o">?</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span> <span class="kr">as</span> <span class="kt">any</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">hideMainUI</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">          <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">Dashboard</span> <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">innerRef</span><span class="p">}</span>  <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="nx">App</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>效果：</p>
 <p>现在点击<code>UIItem</code>时就有一个小窗口出现在<code>logseq</code>正中央(因为<code>items-center justify-center</code>)。当我们点击<code>logseq</code>任意位置，都可以关闭该窗口。</p>
@@ -481,19 +653,19 @@ if (!doNotTrack) {
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="p">.</span><span class="nc">dashboard-root</span> <span class="p">{</span>
-    <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
-    <span class="k">background-color</span><span class="p">:</span> <span class="mh">#e5e7eb</span><span class="p">;</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
-    <span class="k">width</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">height</span><span class="p">:</span> <span class="mi">80</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="p">.</span><span class="nc">center</span><span class="p">{</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
-    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">dashboard-root</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background-color</span><span class="p">:</span> <span class="mh">#e5e7eb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">width</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">height</span><span class="p">:</span> <span class="mi">80</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">center</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>修改<code>dashboard.tsx</code></p>
 <div class="highlight"><div class="chroma">
@@ -529,36 +701,36 @@ if (!doNotTrack) {
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="nx">React</span> <span class="kr">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="s2">&#34;./dashboard.css&#34;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">useWindowSize</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;react-use&#34;</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nx">useIconPosition() {</span>
-    <span class="kr">const</span> <span class="nx">windowSize</span> <span class="o">=</span> <span class="nx">useWindowSize</span><span class="p">();</span>
-    <span class="k">return</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useMemo</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="kr">const</span> <span class="nx">right</span> <span class="o">=</span> <span class="nx">windowSize</span><span class="p">.</span><span class="nx">width</span> <span class="o">-</span> <span class="mi">10</span><span class="p">;</span>
-        <span class="kr">const</span> <span class="nx">bottom</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
-        <span class="k">return</span> <span class="p">{</span> <span class="nx">right</span><span class="p">,</span> <span class="nx">bottom</span> <span class="p">};</span>
-    <span class="p">},</span> <span class="p">[</span><span class="nx">windowSize</span><span class="p">]);</span>
-<span class="p">}</span>
-
-<span class="c1">// eslint-disable-next-line react/display-name
-</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">Dashboard</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(({},</span> <span class="nx">ref</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="p">{</span> <span class="nx">bottom</span><span class="p">,</span> <span class="nx">right</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">useIconPosition</span><span class="p">();</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bottom</span><span class="p">,</span> <span class="nx">right</span><span class="p">);</span>
-    <span class="k">return</span><span class="p">(</span>
-        <span class="p">&lt;</span><span class="nt">div</span>
-            <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">ref</span><span class="p">}</span>
-            <span class="na">className</span><span class="o">=</span><span class="s">&#34;dashboard-root&#34;</span>
-             <span class="na">style</span><span class="o">=</span><span class="p">{{</span> <span class="nx">left</span>: <span class="kt">right</span> <span class="o">-</span> <span class="mi">400</span><span class="p">,</span> <span class="nx">top</span>: <span class="kt">bottom</span> <span class="o">+</span> <span class="mi">20</span> <span class="p">}}</span>
-            <span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">logseq</span> <span class="nx">borad</span><span class="o">!!!</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">);</span>
-<span class="p">});</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">React</span> <span class="kr">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="s2">&#34;./dashboard.css&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">useWindowSize</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;react-use&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">useIconPosition() {</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">windowSize</span> <span class="o">=</span> <span class="nx">useWindowSize</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useMemo</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">right</span> <span class="o">=</span> <span class="nx">windowSize</span><span class="p">.</span><span class="nx">width</span> <span class="o">-</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">bottom</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">{</span> <span class="nx">right</span><span class="p">,</span> <span class="nx">bottom</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">[</span><span class="nx">windowSize</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// eslint-disable-next-line react/display-name
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">Dashboard</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(({},</span> <span class="nx">ref</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">{</span> <span class="nx">bottom</span><span class="p">,</span> <span class="nx">right</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">useIconPosition</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bottom</span><span class="p">,</span> <span class="nx">right</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span>
+</span></span><span class="line"><span class="cl">            <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">ref</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="na">className</span><span class="o">=</span><span class="s">&#34;dashboard-root&#34;</span>
+</span></span><span class="line"><span class="cl">             <span class="na">style</span><span class="o">=</span><span class="p">{{</span> <span class="nx">left</span>: <span class="kt">right</span> <span class="o">-</span> <span class="mi">400</span><span class="p">,</span> <span class="nx">top</span>: <span class="kt">bottom</span> <span class="o">+</span> <span class="mi">20</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">logseq</span> <span class="nx">borad</span><span class="o">!!!</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>其中<code>useWindowSize</code>是用来获取<code>logseq</code>的窗口位置的。而<code>useIconPosition</code>是我从<code>logseq-plugin-heatmap</code>里扒来的。</p>
 <p><code>main.tsx</code>中<code>&lt;main&gt;</code>的<code>className</code>修改为<code>className=&quot;absolute inset-0&quot;</code></p>
@@ -600,29 +772,29 @@ if (!doNotTrack) {
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">Dashboard</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(({},</span> <span class="nx">ref</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="p">{</span> <span class="nx">bottom</span><span class="p">,</span> <span class="nx">right</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">useIconPosition</span><span class="p">();</span>
-
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">pageCount</span><span class="p">,</span> <span class="nx">setPageCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="nx">useEffect</span><span class="p">(()</span><span class="o">=&gt;</span><span class="p">{</span>
-        <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">getAllPages</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">pages</span><span class="o">=&gt;</span><span class="p">{</span>
-            <span class="nx">setPageCount</span><span class="p">(</span><span class="nx">pages</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
-        <span class="p">})</span>
-    <span class="p">},[])</span>
-
-    <span class="k">return</span><span class="p">(</span>
-        <span class="p">&lt;</span><span class="nt">div</span>
-            <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">ref</span><span class="p">}</span>
-            <span class="na">className</span><span class="o">=</span><span class="s">&#34;dashboard-root&#34;</span>
-             <span class="na">style</span><span class="o">=</span><span class="p">{{</span> <span class="nx">left</span>: <span class="kt">right</span> <span class="o">-</span> <span class="mi">400</span><span class="p">,</span> <span class="nx">top</span>: <span class="kt">bottom</span> <span class="o">+</span> <span class="mi">20</span> <span class="p">}}</span>
-            <span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span> <span class="err">一共有</span> <span class="p">{</span><span class="nx">pageCount</span><span class="p">}</span> <span class="err">个页面</span> <span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">);</span>
-<span class="p">});</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">Dashboard</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(({},</span> <span class="nx">ref</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">{</span> <span class="nx">bottom</span><span class="p">,</span> <span class="nx">right</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">useIconPosition</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">pageCount</span><span class="p">,</span> <span class="nx">setPageCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">useEffect</span><span class="p">(()</span><span class="o">=&gt;</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">window</span><span class="p">.</span><span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">getAllPages</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">pages</span><span class="o">=&gt;</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">setPageCount</span><span class="p">(</span><span class="nx">pages</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},[])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span>
+</span></span><span class="line"><span class="cl">            <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">ref</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="na">className</span><span class="o">=</span><span class="s">&#34;dashboard-root&#34;</span>
+</span></span><span class="line"><span class="cl">             <span class="na">style</span><span class="o">=</span><span class="p">{{</span> <span class="nx">left</span>: <span class="kt">right</span> <span class="o">-</span> <span class="mi">400</span><span class="p">,</span> <span class="nx">top</span>: <span class="kt">bottom</span> <span class="o">+</span> <span class="mi">20</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span> <span class="err">一共有</span> <span class="p">{</span><span class="nx">pageCount</span><span class="p">}</span> <span class="err">个页面</span> <span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>现在当我们点成<code>UIItem</code>，我们就能看到我们一共拥有多少页了。</p>
 <p><img src="/../.gitbook/assets/20.png"
@@ -660,35 +832,13 @@ if (!doNotTrack) {
 
     
 
-    <aside class="related-contents--wrapper">
     
-    
-</aside>
 
      
     
         
     <div class="disqus-container">
-    <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
     
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 </div>
 
 <style>
@@ -723,7 +873,7 @@ if (!doNotTrack) {
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.8.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 
@@ -807,11 +957,13 @@ if (!doNotTrack) {
             >
 
             </main>
-    
-        <aside class="sidebar right-sidebar sticky">
-            <section class="widget archives">
-                <div class="widget-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <line x1="5" y1="9" x2="19" y2="9" />
   <line x1="5" y1="15" x2="19" y2="15" />
@@ -821,11 +973,11 @@ if (!doNotTrack) {
 
 
 
-                </div>
-                <h2 class="widget-title section-title">目录</h2>
-                
-                <div class="widget--toc">
-                    <nav id="TableOfContents">
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
   <ol>
     <li><a href="#前言">前言</a></li>
     <li><a href="#环境搭建">环境搭建</a></li>
@@ -840,10 +992,13 @@ if (!doNotTrack) {
     </li>
   </ol>
 </nav>
-                </div>
-            </section>
-        </aside>
-    
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
         </div>
         <script 

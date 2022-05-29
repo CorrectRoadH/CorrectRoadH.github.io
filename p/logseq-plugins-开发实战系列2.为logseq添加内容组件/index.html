@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='为logseq添加内容组件 前言 本文为本人发布gitbook的书籍，但是因为gitbook一直没有被谷歌索引，我也没有办法提交给谷歌(无法证明所有权)。无奈只能把该本的章节逐步搬运过来，提高SEO。希望那些想学习logseq plugins 开发的同学们能直接通过搜索引擎看到此书。
 原书本章地址：https://correctroad.gitbook.io/logseq-plugins-in-action/
@@ -13,7 +13,7 @@
 
 <link rel='canonical' href='https://correctroadh.github.io/p/logseq-plugins-%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%972.%E4%B8%BAlogseq%E6%B7%BB%E5%8A%A0%E5%86%85%E5%AE%B9%E7%BB%84%E4%BB%B6/'>
 
-<link rel="stylesheet" href="/scss/style.min.b949db8bead9abdc40291b93383b8da6abc3aa62e74f5580356c06ddbb792dab.css"><meta property='og:title' content='Logseq Plugins 开发实战系列：2.为logseq添加内容组件'>
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Logseq Plugins 开发实战系列：2.为logseq添加内容组件'>
 <meta property='og:description' content='为logseq添加内容组件 前言 本文为本人发布gitbook的书籍，但是因为gitbook一直没有被谷歌索引，我也没有办法提交给谷歌(无法证明所有权)。无奈只能把该本的章节逐步搬运过来，提高SEO。希望那些想学习logseq plugins 开发的同学们能直接通过搜索引擎看到此书。
 原书本章地址：https://correctroad.gitbook.io/logseq-plugins-in-action/
 起步 在logseq中有一种特殊的语法{{renderer }}，我们可以通过插件实现把{{renderer }}渲染为特定的内容。
@@ -49,8 +49,8 @@ if (!doNotTrack) {
 
     </head>
     <body class="
-    article-page has-toc
-">
+    article-page
+    ">
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
@@ -73,25 +73,193 @@ if (!doNotTrack) {
         }
     })();
 </script>
-<div class="container main-container flex 
-    
-        extended
-    
-">
-    
-        <div id="article-toolbar">
-            <a href="/" class="back-home">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="15 6 9 12 15 18" />
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu54efa2901cde7b2b25a636d0b50ccbf1_35844_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">CorrectRoad&#39;s Blog</a></h1>
+            <h2 class="site-description">君子生非异也，善假于物也。</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CorrectRoadH'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
 </svg>
 
 
 
-                <span>返回</span>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' target="_blank">
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
             </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
         </div>
-    
+    </ol>
+</aside>
 <main class="main full-width">
     <article class="main-article">
     <header class="article-header">
@@ -99,11 +267,13 @@ if (!doNotTrack) {
     <div class="article-details">
     
 
-    <h2 class="article-title">
-        <a href="/p/logseq-plugins-%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%972.%E4%B8%BAlogseq%E6%B7%BB%E5%8A%A0%E5%86%85%E5%AE%B9%E7%BB%84%E4%BB%B6/">Logseq Plugins 开发实战系列：2.为logseq添加内容组件</a>
-    </h2>
-
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/logseq-plugins-%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%972.%E4%B8%BAlogseq%E6%B7%BB%E5%8A%A0%E5%86%85%E5%AE%B9%E7%BB%84%E4%BB%B6/">Logseq Plugins 开发实战系列：2.为logseq添加内容组件</a>
+        </h2>
     
+        
+    </div>
 
     
     <footer class="article-time">
@@ -138,6 +308,8 @@ if (!doNotTrack) {
             </div>
         
     </footer>
+    
+
     
 </div>
 </header>
@@ -180,19 +352,19 @@ if (!doNotTrack) {
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">onMacroRendererSlotted</span><span class="p">(({</span> <span class="nx">slot</span><span class="p">,</span> <span class="nx">payload</span><span class="p">}</span> <span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">type</span><span class="p">,</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">arguments</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">!==</span> <span class="s1">&#39;:hello&#39;</span><span class="p">)</span> <span class="k">return</span>
-    <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
-      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;h1-playground&#39;</span><span class="p">,</span>
-      <span class="nx">slot</span><span class="p">,</span> <span class="nx">template</span><span class="o">:</span> <span class="sb">`
-</span><span class="sb">      &lt;div class=&#34;hello&#34;&gt;
-</span><span class="sb">        hello! </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">
-</span><span class="sb">      &lt;/div&gt;  
-</span><span class="sb">     `</span><span class="p">,</span>
-    <span class="p">})</span>
-  <span class="p">})</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">onMacroRendererSlotted</span><span class="p">(({</span> <span class="nx">slot</span><span class="p">,</span> <span class="nx">payload</span><span class="p">}</span> <span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">type</span><span class="p">,</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">arguments</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">!==</span> <span class="s1">&#39;:hello&#39;</span><span class="p">)</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;h1-playground&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">slot</span><span class="p">,</span> <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;div class=&#34;hello&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">        hello! </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;/div&gt;  
+</span></span></span><span class="line"><span class="cl"><span class="sb">     `</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>我们在<code>{{renderer :hello,Logseq}}</code>中<code>renderer</code>后面的内容就会存在<code>payload</code>的<code>arguments</code>中。我们可以通过解构的方式去得到里面的值。</p>
 <p>修改<code>main.tsx</code></p>
@@ -220,27 +392,27 @@ if (!doNotTrack) {
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="s1">&#39;@logseq/libs&#39;</span>
-
-<span class="kr">async</span> <span class="kd">function</span> <span class="nx">main</span> <span class="p">()</span> <span class="p">{</span>
-
-  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">onMacroRendererSlotted</span><span class="p">(({</span> <span class="nx">slot</span><span class="p">,</span> <span class="nx">payload</span><span class="p">}</span> <span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">type</span><span class="p">,</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">arguments</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">!==</span> <span class="s1">&#39;:hello&#39;</span><span class="p">)</span> <span class="k">return</span>
-    <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
-      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span>
-      <span class="nx">slot</span><span class="p">,</span> <span class="nx">template</span><span class="o">:</span> <span class="sb">`
-</span><span class="sb">      &lt;div class=&#34;hello&#34; &gt;
-</span><span class="sb">        hello! </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">
-</span><span class="sb">      &lt;/div&gt;  
-</span><span class="sb">     `</span><span class="p">,</span>
-    <span class="p">})</span>
-  <span class="p">})</span>
-
-<span class="p">}</span>
-
-<span class="nx">logseq</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="nx">main</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="s1">&#39;@logseq/libs&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">async</span> <span class="kd">function</span> <span class="nx">main</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">onMacroRendererSlotted</span><span class="p">(({</span> <span class="nx">slot</span><span class="p">,</span> <span class="nx">payload</span><span class="p">}</span> <span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">type</span><span class="p">,</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">arguments</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">!==</span> <span class="s1">&#39;:hello&#39;</span><span class="p">)</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">slot</span><span class="p">,</span> <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;div class=&#34;hello&#34; &gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">        hello! </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;/div&gt;  
+</span></span></span><span class="line"><span class="cl"><span class="sb">     `</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">logseq</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="nx">main</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>npm build</code>并载入<code>logseq</code>。</p>
 <p><img src="/../.gitbook/assets/8.gif"
@@ -270,19 +442,19 @@ if (!doNotTrack) {
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">  logseq.provideStyle(`
-    .hello {
-       background-color: red;
-       border: 1px solid var(--ls-border-color); 
-       white-space: initial; 
-       padding: 2px 4px; 
-       border-radius: 4px; 
-       user-select: none;
-       cursor: default;
-       display: flex;
-       align-content: center;
-    }`)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  logseq.provideStyle(`
+</span></span><span class="line"><span class="cl">    .hello {
+</span></span><span class="line"><span class="cl">       background-color: red;
+</span></span><span class="line"><span class="cl">       border: 1px solid var(--ls-border-color); 
+</span></span><span class="line"><span class="cl">       white-space: initial; 
+</span></span><span class="line"><span class="cl">       padding: 2px 4px; 
+</span></span><span class="line"><span class="cl">       border-radius: 4px; 
+</span></span><span class="line"><span class="cl">       user-select: none;
+</span></span><span class="line"><span class="cl">       cursor: default;
+</span></span><span class="line"><span class="cl">       display: flex;
+</span></span><span class="line"><span class="cl">       align-content: center;
+</span></span><span class="line"><span class="cl">    }`)
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>ps：该css出自<code>logseq-plugin-samples</code></p>
 <p>现在我们的<code>main.tsx</code>是这样的</p>
@@ -321,38 +493,38 @@ if (!doNotTrack) {
 </span><span class="lnt">31
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="s1">&#39;@logseq/libs&#39;</span>
-
-<span class="kr">async</span> <span class="kd">function</span> <span class="nx">main</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideStyle</span><span class="p">(</span><span class="sb">`
-</span><span class="sb">    .hello {
-</span><span class="sb">       background-color: red;
-</span><span class="sb">       border: 1px solid var(--ls-border-color); 
-</span><span class="sb">       white-space: initial; 
-</span><span class="sb">       padding: 2px 4px; 
-</span><span class="sb">       border-radius: 4px; 
-</span><span class="sb">       user-select: none;
-</span><span class="sb">       cursor: default;
-</span><span class="sb">       display: flex;
-</span><span class="sb">       align-content: center;
-</span><span class="sb">    }`</span><span class="p">)</span>
-
-  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">onMacroRendererSlotted</span><span class="p">(({</span> <span class="nx">slot</span><span class="p">,</span> <span class="nx">payload</span><span class="p">}</span> <span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">type</span><span class="p">,</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">arguments</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">!==</span> <span class="s1">&#39;:hello&#39;</span><span class="p">)</span> <span class="k">return</span>
-    <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
-      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span>
-      <span class="nx">slot</span><span class="p">,</span> <span class="nx">template</span><span class="o">:</span> <span class="sb">`
-</span><span class="sb">      &lt;div class=&#34;hello&#34;&gt;
-</span><span class="sb">        hello! </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">
-</span><span class="sb">      &lt;/div&gt;  
-</span><span class="sb">     `</span><span class="p">,</span>
-    <span class="p">})</span>
-  <span class="p">})</span>
-<span class="p">}</span>
-
-<span class="nx">logseq</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="nx">main</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="s1">&#39;@logseq/libs&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">async</span> <span class="kd">function</span> <span class="nx">main</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideStyle</span><span class="p">(</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">    .hello {
+</span></span></span><span class="line"><span class="cl"><span class="sb">       background-color: red;
+</span></span></span><span class="line"><span class="cl"><span class="sb">       border: 1px solid var(--ls-border-color); 
+</span></span></span><span class="line"><span class="cl"><span class="sb">       white-space: initial; 
+</span></span></span><span class="line"><span class="cl"><span class="sb">       padding: 2px 4px; 
+</span></span></span><span class="line"><span class="cl"><span class="sb">       border-radius: 4px; 
+</span></span></span><span class="line"><span class="cl"><span class="sb">       user-select: none;
+</span></span></span><span class="line"><span class="cl"><span class="sb">       cursor: default;
+</span></span></span><span class="line"><span class="cl"><span class="sb">       display: flex;
+</span></span></span><span class="line"><span class="cl"><span class="sb">       align-content: center;
+</span></span></span><span class="line"><span class="cl"><span class="sb">    }`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">onMacroRendererSlotted</span><span class="p">(({</span> <span class="nx">slot</span><span class="p">,</span> <span class="nx">payload</span><span class="p">}</span> <span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">type</span><span class="p">,</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">arguments</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">!==</span> <span class="s1">&#39;:hello&#39;</span><span class="p">)</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">slot</span><span class="p">,</span> <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;div class=&#34;hello&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">        hello! </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;/div&gt;  
+</span></span></span><span class="line"><span class="cl"><span class="sb">     `</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">logseq</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="nx">main</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>来看看效果：</p>
 <p><img src="/../.gitbook/assets/9.png"
@@ -377,13 +549,13 @@ if (!doNotTrack) {
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideModel</span><span class="p">({</span>
-    <span class="nx">msg</span><span class="p">(</span><span class="nx">e</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kr">const</span> <span class="p">{</span><span class="nx">msg</span><span class="p">}</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">dataset</span><span class="p">;</span>
-      <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">showMsg</span><span class="p">(</span><span class="sb">`Hello! </span><span class="si">${</span><span class="nx">msg</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">})</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideModel</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">msg</span><span class="p">(</span><span class="nx">e</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="p">{</span><span class="nx">msg</span><span class="p">}</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">dataset</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">showMsg</span><span class="p">(</span><span class="sb">`Hello! </span><span class="si">${</span><span class="nx">msg</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>组件函数：</p>
 <div class="highlight"><div class="chroma">
@@ -402,19 +574,19 @@ if (!doNotTrack) {
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">onMacroRendererSlotted</span><span class="p">(({</span> <span class="nx">slot</span><span class="p">,</span> <span class="nx">payload</span><span class="p">}</span> <span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">type</span><span class="p">,</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">arguments</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">!==</span> <span class="s1">&#39;:hello&#39;</span><span class="p">)</span> <span class="k">return</span>
-    <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
-      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span>
-      <span class="nx">slot</span><span class="p">,</span> <span class="nx">template</span><span class="o">:</span> <span class="sb">`
-</span><span class="sb">      &lt;div class=&#34;hello&#34; data-msg=&#34;</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">&#34; data-on-click=&#34;msg&#34; &gt;
-</span><span class="sb">        hello! </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">
-</span><span class="sb">      &lt;/div&gt;  
-</span><span class="sb">     `</span><span class="p">,</span>
-    <span class="p">})</span>
-  <span class="p">})</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">onMacroRendererSlotted</span><span class="p">(({</span> <span class="nx">slot</span><span class="p">,</span> <span class="nx">payload</span><span class="p">}</span> <span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">type</span><span class="p">,</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">arguments</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">!==</span> <span class="s1">&#39;:hello&#39;</span><span class="p">)</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">slot</span><span class="p">,</span> <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;div class=&#34;hello&#34; data-msg=&#34;</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">&#34; data-on-click=&#34;msg&#34; &gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">        hello! </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;/div&gt;  
+</span></span></span><span class="line"><span class="cl"><span class="sb">     `</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>通过<code>data-xxx</code>我们可以向事件函数传参。</p>
 <p>效果：</p>
@@ -445,18 +617,18 @@ if (!doNotTrack) {
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideStyle</span><span class="p">(</span><span class="sb">`
-</span><span class="sb">    .hello {
-</span><span class="sb">       border: 1px solid var(--ls-border-color); 
-</span><span class="sb">       white-space: initial; 
-</span><span class="sb">       padding: 2px 4px; 
-</span><span class="sb">       border-radius: 4px; 
-</span><span class="sb">       user-select: none;
-</span><span class="sb">       cursor: default;
-</span><span class="sb">       display: flex;
-</span><span class="sb">       align-content: center;
-</span><span class="sb">    }`</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideStyle</span><span class="p">(</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">    .hello {
+</span></span></span><span class="line"><span class="cl"><span class="sb">       border: 1px solid var(--ls-border-color); 
+</span></span></span><span class="line"><span class="cl"><span class="sb">       white-space: initial; 
+</span></span></span><span class="line"><span class="cl"><span class="sb">       padding: 2px 4px; 
+</span></span></span><span class="line"><span class="cl"><span class="sb">       border-radius: 4px; 
+</span></span></span><span class="line"><span class="cl"><span class="sb">       user-select: none;
+</span></span></span><span class="line"><span class="cl"><span class="sb">       cursor: default;
+</span></span></span><span class="line"><span class="cl"><span class="sb">       display: flex;
+</span></span></span><span class="line"><span class="cl"><span class="sb">       align-content: center;
+</span></span></span><span class="line"><span class="cl"><span class="sb">    }`</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>修改组件</p>
 <div class="highlight"><div class="chroma">
@@ -479,23 +651,23 @@ if (!doNotTrack) {
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">onMacroRendererSlotted</span><span class="p">(({</span> <span class="nx">slot</span><span class="p">,</span> <span class="nx">payload</span><span class="p">}</span> <span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">type</span><span class="p">,</span><span class="nx">name</span><span class="p">,</span><span class="nx">color</span><span class="p">]</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">arguments</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">!==</span> <span class="s1">&#39;:hello&#39;</span><span class="p">)</span> <span class="k">return</span>
-    <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
-      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span>
-      <span class="nx">reset</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-      <span class="nx">slot</span><span class="p">,</span> <span class="nx">template</span><span class="o">:</span> <span class="sb">`
-</span><span class="sb">      &lt;div style=&#34;background-color: </span><span class="si">${</span> <span class="nx">color</span> <span class="si">}</span><span class="sb">&#34; class=&#34;hello&#34; 
-</span><span class="sb">      data-block-uuid=&#34;</span><span class="si">${</span><span class="nx">payload</span><span class="p">.</span><span class="nx">uuid</span><span class="si">}</span><span class="sb">&#34;
-</span><span class="sb">      data-on-click=&#34;update&#34; &gt;
-</span><span class="sb">        hello! </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">
-</span><span class="sb">      &lt;/div&gt;  
-</span><span class="sb">     `</span><span class="p">,</span>
-    <span class="p">})</span>
-  <span class="p">})</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">onMacroRendererSlotted</span><span class="p">(({</span> <span class="nx">slot</span><span class="p">,</span> <span class="nx">payload</span><span class="p">}</span> <span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">type</span><span class="p">,</span><span class="nx">name</span><span class="p">,</span><span class="nx">color</span><span class="p">]</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">arguments</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">!==</span> <span class="s1">&#39;:hello&#39;</span><span class="p">)</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">reset</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">slot</span><span class="p">,</span> <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;div style=&#34;background-color: </span><span class="si">${</span> <span class="nx">color</span> <span class="si">}</span><span class="sb">&#34; class=&#34;hello&#34; 
+</span></span></span><span class="line"><span class="cl"><span class="sb">      data-block-uuid=&#34;</span><span class="si">${</span><span class="nx">payload</span><span class="p">.</span><span class="nx">uuid</span><span class="si">}</span><span class="sb">&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sb">      data-on-click=&#34;update&#34; &gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">        hello! </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;/div&gt;  
+</span></span></span><span class="line"><span class="cl"><span class="sb">     `</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>注意</strong>：这里增加了<code>reset</code>，这个有什么用，后面会演示</p>
 <p><img src="/../.gitbook/assets/14.gif"
@@ -525,20 +697,20 @@ if (!doNotTrack) {
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideModel</span><span class="p">({</span>
-    <span class="kr">async</span> <span class="nx">update</span><span class="p">(</span><span class="nx">e</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kr">const</span> <span class="p">{</span> <span class="nx">blockUuid</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">dataset</span><span class="p">;</span>
-      <span class="kr">const</span> <span class="nx">block</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">getBlock</span><span class="p">(</span><span class="nx">blockUuid</span><span class="p">)</span>
-      <span class="kd">let</span> <span class="nx">newContent</span> <span class="o">=</span> <span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="p">;</span>
-      <span class="k">if</span><span class="p">(</span><span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="o">?</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&#34;red&#34;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">newContent</span> <span class="o">=</span> <span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="o">?</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sb">`red`</span><span class="p">,</span> <span class="sb">`green`</span><span class="p">)</span>
-      <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-        <span class="nx">newContent</span> <span class="o">=</span> <span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="o">?</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sb">`green`</span><span class="p">,</span> <span class="sb">`red`</span><span class="p">)</span>
-      <span class="p">}</span>
-      <span class="kr">await</span> <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">updateBlock</span><span class="p">(</span><span class="nx">blockUuid</span><span class="p">,</span> <span class="nx">newContent</span><span class="p">)</span>
-    <span class="p">}</span>
-  <span class="p">})</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideModel</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">async</span> <span class="nx">update</span><span class="p">(</span><span class="nx">e</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="p">{</span> <span class="nx">blockUuid</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">dataset</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">block</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">getBlock</span><span class="p">(</span><span class="nx">blockUuid</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="kd">let</span> <span class="nx">newContent</span> <span class="o">=</span> <span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span><span class="p">(</span><span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="o">?</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&#34;red&#34;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">newContent</span> <span class="o">=</span> <span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="o">?</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sb">`red`</span><span class="p">,</span> <span class="sb">`green`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">newContent</span> <span class="o">=</span> <span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="o">?</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sb">`green`</span><span class="p">,</span> <span class="sb">`red`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">await</span> <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">updateBlock</span><span class="p">(</span><span class="nx">blockUuid</span><span class="p">,</span> <span class="nx">newContent</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>我们先通过<code>logseq.Editor.getBlock</code>用传进来的<code>blockuuid</code>去得到<code>block</code>的内容。然后通过<code>logseq.Editor.updateBlock</code>去更新<code>block</code>的值。</p>
 <p>效果：</p>
@@ -611,53 +783,53 @@ if (!doNotTrack) {
 </span><span class="lnt">46
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="s1">&#39;@logseq/libs&#39;</span>
-
-<span class="kr">async</span> <span class="kd">function</span> <span class="nx">main</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideModel</span><span class="p">({</span>
-    <span class="kr">async</span> <span class="nx">update</span><span class="p">(</span><span class="nx">e</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kr">const</span> <span class="p">{</span> <span class="nx">blockUuid</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">dataset</span><span class="p">;</span>
-      <span class="kr">const</span> <span class="nx">block</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">getBlock</span><span class="p">(</span><span class="nx">blockUuid</span><span class="p">)</span>
-      <span class="kd">let</span> <span class="nx">newContent</span> <span class="o">=</span> <span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="p">;</span>
-      <span class="k">if</span><span class="p">(</span><span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="o">?</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&#34;red&#34;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">newContent</span> <span class="o">=</span> <span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="o">?</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sb">`red`</span><span class="p">,</span> <span class="sb">`green`</span><span class="p">)</span>
-      <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-        <span class="nx">newContent</span> <span class="o">=</span> <span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="o">?</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sb">`green`</span><span class="p">,</span> <span class="sb">`red`</span><span class="p">)</span>
-      <span class="p">}</span>
-      <span class="kr">await</span> <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">updateBlock</span><span class="p">(</span><span class="nx">blockUuid</span><span class="p">,</span> <span class="nx">newContent</span><span class="p">)</span>
-    <span class="p">}</span>
-  <span class="p">})</span>
-  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideStyle</span><span class="p">(</span><span class="sb">`
-</span><span class="sb">    .hello {
-</span><span class="sb">       border: 1px solid var(--ls-border-color); 
-</span><span class="sb">       white-space: initial; 
-</span><span class="sb">       padding: 2px 4px; 
-</span><span class="sb">       border-radius: 4px; 
-</span><span class="sb">       user-select: none;
-</span><span class="sb">       cursor: default;
-</span><span class="sb">       display: flex;
-</span><span class="sb">       align-content: center;
-</span><span class="sb">    }`</span><span class="p">)</span>
-
-  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">onMacroRendererSlotted</span><span class="p">(({</span> <span class="nx">slot</span><span class="p">,</span> <span class="nx">payload</span><span class="p">}</span> <span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="p">[</span><span class="nx">type</span><span class="p">,</span><span class="nx">name</span><span class="p">,</span><span class="nx">color</span><span class="p">]</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">arguments</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">!==</span> <span class="s1">&#39;:hello&#39;</span><span class="p">)</span> <span class="k">return</span>
-    <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
-      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span>
-      <span class="nx">reset</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-      <span class="nx">slot</span><span class="p">,</span> <span class="nx">template</span><span class="o">:</span> <span class="sb">`
-</span><span class="sb">      &lt;div style=&#34;background-color: </span><span class="si">${</span> <span class="nx">color</span> <span class="si">}</span><span class="sb">&#34; class=&#34;hello&#34; 
-</span><span class="sb">      data-block-uuid=&#34;</span><span class="si">${</span><span class="nx">payload</span><span class="p">.</span><span class="nx">uuid</span><span class="si">}</span><span class="sb">&#34;
-</span><span class="sb">      data-on-click=&#34;msg&#34; &gt;
-</span><span class="sb">        hello! </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">
-</span><span class="sb">      &lt;/div&gt;  
-</span><span class="sb">     `</span><span class="p">,</span>
-    <span class="p">})</span>
-  <span class="p">})</span>
-<span class="p">}</span>
-
-<span class="nx">logseq</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="nx">main</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="s1">&#39;@logseq/libs&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">async</span> <span class="kd">function</span> <span class="nx">main</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideModel</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">async</span> <span class="nx">update</span><span class="p">(</span><span class="nx">e</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="p">{</span> <span class="nx">blockUuid</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">dataset</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">block</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">getBlock</span><span class="p">(</span><span class="nx">blockUuid</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="kd">let</span> <span class="nx">newContent</span> <span class="o">=</span> <span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span><span class="p">(</span><span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="o">?</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&#34;red&#34;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">newContent</span> <span class="o">=</span> <span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="o">?</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sb">`red`</span><span class="p">,</span> <span class="sb">`green`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">newContent</span> <span class="o">=</span> <span class="nx">block</span><span class="o">?</span><span class="p">.</span><span class="nx">content</span><span class="o">?</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sb">`green`</span><span class="p">,</span> <span class="sb">`red`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">await</span> <span class="nx">logseq</span><span class="p">.</span><span class="nx">Editor</span><span class="p">.</span><span class="nx">updateBlock</span><span class="p">(</span><span class="nx">blockUuid</span><span class="p">,</span> <span class="nx">newContent</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideStyle</span><span class="p">(</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">    .hello {
+</span></span></span><span class="line"><span class="cl"><span class="sb">       border: 1px solid var(--ls-border-color); 
+</span></span></span><span class="line"><span class="cl"><span class="sb">       white-space: initial; 
+</span></span></span><span class="line"><span class="cl"><span class="sb">       padding: 2px 4px; 
+</span></span></span><span class="line"><span class="cl"><span class="sb">       border-radius: 4px; 
+</span></span></span><span class="line"><span class="cl"><span class="sb">       user-select: none;
+</span></span></span><span class="line"><span class="cl"><span class="sb">       cursor: default;
+</span></span></span><span class="line"><span class="cl"><span class="sb">       display: flex;
+</span></span></span><span class="line"><span class="cl"><span class="sb">       align-content: center;
+</span></span></span><span class="line"><span class="cl"><span class="sb">    }`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">logseq</span><span class="p">.</span><span class="nx">App</span><span class="p">.</span><span class="nx">onMacroRendererSlotted</span><span class="p">(({</span> <span class="nx">slot</span><span class="p">,</span> <span class="nx">payload</span><span class="p">}</span> <span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">[</span><span class="nx">type</span><span class="p">,</span><span class="nx">name</span><span class="p">,</span><span class="nx">color</span><span class="p">]</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">arguments</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">!==</span> <span class="s1">&#39;:hello&#39;</span><span class="p">)</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">logseq</span><span class="p">.</span><span class="nx">provideUI</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">reset</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">slot</span><span class="p">,</span> <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;div style=&#34;background-color: </span><span class="si">${</span> <span class="nx">color</span> <span class="si">}</span><span class="sb">&#34; class=&#34;hello&#34; 
+</span></span></span><span class="line"><span class="cl"><span class="sb">      data-block-uuid=&#34;</span><span class="si">${</span><span class="nx">payload</span><span class="p">.</span><span class="nx">uuid</span><span class="si">}</span><span class="sb">&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sb">      data-on-click=&#34;msg&#34; &gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">        hello! </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;/div&gt;  
+</span></span></span><span class="line"><span class="cl"><span class="sb">     `</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">logseq</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="nx">main</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="拓展">拓展</h2>
 <p>在<code>onMacroRendererSlotted</code>中常见判断组件类型有：通过<code>type.startsWith</code>判断和通过<code>type !== </code>判断。他们的区别与优劣是什么？</p>
@@ -689,35 +861,13 @@ if (!doNotTrack) {
 
     
 
-    <aside class="related-contents--wrapper">
     
-    
-</aside>
 
      
     
         
     <div class="disqus-container">
-    <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
     
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 </div>
 
 <style>
@@ -752,7 +902,7 @@ if (!doNotTrack) {
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.8.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 
@@ -836,11 +986,13 @@ if (!doNotTrack) {
             >
 
             </main>
-    
-        <aside class="sidebar right-sidebar sticky">
-            <section class="widget archives">
-                <div class="widget-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <line x1="5" y1="9" x2="19" y2="9" />
   <line x1="5" y1="15" x2="19" y2="15" />
@@ -850,11 +1002,11 @@ if (!doNotTrack) {
 
 
 
-                </div>
-                <h2 class="widget-title section-title">目录</h2>
-                
-                <div class="widget--toc">
-                    <nav id="TableOfContents">
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
   <ol>
     <li><a href="#前言">前言</a></li>
     <li><a href="#起步">起步</a></li>
@@ -870,10 +1022,13 @@ if (!doNotTrack) {
     <li><a href="#拓展">拓展</a></li>
   </ol>
 </nav>
-                </div>
-            </section>
-        </aside>
-    
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
         </div>
         <script 
