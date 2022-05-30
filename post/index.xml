@@ -438,7 +438,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;效果不错!&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/21.gif&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/21.gif&#34;
 	
 	
 	
@@ -544,7 +544,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/22.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/22.png&#34;
 	
 	
 	
@@ -576,7 +576,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/23.gif&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/23.gif&#34;
 	
 	
 	
@@ -646,7 +646,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;},[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;row&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;col&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/24.gif&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/24.gif&#34;
 	
 	
 	
@@ -975,7 +975,7 @@
 &lt;/div&gt;&lt;p&gt;&lt;code&gt;logseq.App.registerUIItem&lt;/code&gt;让我们向&lt;code&gt;toolbar&lt;/code&gt;注册组件。&lt;/p&gt;
 &lt;p&gt;代码部分来源于&lt;code&gt;logseq-plugin-heatmap&lt;/code&gt;项目。&lt;/p&gt;
 &lt;p&gt;现在我们运行&lt;code&gt;pnpm install &amp;amp;&amp;amp; pnpm run build&lt;/code&gt;。在&lt;code&gt;logseq&lt;/code&gt;中载入，就可以在&lt;code&gt;toolbar&lt;/code&gt;上看到我们的&lt;code&gt;UIItem&lt;/code&gt;了。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/15.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/15.png&#34;
 	
 	
 	
@@ -984,7 +984,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;当我们点击该蓝色图标时，就是我们的&lt;code&gt;页面&lt;/code&gt;了。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/17.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/17.png&#34;
 	
 	
 	
@@ -994,7 +994,7 @@
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;新建页面&#34;&gt;新建页面&lt;/h2&gt;
 &lt;p&gt;我们的目标是制做一个&lt;code&gt;仪表盘&lt;/code&gt;。上面显示着&lt;code&gt;logseq&lt;/code&gt;里的相关信息。在界面上参考&lt;code&gt;logseq-plugin-heatmap&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/16.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/16.png&#34;
 	
 	
 	
@@ -1127,7 +1127,7 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;效果：&lt;/p&gt;
 &lt;p&gt;现在点击&lt;code&gt;UIItem&lt;/code&gt;时就有一个小窗口出现在&lt;code&gt;logseq&lt;/code&gt;正中央(因为&lt;code&gt;items-center justify-center&lt;/code&gt;)。当我们点击&lt;code&gt;logseq&lt;/code&gt;任意位置，都可以关闭该窗口。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/18.gif&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/18.gif&#34;
 	
 	
 	
@@ -1137,7 +1137,7 @@
 &gt;&lt;/p&gt;
 &lt;h3 id=&#34;调整页面位置&#34;&gt;调整页面位置&lt;/h3&gt;
 &lt;p&gt;如果我们想像&lt;code&gt;logseq-plugin-heatmap&lt;/code&gt;一样，页面出现在toolbar正下面。我们就需要调整页面的位置。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/16.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/16.png&#34;
 	
 	
 	
@@ -1244,7 +1244,7 @@
 &lt;/div&gt;&lt;p&gt;其中&lt;code&gt;useWindowSize&lt;/code&gt;是用来获取&lt;code&gt;logseq&lt;/code&gt;的窗口位置的。而&lt;code&gt;useIconPosition&lt;/code&gt;是我从&lt;code&gt;logseq-plugin-heatmap&lt;/code&gt;里扒来的。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;main.tsx&lt;/code&gt;中&lt;code&gt;&amp;lt;main&amp;gt;&lt;/code&gt;的&lt;code&gt;className&lt;/code&gt;修改为&lt;code&gt;className=&amp;quot;absolute inset-0&amp;quot;&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;现在的效果：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/19%20%281%29.gif&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/19%20%281%29.gif&#34;
 	
 	
 	
@@ -1306,7 +1306,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;现在当我们点成&lt;code&gt;UIItem&lt;/code&gt;，我们就能看到我们一共拥有多少页了。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/20.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/20.png&#34;
 	
 	
 	
@@ -1330,7 +1330,7 @@
 &lt;h2 id=&#34;起步&#34;&gt;起步&lt;/h2&gt;
 &lt;p&gt;在&lt;code&gt;logseq&lt;/code&gt;中有一种特殊的语法&lt;code&gt;{{renderer }}&lt;/code&gt;，我们可以通过插件实现把&lt;code&gt;{{renderer }}&lt;/code&gt;渲染为特定的内容。&lt;/p&gt;
 &lt;p&gt;比如在 &lt;code&gt;logseq-plugin-link-preview&lt;/code&gt;插件中&lt;code&gt;{{renderer :linkpreview,https://google.com}}&lt;/code&gt;将会被显示为：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/7.gif&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/7.gif&#34;
 	
 	
 	
@@ -1420,7 +1420,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;&lt;code&gt;npm build&lt;/code&gt;并载入&lt;code&gt;logseq&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/8.gif&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/8.gif&#34;
 	
 	
 	
@@ -1532,7 +1532,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;来看看效果：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/9.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/9.png&#34;
 	
 	
 	
@@ -1595,7 +1595,7 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;通过&lt;code&gt;data-xxx&lt;/code&gt;我们可以向事件函数传参。&lt;/p&gt;
 &lt;p&gt;效果：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/10.gif&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/10.gif&#34;
 	
 	
 	
@@ -1675,7 +1675,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;：这里增加了&lt;code&gt;reset&lt;/code&gt;，这个有什么用，后面会演示&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/14.gif&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/14.gif&#34;
 	
 	
 	
@@ -1719,7 +1719,7 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;我们先通过&lt;code&gt;logseq.Editor.getBlock&lt;/code&gt;用传进来的&lt;code&gt;blockuuid&lt;/code&gt;去得到&lt;code&gt;block&lt;/code&gt;的内容。然后通过&lt;code&gt;logseq.Editor.updateBlock&lt;/code&gt;去更新&lt;code&gt;block&lt;/code&gt;的值。&lt;/p&gt;
 &lt;p&gt;效果：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/13.gif&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/13.gif&#34;
 	
 	
 	
@@ -1728,7 +1728,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;到了最后，我们再回来去看看之前设置的&lt;code&gt;reset&lt;/code&gt;有什么用？如何一个组件的&lt;code&gt;reset&lt;/code&gt;没有设置。那么点击的效果就会变成这样：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/.gitbook/assets/12.gif&#34;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/images/plugins/12.gif&#34;
 	
 	
 	
