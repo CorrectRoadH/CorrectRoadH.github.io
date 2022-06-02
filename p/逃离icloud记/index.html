@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='起因 在5月26号，我发现我的 iCloud 不能正常的上传文件了，我在电脑上记的笔记，在手机上还是旧的版本。打开finder一看，原来是卡在上传。我本来以为是我的 Mac 日常性抽风，所以也没有太在意。
+不过随着一天的等待，我发现问题还是没有被解决。我打开v2ex一看，发现居然也有别人遇到一样的问题!说明应该是云上贵州导致的问题。
+加上我之前经常遇到iCloud抽风的情况终于在这次做出决定，我要『逃离』iCloud。
+技术选型 其实之前遇到 iCloud 问题就想着替代品，比如这位老兄的博文，用syncthing代替 iCloud 。所以我之前尝试用syncthing在Mac和Linux之间同步 Logseq 笔记。
+这次我梳理一下我的需要，我平时需要用 iCloud 同步logseq笔记、电子书。而可选软件有resilio sync和syncthing。后者的话，两者不在同一局域网的连接有点慢。并且后者也没有IOS端。而前者主要是非开源软件，所以最终我还是选择了resilio sync。
+计划在自己的笔记本、PC、iPad、iPhone和一台服务器上都安装resilio sync。进行文件同步。
+遇到的困难 docker里的resilio sync不能正常启动 服务器环境：Centos8 ​在服务器上我通过docker安装resilio sync。使用linuxserver/resilio-sync镜像。按官方教程启动却发现不能正常访问GUI。用docker logs sync看日志，发现是没有权限创建config文件。官方启动命令如下： ​
+1 2 3 4 5 6 7 8 9 10 11 12 13  docker run -d \ --name=resilio-sync \ -e PUID=1000 \ -e PGID=1000 \ -e TZ=Europe/London \ -p 8888:8888 \ -p 55555:55555 \ -v /path/to/config:/config \ -v /path/to/downloads:/downloads \ -v /path/to/data:/sync \ --restart unless-stopped \ lscr.'><title>『逃离』iCloud记</title>
+
+<link rel='canonical' href='https://correctroadh.github.io/p/%E9%80%83%E7%A6%BBicloud%E8%AE%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='『逃离』iCloud记'>
+<meta property='og:description' content='起因 在5月26号，我发现我的 iCloud 不能正常的上传文件了，我在电脑上记的笔记，在手机上还是旧的版本。打开finder一看，原来是卡在上传。我本来以为是我的 Mac 日常性抽风，所以也没有太在意。
+不过随着一天的等待，我发现问题还是没有被解决。我打开v2ex一看，发现居然也有别人遇到一样的问题!说明应该是云上贵州导致的问题。
+加上我之前经常遇到iCloud抽风的情况终于在这次做出决定，我要『逃离』iCloud。
+技术选型 其实之前遇到 iCloud 问题就想着替代品，比如这位老兄的博文，用syncthing代替 iCloud 。所以我之前尝试用syncthing在Mac和Linux之间同步 Logseq 笔记。
+这次我梳理一下我的需要，我平时需要用 iCloud 同步logseq笔记、电子书。而可选软件有resilio sync和syncthing。后者的话，两者不在同一局域网的连接有点慢。并且后者也没有IOS端。而前者主要是非开源软件，所以最终我还是选择了resilio sync。
+计划在自己的笔记本、PC、iPad、iPhone和一台服务器上都安装resilio sync。进行文件同步。
+遇到的困难 docker里的resilio sync不能正常启动 服务器环境：Centos8 ​在服务器上我通过docker安装resilio sync。使用linuxserver/resilio-sync镜像。按官方教程启动却发现不能正常访问GUI。用docker logs sync看日志，发现是没有权限创建config文件。官方启动命令如下： ​
+1 2 3 4 5 6 7 8 9 10 11 12 13  docker run -d \ --name=resilio-sync \ -e PUID=1000 \ -e PGID=1000 \ -e TZ=Europe/London \ -p 8888:8888 \ -p 55555:55555 \ -v /path/to/config:/config \ -v /path/to/downloads:/downloads \ -v /path/to/data:/sync \ --restart unless-stopped \ lscr.'>
+<meta property='og:url' content='https://correctroadh.github.io/p/%E9%80%83%E7%A6%BBicloud%E8%AE%B0/'>
+<meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2022-06-01T19:57:10&#43;08:00'/><meta property='article:modified_time' content='2022-06-01T19:57:10&#43;08:00'/>
+<meta name="twitter:title" content="『逃离』iCloud记">
+<meta name="twitter:description" content="起因 在5月26号，我发现我的 iCloud 不能正常的上传文件了，我在电脑上记的笔记，在手机上还是旧的版本。打开finder一看，原来是卡在上传。我本来以为是我的 Mac 日常性抽风，所以也没有太在意。
+不过随着一天的等待，我发现问题还是没有被解决。我打开v2ex一看，发现居然也有别人遇到一样的问题!说明应该是云上贵州导致的问题。
+加上我之前经常遇到iCloud抽风的情况终于在这次做出决定，我要『逃离』iCloud。
+技术选型 其实之前遇到 iCloud 问题就想着替代品，比如这位老兄的博文，用syncthing代替 iCloud 。所以我之前尝试用syncthing在Mac和Linux之间同步 Logseq 笔记。
+这次我梳理一下我的需要，我平时需要用 iCloud 同步logseq笔记、电子书。而可选软件有resilio sync和syncthing。后者的话，两者不在同一局域网的连接有点慢。并且后者也没有IOS端。而前者主要是非开源软件，所以最终我还是选择了resilio sync。
+计划在自己的笔记本、PC、iPad、iPhone和一台服务器上都安装resilio sync。进行文件同步。
+遇到的困难 docker里的resilio sync不能正常启动 服务器环境：Centos8 ​在服务器上我通过docker安装resilio sync。使用linuxserver/resilio-sync镜像。按官方教程启动却发现不能正常访问GUI。用docker logs sync看日志，发现是没有权限创建config文件。官方启动命令如下： ​
+1 2 3 4 5 6 7 8 9 10 11 12 13  docker run -d \ --name=resilio-sync \ -e PUID=1000 \ -e PGID=1000 \ -e TZ=Europe/London \ -p 8888:8888 \ -p 55555:55555 \ -v /path/to/config:/config \ -v /path/to/downloads:/downloads \ -v /path/to/data:/sync \ --restart unless-stopped \ lscr.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-PDJXNW2S9J', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu54efa2901cde7b2b25a636d0b50ccbf1_35844_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">CorrectRoad&#39;s Blog</a></h1>
+            <h2 class="site-description">君子生非异也，善假于物也。</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CorrectRoadH'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='index.xml'
+                        target="_blank"
+                        title="RSS"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' target="_blank">
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E9%80%83%E7%A6%BBicloud%E8%AE%B0/">『逃离』iCloud记</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 01, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="起因">起因</h2>
+<p>在5月26号，我发现我的 iCloud 不能正常的上传文件了，我在电脑上记的笔记，在手机上还是旧的版本。打开<code>finder</code>一看，原来是卡在上传。我本来以为是我的 Mac 日常性抽风，所以也没有太在意。</p>
+<p>不过随着一天的等待，我发现问题还是没有被解决。我打开<code>v2ex</code>一看，<a class="link" href="https://www.v2ex.com/t/855822#reply38"  target="_blank" rel="noopener"
+    >发现居然也有别人遇到一样的问题!说明应该是云上贵州导致的问题。</a></p>
+<p>加上我之前经常遇到iCloud抽风的情况终于在这次做出决定，我要『逃离』iCloud。</p>
+<h2 id="技术选型">技术选型</h2>
+<p>其实之前遇到 iCloud 问题就想着替代品，比如<a class="link" href="https://tonsky.me/blog/syncthing/"  target="_blank" rel="noopener"
+    >这位老兄的博文</a>，用<code>syncthing</code>代替 iCloud 。所以我之前尝试用<code>syncthing</code>在Mac和Linux之间同步 Logseq 笔记。</p>
+<p>这次我梳理一下我的需要，我平时需要用 iCloud 同步logseq笔记、电子书。而可选软件有<code>resilio sync</code>和<code>syncthing</code>。后者的话，两者不在同一局域网的连接有点慢。并且后者也没有<code>IOS</code>端。而前者主要是非开源软件，所以最终我还是选择了<code>resilio sync</code>。</p>
+<p>计划在自己的笔记本、PC、iPad、iPhone和一台服务器上都安装<code>resilio sync</code>。进行文件同步。</p>
+<h2 id="遇到的困难">遇到的困难</h2>
+<h3 id="docker里的resilio-sync不能正常启动">docker里的resilio sync不能正常启动</h3>
+<p><strong>服务器环境：Centos8</strong>
+​在服务器上我通过<code>docker</code>安装<code>resilio sync</code>。使用<code>linuxserver/resilio-sync</code>镜像。按官方教程启动却发现不能正常访问GUI。用<code>docker logs sync</code>看日志，发现是没有权限创建<code>config</code>文件。官方启动命令如下：
+​</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker run -d <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--name<span class="o">=</span>resilio-sync <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-e <span class="nv">PUID</span><span class="o">=</span><span class="m">1000</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-e <span class="nv">PGID</span><span class="o">=</span><span class="m">1000</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-e <span class="nv">TZ</span><span class="o">=</span>Europe/London <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-p 8888:8888 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-p 55555:55555 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-v /path/to/config:/config <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-v /path/to/downloads:/downloads <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-v /path/to/data:/sync <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--restart unless-stopped <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>lscr.io/linuxserver/resilio-sync:latest
+</span></span><span class="line"><span class="cl">		
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​</p>
+<p>所以我把<code>/path/to</code>目录改成<code>777</code>，重启容器，不行，删除容器之后再run，不行，重启 docker ，依然不行。只能作罢，放弃目录映射。改成这样</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker run -d <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--name<span class="o">=</span>resilio-sync <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-e <span class="nv">PUID</span><span class="o">=</span><span class="m">1000</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-e <span class="nv">PGID</span><span class="o">=</span><span class="m">1000</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-e <span class="nv">TZ</span><span class="o">=</span>Europe/London <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-p 8888:8888 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-p 55555:55555 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--restart unless-stopped <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>lscr.io/linuxserver/resilio-sync:latest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>跑是能跑了，尽管不能在实体机直接访问文件，不过也无所谓了，只是想把服务器当成一个中转而已。</p>
+<h3 id="linux上的resilio-sync同步过来的文件无法被logseq编辑">linux上的resilio sync同步过来的文件无法被logseq编辑。</h3>
+<p><strong>环境：Manjaro</strong>
+​通过<code>rslsync</code>启动的<code>resilio sync</code>同步的文件的所有者是正常用户，无论读写都没有问题。但是通过<code>systemctl enable rslsync</code>启动的rslsync，同步到本地的文件所有者是<code>rslsync</code>。权限为<code>711</code>，当我使用Logseq时，无法编辑这些文件。
+​我尝试把权限改成<code>777</code>，依然无法写入。只能通过<code>chown</code>去改成文件所有者之后，Logseq才恢复正常。</p>
+<h3 id="非公网与非局域网同步慢">非公网与非局域网同步慢</h3>
+<p>当我的iPhone在外，通过数据流量访问在另外没有公网IP的三台电脑上的文件时下载、上传速度大概只有100kb-200kb左右。
+​目前并没有找一到一个好的解决方案，计划哪天有优惠的时候买一台便宜的有公网的云服务器。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="CorrectRoadH/CorrectRoadH.github.io"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 CorrectRoad&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#起因">起因</a></li>
+    <li><a href="#技术选型">技术选型</a></li>
+    <li><a href="#遇到的困难">遇到的困难</a>
+      <ol>
+        <li><a href="#docker里的resilio-sync不能正常启动">docker里的resilio sync不能正常启动</a></li>
+        <li><a href="#linux上的resilio-sync同步过来的文件无法被logseq编辑">linux上的resilio sync同步过来的文件无法被logseq编辑。</a></li>
+        <li><a href="#非公网与非局域网同步慢">非公网与非局域网同步慢</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
