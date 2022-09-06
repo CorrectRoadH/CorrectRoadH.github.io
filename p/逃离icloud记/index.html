@@ -8,11 +8,11 @@
 这次我梳理一下我的需要，我平时需要用 iCloud 同步logseq笔记、电子书。而可选软件有resilio sync和syncthing。后者的话，两者不在同一局域网的连接有点慢。并且后者也没有IOS端。而前者主要是非开源软件，所以最终我还是选择了resilio sync。
 计划在自己的笔记本、PC、iPad、iPhone和一台服务器上都安装resilio sync。进行文件同步。
 遇到的困难 docker里的resilio sync不能正常启动 服务器环境：Centos8 ​在服务器上我通过docker安装resilio sync。使用linuxserver/resilio-sync镜像。按官方教程启动却发现不能正常访问GUI。用docker logs sync看日志，发现是没有权限创建config文件。官方启动命令如下： ​
-1 2 3 4 5 6 7 8 9 10 11 12 13  docker run -d \ --name=resilio-sync \ -e PUID=1000 \ -e PGID=1000 \ -e TZ=Europe/London \ -p 8888:8888 \ -p 55555:55555 \ -v /path/to/config:/config \ -v /path/to/downloads:/downloads \ -v /path/to/data:/sync \ --restart unless-stopped \ lscr.'><title>『逃离』iCloud记</title>
+1 2 3 4 5 6 7 8 9 10 11 12 13 docker run -d \ --name=resilio-sync \ -e PUID=1000 \ -e PGID=1000 \ -e TZ=Europe/London \ -p 8888:8888 \ -p 55555:55555 \ -v /path/to/config:/config \ -v /path/to/downloads:/downloads \ -v /path/to/data:/sync \ --restart unless-stopped \ lscr.'><title>『逃离』iCloud记</title>
 
 <link rel='canonical' href='https://correctroadh.github.io/p/%E9%80%83%E7%A6%BBicloud%E8%AE%B0/'>
 
-<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='『逃离』iCloud记'>
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='『逃离』iCloud记'>
 <meta property='og:description' content='起因 在5月26号，我发现我的 iCloud 不能正常的上传文件了，我在电脑上记的笔记，在手机上还是旧的版本。打开finder一看，原来是卡在上传。我本来以为是我的 Mac 日常性抽风，所以也没有太在意。
 不过随着一天的等待，我发现问题还是没有被解决。我打开v2ex一看，发现居然也有别人遇到一样的问题!说明应该是云上贵州导致的问题。
 加上我之前经常遇到iCloud抽风的情况终于在这次做出决定，我要『逃离』iCloud。
@@ -20,10 +20,10 @@
 这次我梳理一下我的需要，我平时需要用 iCloud 同步logseq笔记、电子书。而可选软件有resilio sync和syncthing。后者的话，两者不在同一局域网的连接有点慢。并且后者也没有IOS端。而前者主要是非开源软件，所以最终我还是选择了resilio sync。
 计划在自己的笔记本、PC、iPad、iPhone和一台服务器上都安装resilio sync。进行文件同步。
 遇到的困难 docker里的resilio sync不能正常启动 服务器环境：Centos8 ​在服务器上我通过docker安装resilio sync。使用linuxserver/resilio-sync镜像。按官方教程启动却发现不能正常访问GUI。用docker logs sync看日志，发现是没有权限创建config文件。官方启动命令如下： ​
-1 2 3 4 5 6 7 8 9 10 11 12 13  docker run -d \ --name=resilio-sync \ -e PUID=1000 \ -e PGID=1000 \ -e TZ=Europe/London \ -p 8888:8888 \ -p 55555:55555 \ -v /path/to/config:/config \ -v /path/to/downloads:/downloads \ -v /path/to/data:/sync \ --restart unless-stopped \ lscr.'>
+1 2 3 4 5 6 7 8 9 10 11 12 13 docker run -d \ --name=resilio-sync \ -e PUID=1000 \ -e PGID=1000 \ -e TZ=Europe/London \ -p 8888:8888 \ -p 55555:55555 \ -v /path/to/config:/config \ -v /path/to/downloads:/downloads \ -v /path/to/data:/sync \ --restart unless-stopped \ lscr.'>
 <meta property='og:url' content='https://correctroadh.github.io/p/%E9%80%83%E7%A6%BBicloud%E8%AE%B0/'>
 <meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2022-06-01T19:57:10&#43;08:00'/><meta property='article:modified_time' content='2022-06-01T19:57:10&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Apple' /><meta property='article:published_time' content='2022-06-01T19:57:10&#43;08:00'/><meta property='article:modified_time' content='2022-06-01T19:57:10&#43;08:00'/>
 <meta name="twitter:title" content="『逃离』iCloud记">
 <meta name="twitter:description" content="起因 在5月26号，我发现我的 iCloud 不能正常的上传文件了，我在电脑上记的笔记，在手机上还是旧的版本。打开finder一看，原来是卡在上传。我本来以为是我的 Mac 日常性抽风，所以也没有太在意。
 不过随着一天的等待，我发现问题还是没有被解决。我打开v2ex一看，发现居然也有别人遇到一样的问题!说明应该是云上贵州导致的问题。
@@ -32,7 +32,7 @@
 这次我梳理一下我的需要，我平时需要用 iCloud 同步logseq笔记、电子书。而可选软件有resilio sync和syncthing。后者的话，两者不在同一局域网的连接有点慢。并且后者也没有IOS端。而前者主要是非开源软件，所以最终我还是选择了resilio sync。
 计划在自己的笔记本、PC、iPad、iPhone和一台服务器上都安装resilio sync。进行文件同步。
 遇到的困难 docker里的resilio sync不能正常启动 服务器环境：Centos8 ​在服务器上我通过docker安装resilio sync。使用linuxserver/resilio-sync镜像。按官方教程启动却发现不能正常访问GUI。用docker logs sync看日志，发现是没有权限创建config文件。官方启动命令如下： ​
-1 2 3 4 5 6 7 8 9 10 11 12 13  docker run -d \ --name=resilio-sync \ -e PUID=1000 \ -e PGID=1000 \ -e TZ=Europe/London \ -p 8888:8888 \ -p 55555:55555 \ -v /path/to/config:/config \ -v /path/to/downloads:/downloads \ -v /path/to/data:/sync \ --restart unless-stopped \ lscr.">
+1 2 3 4 5 6 7 8 9 10 11 12 13 docker run -d \ --name=resilio-sync \ -e PUID=1000 \ -e PGID=1000 \ -e TZ=Europe/London \ -p 8888:8888 \ -p 55555:55555 \ -v /path/to/config:/config \ -v /path/to/downloads:/downloads \ -v /path/to/data:/sync \ --restart unless-stopped \ lscr.">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
 <script>
 var doNotTrack = false;
@@ -93,7 +93,7 @@ if (!doNotTrack) {
                 
                 </a>
                 
-                    <span class="emoji">🍥</span>
+                    <span class="emoji">🐍</span>
                 
             </figure>
             
@@ -196,17 +196,15 @@ if (!doNotTrack) {
                 
                 
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="5 12 3 12 12 3 21 12 19 12" />
-  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+  <path d="M9 11l-4 4l4 4m-4 -4h11a4 4 0 0 0 0 -8h-1" />
 </svg>
 
 
 
                 
-                <span>Home</span>
+                <span>Refresh</span>
             </a>
         </li>
         
@@ -422,6 +420,12 @@ if (!doNotTrack) {
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/tags/apple/">Apple</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -501,7 +505,7 @@ if (!doNotTrack) {
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.13.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 
@@ -578,10 +582,10 @@ if (!doNotTrack) {
                 >
             </script><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
             ><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
             >
 
             </main>
@@ -628,7 +632,7 @@ if (!doNotTrack) {
 
         </div>
         <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
             </script><script type="text/javascript" src="/ts/main.js" defer></script>

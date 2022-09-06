@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Apple on CorrectRoad&#39;s Blog</title>
+        <link>https://correctroadh.github.io/tags/apple/</link>
+        <description>Recent content in Apple on CorrectRoad&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Wed, 01 Jun 2022 19:57:10 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/tags/apple/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>『逃离』iCloud记</title>
+        <link>https://correctroadh.github.io/p/%E9%80%83%E7%A6%BBicloud%E8%AE%B0/</link>
+        <pubDate>Wed, 01 Jun 2022 19:57:10 +0800</pubDate>
+        
+        <guid>https://correctroadh.github.io/p/%E9%80%83%E7%A6%BBicloud%E8%AE%B0/</guid>
+        <description>&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;
+&lt;p&gt;在5月26号，我发现我的 iCloud 不能正常的上传文件了，我在电脑上记的笔记，在手机上还是旧的版本。打开&lt;code&gt;finder&lt;/code&gt;一看，原来是卡在上传。我本来以为是我的 Mac 日常性抽风，所以也没有太在意。&lt;/p&gt;
+&lt;p&gt;不过随着一天的等待，我发现问题还是没有被解决。我打开&lt;code&gt;v2ex&lt;/code&gt;一看，&lt;a class=&#34;link&#34; href=&#34;https://www.v2ex.com/t/855822#reply38&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;发现居然也有别人遇到一样的问题!说明应该是云上贵州导致的问题。&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;加上我之前经常遇到iCloud抽风的情况终于在这次做出决定，我要『逃离』iCloud。&lt;/p&gt;
+&lt;h2 id=&#34;技术选型&#34;&gt;技术选型&lt;/h2&gt;
+&lt;p&gt;其实之前遇到 iCloud 问题就想着替代品，比如&lt;a class=&#34;link&#34; href=&#34;https://tonsky.me/blog/syncthing/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;这位老兄的博文&lt;/a&gt;，用&lt;code&gt;syncthing&lt;/code&gt;代替 iCloud 。所以我之前尝试用&lt;code&gt;syncthing&lt;/code&gt;在Mac和Linux之间同步 Logseq 笔记。&lt;/p&gt;
+&lt;p&gt;这次我梳理一下我的需要，我平时需要用 iCloud 同步logseq笔记、电子书。而可选软件有&lt;code&gt;resilio sync&lt;/code&gt;和&lt;code&gt;syncthing&lt;/code&gt;。后者的话，两者不在同一局域网的连接有点慢。并且后者也没有&lt;code&gt;IOS&lt;/code&gt;端。而前者主要是非开源软件，所以最终我还是选择了&lt;code&gt;resilio sync&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;计划在自己的笔记本、PC、iPad、iPhone和一台服务器上都安装&lt;code&gt;resilio sync&lt;/code&gt;。进行文件同步。&lt;/p&gt;
+&lt;h2 id=&#34;遇到的困难&#34;&gt;遇到的困难&lt;/h2&gt;
+&lt;h3 id=&#34;docker里的resilio-sync不能正常启动&#34;&gt;docker里的resilio sync不能正常启动&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;服务器环境：Centos8&lt;/strong&gt;
+​在服务器上我通过&lt;code&gt;docker&lt;/code&gt;安装&lt;code&gt;resilio sync&lt;/code&gt;。使用&lt;code&gt;linuxserver/resilio-sync&lt;/code&gt;镜像。按官方教程启动却发现不能正常访问GUI。用&lt;code&gt;docker logs sync&lt;/code&gt;看日志，发现是没有权限创建&lt;code&gt;config&lt;/code&gt;文件。官方启动命令如下：
+​&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker run -d &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;--name&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;resilio-sync &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-e &lt;span class=&#34;nv&#34;&gt;PUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-e &lt;span class=&#34;nv&#34;&gt;PGID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-e &lt;span class=&#34;nv&#34;&gt;TZ&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;Europe/London &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-p 8888:8888 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-p 55555:55555 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-v /path/to/config:/config &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-v /path/to/downloads:/downloads &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-v /path/to/data:/sync &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;--restart unless-stopped &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;lscr.io/linuxserver/resilio-sync:latest
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;​&lt;/p&gt;
+&lt;p&gt;所以我把&lt;code&gt;/path/to&lt;/code&gt;目录改成&lt;code&gt;777&lt;/code&gt;，重启容器，不行，删除容器之后再run，不行，重启 docker ，依然不行。只能作罢，放弃目录映射。改成这样&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker run -d &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;--name&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;resilio-sync &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-e &lt;span class=&#34;nv&#34;&gt;PUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-e &lt;span class=&#34;nv&#34;&gt;PGID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-e &lt;span class=&#34;nv&#34;&gt;TZ&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;Europe/London &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-p 8888:8888 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-p 55555:55555 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;--restart unless-stopped &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;lscr.io/linuxserver/resilio-sync:latest
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;跑是能跑了，尽管不能在实体机直接访问文件，不过也无所谓了，只是想把服务器当成一个中转而已。&lt;/p&gt;
+&lt;h3 id=&#34;linux上的resilio-sync同步过来的文件无法被logseq编辑&#34;&gt;linux上的resilio sync同步过来的文件无法被logseq编辑。&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;环境：Manjaro&lt;/strong&gt;
+​通过&lt;code&gt;rslsync&lt;/code&gt;启动的&lt;code&gt;resilio sync&lt;/code&gt;同步的文件的所有者是正常用户，无论读写都没有问题。但是通过&lt;code&gt;systemctl enable rslsync&lt;/code&gt;启动的rslsync，同步到本地的文件所有者是&lt;code&gt;rslsync&lt;/code&gt;。权限为&lt;code&gt;711&lt;/code&gt;，当我使用Logseq时，无法编辑这些文件。
+​我尝试把权限改成&lt;code&gt;777&lt;/code&gt;，依然无法写入。只能通过&lt;code&gt;chown&lt;/code&gt;去改成文件所有者之后，Logseq才恢复正常。&lt;/p&gt;
+&lt;h3 id=&#34;非公网与非局域网同步慢&#34;&gt;非公网与非局域网同步慢&lt;/h3&gt;
+&lt;p&gt;当我的iPhone在外，通过数据流量访问在另外没有公网IP的三台电脑上的文件时下载、上传速度大概只有100kb-200kb左右。
+​目前并没有找一到一个好的解决方案，计划哪天有优惠的时候买一台便宜的有公网的云服务器。&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

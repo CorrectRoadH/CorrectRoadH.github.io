@@ -7,20 +7,20 @@
 这次项目同样基于logseq-plugin-template-react
 搭建 参考上一章
 注册命令 main.tsx
-1 2 3 4 5  logseq.Editor.registerSlashCommand( &amp;#39;create table&amp;#39;, async () =&amp;gt; { logseq.showMainUI() }, )   写窗口 新建table.tsx和table.css
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60  import React, {useEffect} from &amp;#34;react&amp;#34;; import &amp;#34;.'><title>Logseq Plugins 开发实战系列：4.制作一个表格生成器</title>
+1 2 3 4 5 logseq.Editor.registerSlashCommand( &amp;#39;create table&amp;#39;, async () =&amp;gt; { logseq.showMainUI() }, ) 写窗口 新建table.tsx和table.css
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 import React, {useEffect} from &amp;#34;react&amp;#34;; import &amp;#34;.'><title>Logseq Plugins 开发实战系列：4.制作一个表格生成器</title>
 
 <link rel='canonical' href='https://correctroadh.github.io/p/logseq-plugins-%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%974.%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%A1%A8%E6%A0%BC%E7%94%9F%E6%88%90%E5%99%A8/'>
 
-<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Logseq Plugins 开发实战系列：4.制作一个表格生成器'>
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Logseq Plugins 开发实战系列：4.制作一个表格生成器'>
 <meta property='og:description' content='制作一个表格生成器 前言 本文为本人发布gitbook的书籍，但是因为gitbook一直没有被谷歌索引，我也没有办法提交给谷歌(无法证明所有权)。无奈只能把该本的章节逐步搬运过来，提高SEO。希望那些想学习logseq plugins 开发的同学们能直接通过搜索引擎看到此书。
 原书本章地址：https://correctroad.gitbook.io/logseq-plugins-in-action/chapter-1/make-markdown-table-creator
 这次我们来创建一个快捷创建markdown的表格。当我们输入/create table时，显示出一个create table窗口，填入我们想要的row和col就往logseq插入我们想要的markdown表格。
 这次项目同样基于logseq-plugin-template-react
 搭建 参考上一章
 注册命令 main.tsx
-1 2 3 4 5  logseq.Editor.registerSlashCommand( &amp;#39;create table&amp;#39;, async () =&amp;gt; { logseq.showMainUI() }, )   写窗口 新建table.tsx和table.css
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60  import React, {useEffect} from &amp;#34;react&amp;#34;; import &amp;#34;.'>
+1 2 3 4 5 logseq.Editor.registerSlashCommand( &amp;#39;create table&amp;#39;, async () =&amp;gt; { logseq.showMainUI() }, ) 写窗口 新建table.tsx和table.css
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 import React, {useEffect} from &amp;#34;react&amp;#34;; import &amp;#34;.'>
 <meta property='og:url' content='https://correctroadh.github.io/p/logseq-plugins-%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%974.%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%A1%A8%E6%A0%BC%E7%94%9F%E6%88%90%E5%99%A8/'>
 <meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2022-02-28T20:21:02&#43;08:00'/><meta property='article:modified_time' content='2022-02-28T20:21:02&#43;08:00'/>
@@ -31,8 +31,8 @@
 这次项目同样基于logseq-plugin-template-react
 搭建 参考上一章
 注册命令 main.tsx
-1 2 3 4 5  logseq.Editor.registerSlashCommand( &amp;#39;create table&amp;#39;, async () =&amp;gt; { logseq.showMainUI() }, )   写窗口 新建table.tsx和table.css
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60  import React, {useEffect} from &amp;#34;react&amp;#34;; import &amp;#34;.">
+1 2 3 4 5 logseq.Editor.registerSlashCommand( &amp;#39;create table&amp;#39;, async () =&amp;gt; { logseq.showMainUI() }, ) 写窗口 新建table.tsx和table.css
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 import React, {useEffect} from &amp;#34;react&amp;#34;; import &amp;#34;.">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
 <script>
 var doNotTrack = false;
@@ -93,7 +93,7 @@ if (!doNotTrack) {
                 
                 </a>
                 
-                    <span class="emoji">🍥</span>
+                    <span class="emoji">🐍</span>
                 
             </figure>
             
@@ -196,17 +196,15 @@ if (!doNotTrack) {
                 
                 
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="5 12 3 12 12 3 21 12 19 12" />
-  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+  <path d="M9 11l-4 4l4 4m-4 -4h11a4 4 0 0 0 0 -8h-1" />
 </svg>
 
 
 
                 
-                <span>Home</span>
+                <span>Refresh</span>
             </a>
         </li>
         
@@ -1133,7 +1131,7 @@ if (!doNotTrack) {
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.13.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 
@@ -1210,10 +1208,10 @@ if (!doNotTrack) {
                 >
             </script><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
             ><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
             >
 
             </main>
@@ -1266,7 +1264,7 @@ if (!doNotTrack) {
 
         </div>
         <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
             </script><script type="text/javascript" src="/ts/main.js" defer></script>
