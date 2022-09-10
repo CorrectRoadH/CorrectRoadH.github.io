@@ -3,7 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://correctroadh.github.io/</loc>
-    <lastmod>2022-09-06T19:35:41+08:00</lastmod>
+    <lastmod>2022-09-10T12:24:25+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://correctroadh.github.io/post/</loc>
+    <lastmod>2022-09-10T12:24:25+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://correctroadh.github.io/p/%E4%BB%8Egit%E6%89%80%E6%9C%89commit%E5%88%A0%E6%8E%89%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6/%E6%96%87%E4%BB%B6%E5%A4%B9/</loc>
+    <lastmod>2022-09-10T12:24:25+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -13,11 +23,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://correctroadh.github.io/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/</loc>
-    <lastmod>2022-09-06T19:35:41+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://correctroadh.github.io/post/</loc>
     <lastmod>2022-09-06T19:35:41+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
-    <head>
-	<meta name="generator" content="Hugo 0.102.3" /><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='君子生非异也，善假于物也。'><title>CorrectRoad&#39;s Blog</title>
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='前几天在收到Fleet的内测邮件后，我开始尝试Fleet。但是忘记在.gitignore里忽略.fleet了。在commit多个版本之后，才后知后觉的发现多了一个无必要的文件夹，所以要把git里的所以commit里的这个文件夹都删掉。 如果要删除一个文件用这个
+1 git filter-branch -f --index-filter &amp;#39;git rm --cached --ignore-unmatch -- 文件名&amp;#39; --prune-empty HEAD 如果要删除一个文件夹用这个
+1 git filter-branch -f --index-filter &amp;#39;git rm -r --cached --ignore-unmatch -- 文件夹名&amp;#39; --prune-empty HEAD 成功删除'><title>从Git所有commit删掉不需要的文件/文件夹</title>
 
-<link rel='canonical' href='https://correctroadh.github.io/'>
+<link rel='canonical' href='https://correctroadh.github.io/p/%E4%BB%8Egit%E6%89%80%E6%9C%89commit%E5%88%A0%E6%8E%89%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6/%E6%96%87%E4%BB%B6%E5%A4%B9/'>
 
-<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='CorrectRoad&#39;s Blog'>
-<meta property='og:description' content='君子生非异也，善假于物也。'>
-<meta property='og:url' content='https://correctroadh.github.io/'>
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='从Git所有commit删掉不需要的文件/文件夹'>
+<meta property='og:description' content='前几天在收到Fleet的内测邮件后，我开始尝试Fleet。但是忘记在.gitignore里忽略.fleet了。在commit多个版本之后，才后知后觉的发现多了一个无必要的文件夹，所以要把git里的所以commit里的这个文件夹都删掉。 如果要删除一个文件用这个
+1 git filter-branch -f --index-filter &amp;#39;git rm --cached --ignore-unmatch -- 文件名&amp;#39; --prune-empty HEAD 如果要删除一个文件夹用这个
+1 git filter-branch -f --index-filter &amp;#39;git rm -r --cached --ignore-unmatch -- 文件夹名&amp;#39; --prune-empty HEAD 成功删除'>
+<meta property='og:url' content='https://correctroadh.github.io/p/%E4%BB%8Egit%E6%89%80%E6%9C%89commit%E5%88%A0%E6%8E%89%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6/%E6%96%87%E4%BB%B6%E5%A4%B9/'>
 <meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
-<meta property='og:type' content='website'><meta property='og:updated_time' content=' 2022-09-10T12:24:25&#43;08:00 '/>
-<meta name="twitter:title" content="CorrectRoad&#39;s Blog">
-<meta name="twitter:description" content="君子生非异也，善假于物也。"><link rel="alternate" type="application/rss&#43;xml" href="https://correctroadh.github.io/index.xml">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2022-09-10T12:24:25&#43;08:00'/><meta property='article:modified_time' content='2022-09-10T12:24:25&#43;08:00'/>
+<meta name="twitter:title" content="从Git所有commit删掉不需要的文件/文件夹">
+<meta name="twitter:description" content="前几天在收到Fleet的内测邮件后，我开始尝试Fleet。但是忘记在.gitignore里忽略.fleet了。在commit多个版本之后，才后知后觉的发现多了一个无必要的文件夹，所以要把git里的所以commit里的这个文件夹都删掉。 如果要删除一个文件用这个
+1 git filter-branch -f --index-filter &amp;#39;git rm --cached --ignore-unmatch -- 文件名&amp;#39; --prune-empty HEAD 如果要删除一个文件夹用这个
+1 git filter-branch -f --index-filter &amp;#39;git rm -r --cached --ignore-unmatch -- 文件夹名&amp;#39; --prune-empty HEAD 成功删除">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
 <script>
 var doNotTrack = false;
@@ -25,7 +30,9 @@ if (!doNotTrack) {
 </script>
 
     </head>
-    <body class="">
+    <body class="
+    article-page
+    ">
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
@@ -188,7 +195,7 @@ if (!doNotTrack) {
         
         
 
-        <li  class='current' >
+        <li >
             <a href='/' >
                 
                 
@@ -274,15 +281,7 @@ if (!doNotTrack) {
     </ol>
 </aside>
 <main class="main full-width">
-    
-    
-    
-    
-
-    <section class="article-list">
-        
-            
-<article class="">
+    <article class="main-article">
     <header class="article-header">
 
     <div class="article-details">
@@ -290,7 +289,7 @@ if (!doNotTrack) {
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/">深入浅出配置I3WM</a>
+            <a href="/p/%E4%BB%8Egit%E6%89%80%E6%9C%89commit%E5%88%A0%E6%8E%89%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6/%E6%96%87%E4%BB%B6%E5%A4%B9/">从Git所有commit删掉不需要的文件/文件夹</a>
         </h2>
     
         
@@ -309,62 +308,7 @@ if (!doNotTrack) {
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Apr 22, 2020</time>
-            </div>
-        
-
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-                <time class="article-time--reading">
-                    阅读时长: 2 分钟
-                </time>
-            </div>
-        
-    </footer>
-    
-
-    
-</div>
-</header>
-</article>
-        
-            
-<article class="">
-    <header class="article-header">
-
-    <div class="article-details">
-    
-
-    <div class="article-title-wrapper">
-        <h2 class="article-title">
-            <a href="/p/%E9%87%8D%E6%96%B0%E5%8F%91%E6%98%8Erip/">重新发明RIP</a>
-        </h2>
-    
-        
-    </div>
-
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">Apr 22, 2020</time>
+                <time class="article-time--published">Sep 10, 2022</time>
             </div>
         
 
@@ -389,80 +333,133 @@ if (!doNotTrack) {
     
 </div>
 </header>
-</article>
-        
-            
-<article class="">
-    <header class="article-header">
 
-    <div class="article-details">
+    <section class="article-content">
+    
+    
+    <p>前几天在收到Fleet的内测邮件后，我开始尝试Fleet。但是忘记在<code>.gitignore</code>里忽略<code>.fleet</code>了。在commit多个版本之后，才后知后觉的发现多了一个无必要的文件夹，所以要把git里的所以commit里的这个文件夹都删掉。
+<img src="/p/%E4%BB%8Egit%E6%89%80%E6%9C%89commit%E5%88%A0%E6%8E%89%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6/%E6%96%87%E4%BB%B6%E5%A4%B9/1.png"
+	width="1940"
+	height="768"
+	srcset="/p/%E4%BB%8Egit%E6%89%80%E6%9C%89commit%E5%88%A0%E6%8E%89%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6/%E6%96%87%E4%BB%B6%E5%A4%B9/1_hu1d2cee8da91bef295b07337e7c6f483d_187718_480x0_resize_box_3.png 480w, /p/%E4%BB%8Egit%E6%89%80%E6%9C%89commit%E5%88%A0%E6%8E%89%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6/%E6%96%87%E4%BB%B6%E5%A4%B9/1_hu1d2cee8da91bef295b07337e7c6f483d_187718_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="252"
+		data-flex-basis="606px"
+	
+></p>
+<p>如果要删除一个文件用这个</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git filter-branch -f --index-filter &#39;git rm --cached --ignore-unmatch -- 文件名&#39; --prune-empty HEAD
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果要删除一个文件夹用这个</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git filter-branch -f --index-filter &#39;git rm -r --cached --ignore-unmatch -- 文件夹名&#39; --prune-empty HEAD
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/%E4%BB%8Egit%E6%89%80%E6%9C%89commit%E5%88%A0%E6%8E%89%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6/%E6%96%87%E4%BB%B6%E5%A4%B9/2.png"
+	width="2588"
+	height="1322"
+	srcset="/p/%E4%BB%8Egit%E6%89%80%E6%9C%89commit%E5%88%A0%E6%8E%89%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6/%E6%96%87%E4%BB%B6%E5%A4%B9/2_hu7a28d9bedac048c6426477c857596660_549287_480x0_resize_box_3.png 480w, /p/%E4%BB%8Egit%E6%89%80%E6%9C%89commit%E5%88%A0%E6%8E%89%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6/%E6%96%87%E4%BB%B6%E5%A4%B9/2_hu7a28d9bedac048c6426477c857596660_549287_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="2"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="195"
+		data-flex-basis="469px"
+	
+>
+成功删除</p>
+
+</section>
+
+
+    <footer class="article-footer">
     
 
-    <div class="article-title-wrapper">
-        <h2 class="article-title">
-            <a href="/p/%E4%BB%80%E4%B9%88%E6%98%AFvlsm%E5%92%8C%E4%B8%BA%E4%BB%80%E4%B9%88/">什么是VLSM和为什么</a>
-        </h2>
     
-        
-    </div>
-
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">Mar 22, 2020</time>
-            </div>
-        
-
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
 </svg>
 
 
 
-                <time class="article-time--reading">
-                    阅读时长: 1 分钟
-                </time>
-            </div>
-        
-    </footer>
-    
-
-    
-</div>
-</header>
-</article>
-        
+        <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <nav class='pagination'>
-        
-        
+    </footer>
 
-        
-            
-                    <a class='page-link' href='/'>1</a>
-                
-            
-            
-                <span class='page-link current'>2</span>
-                
-            
-    </nav>
 
-<footer class="site-footer">
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="CorrectRoadH/CorrectRoadH.github.io"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
     <section class="copyright">
         &copy; 
         
@@ -477,134 +474,87 @@ if (!doNotTrack) {
     </section>
 </footer>
 
-            </main>
-    <aside class="sidebar right-sidebar sticky">
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
         
-            
-                <form action="/search/" class="search-form widget" >
-        <p>
-            <label>搜索</label>
-            <input name="keyword" required placeholder="输入关键词..." />
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
         
-            <button title="搜索">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="10" cy="10" r="7" />
-  <line x1="21" y1="21" x2="15" y2="15" />
-</svg>
+        <div class="pswp__ui pswp__ui--hidden">
 
+            <div class="pswp__top-bar">
 
+                
 
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
             </button>
-        </p>
-    </form>
-            
-        
-            
-                <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-infinity" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M9.828 9.172a4 4 0 1 0 0 5.656 a10 10 0 0 0 2.172 -2.828a10 10 0 0 1 2.172 -2.828 a4 4 0 1 1 0 5.656a10 10 0 0 1 -2.172 -2.828a10 10 0 0 0 -2.172 -2.828" />
-</svg>
 
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
 
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
 
         </div>
-        <h2 class="widget-title section-title">归档</h2>
-
-        
-        
-        
-        
-        
-        <div class="widget-archive--list">
-            <div class="archives-year">
-                    <a href="/archives/#2022">
-                        
-                            <span class="year">2022</span>
-                            <span class="count">10</span>
-                        
-                    </a> 
-                </div>
-            <div class="archives-year">
-                    <a href="/archives/#2020">
-                        
-                            <span class="year">2020</span>
-                            <span class="count">3</span>
-                        
-                    </a> 
-                </div>
-            
-        </div>
-    </section>
-            
-        
-            
-                <section class="widget tagCloud">
-    <div class="widget-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
 
     </div>
-    <h2 class="widget-title section-title">分类</h2>
 
-    <div class="tagCloud-tags">
-        
-    </div>
-</section>
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
 
-            
-        
-            
-                <section class="widget tagCloud">
-    <div class="widget-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tag" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11 3L20 12a1.5 1.5 0 0 1 0 2L14 20a1.5 1.5 0 0 1 -2 0L3 11v-4a4 4 0 0 1 4 -4h4" />
-  <circle cx="9" cy="9" r="2" />
-</svg>
-
-
-
-    </div>
-    <h2 class="widget-title section-title">标签云</h2>
-
-    <div class="tagCloud-tags">
-        
-            <a href="/tags/%E7%BD%91%E7%BB%9C/" class="font_size_2">
-                网络
-            </a>
-        
-            <a href="/tags/apple/" class="font_size_1">
-                Apple
-            </a>
-        
-            <a href="/tags/git/" class="font_size_1">
-                Git
-            </a>
-        
-            <a href="/tags/logseq/" class="font_size_1">
-                Logseq
-            </a>
-        
-            <a href="/tags/%E6%96%87%E5%8C%96%E8%AF%BE/" class="font_size_1">
-                文化课
-            </a>
-        
-    </div>
-</section>
-            
-        
-    </aside>
-
+            </main>
+    
 
         </div>
         <script 
