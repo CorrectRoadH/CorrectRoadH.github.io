@@ -355,177 +355,237 @@ if (!doNotTrack) {
 <h2 id="使用rebase合并commit">使用rebase合并commit</h2>
 <p>如果我们有多个commit时，如果我们想把多个commit合并成一个时</p>
 <p><code>git log --oneline --graph</code></p>
-<p><img src="/images/git/1.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/1.png"
+	width="1094"
+	height="428"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/1_hu8ed5266b39fa5c8ca6ad9323d3248c74_183799_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/1_hu8ed5266b39fa5c8ca6ad9323d3248c74_183799_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="1"
 	
 	
+		class="gallery-image" 
+		data-flex-grow="255"
+		data-flex-basis="613px"
+	
 ></p>
 <p>以这个log为例，我们想把commit 2 与 3 合并成一个commit。</p>
 <p>我们就需要<code>rebase -i </code>到2之前的commit，比如这里为<code>git rebase 20f0d49</code>。</p>
 <p>然后我们就进到这样的一个页面。</p>
-<p><img src="/images/git/2.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/2.png"
+	width="1184"
+	height="724"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/2_hu00fb851e40ad9e37c0133d6e39d5feab_382335_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/2_hu00fb851e40ad9e37c0133d6e39d5feab_382335_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="163"
+		data-flex-basis="392px"
 	
 ></p>
 <p>我们把3的<code>pick</code>改成<code>squash</code>或者<code>s</code>都行，这样3与3的上面那个(2)都会进行合并。</p>
-<p><img src="/images/git/3.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/3.png"
+	width="326"
+	height="240"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/3_hu794b97485123b64ac3c94bef4fe117c2_49112_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/3_hu794b97485123b64ac3c94bef4fe117c2_49112_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="135"
+		data-flex-basis="326px"
 	
 ></p>
 <p>然后退出(esc,:wq)，看到这里应该不会有不会用vim的同学吧。🤔</p>
 <p>在退出vim之后，又会进到另一个vim。在这里编辑2、3所合并的新commit的commit message。</p>
-<p><img src="/images/git/4.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/4.png"
+	width="1238"
+	height="1214"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/4_hu447063b46b4231981f15fedfcf00bfa9_588104_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/4_hu447063b46b4231981f15fedfcf00bfa9_588104_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="101"
+		data-flex-basis="244px"
 	
 ></p>
 <p>在这里，我们直接<code>gg</code>、<code>dG</code>，把整个文件清空，然后写上整合2和3的新commit的消息。</p>
-<p><img src="/images/git/5.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/5.png"
+	width="342"
+	height="416"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/5_hu25232beea5695d82ff37fddf9edbdb32_51064_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/5_hu25232beea5695d82ff37fddf9edbdb32_51064_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="82"
+		data-flex-basis="197px"
 	
 ></p>
 <p>继续保存退出。</p>
-<p><img src="/images/git/6.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/6.png"
+	width="1068"
+	height="324"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/6_hu0946562b36029eca3d4cf6dd70dfcc58_145950_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/6_hu0946562b36029eca3d4cf6dd70dfcc58_145950_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="329"
+		data-flex-basis="791px"
 	
 ></p>
 <p>现在我们看git log。合并完成!</p>
-<p><img src="/images/git/7.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/7.png"
+	width="610"
+	height="296"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/7_hu0bb664a9bc1f012f2603a488f98ade41_66219_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/7_hu0bb664a9bc1f012f2603a488f98ade41_66219_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="206"
+		data-flex-basis="494px"
 	
 ></p>
 <h2 id="调整commit的顺序">调整commit的顺序</h2>
-<p><img src="/images/git/8.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/8.png"
+	width="920"
+	height="318"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/8_hu5fa7bcba172a7ccaf53bc2cbadd7b0b8_109582_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/8_hu5fa7bcba172a7ccaf53bc2cbadd7b0b8_109582_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="289"
+		data-flex-basis="694px"
 	
 ></p>
 <p>我们想把2与3的位置交换的话</p>
 <p><code>git rebase -i 1的hash</code></p>
 <p>然后进入VIM</p>
-<p><img src="/images/git/9.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/9.png"
+	width="1530"
+	height="1756"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/9_hu884f7619fc0eacf315267a498c632eb4_951830_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/9_hu884f7619fc0eacf315267a498c632eb4_951830_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="87"
+		data-flex-basis="209px"
 	
 ></p>
 <p>交换你想交换的commit的顺序。(比如可以使用<code>dd</code>和<code>p</code>)</p>
-<p><img src="/images/git/10.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/10.png"
+	width="1078"
+	height="412"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/10_hua87bbc8fa20a60d8024484da8d89fce8_165879_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/10_hua87bbc8fa20a60d8024484da8d89fce8_165879_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="261"
+		data-flex-basis="627px"
 	
 ></p>
 <p>然后退出vim就可以了</p>
-<p><img src="/images/git/11.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/11.png"
+	width="1604"
+	height="156"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/11_huc0bd84a8b3fd8ac60b60beb707d1f142_60198_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/11_huc0bd84a8b3fd8ac60b60beb707d1f142_60198_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="1028"
+		data-flex-basis="2467px"
 	
 ></p>
-<p><img src="/images/git/12.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/12.png"
+	width="580"
+	height="310"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/12_hu3577cb320b5f4c69b7d8ec8253d6f1ce_63988_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/12_hu3577cb320b5f4c69b7d8ec8253d6f1ce_63988_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="187"
+		data-flex-basis="449px"
 	
 ></p>
 <p>交换成功!</p>
 <h2 id="重写历史commit的消息">重写历史commit的消息</h2>
 <p>同上，直接rebase -i进去，然后修改的commit消息。</p>
 <p>在你要重写历史的commit之前把<code>pick</code>改成<code>reword</code>或者 <code>r</code></p>
-<p><img src="/images/git/13.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/13.png"
+	width="1122"
+	height="338"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/13_hu6ddfb6a3828528e183a8dc759215a889_170696_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/13_hu6ddfb6a3828528e183a8dc759215a889_170696_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="331"
+		data-flex-basis="796px"
 	
 ></p>
 <p>然后保存退出vim，接下来进来这里，</p>
-<p><img src="/images/git/14.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/14.png"
+	width="1716"
+	height="902"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/14_hu08b2afbe9f70b3698d3e6e8c25f3b241_416334_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/14_hu08b2afbe9f70b3698d3e6e8c25f3b241_416334_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="190"
+		data-flex-basis="456px"
 	
 ></p>
 <p>这里我们可以直接清空，然后把新的 commit 消息写下。然后保存退出就ok了。</p>
 <h2 id="删除指定commit">删除指定commit</h2>
 <p>同上，进入到rebase interact之后，我们把要删的commit前面的pick改成d或者drop之后保存退出就ok了。</p>
-<p><img src="/images/git/15.png"
-	
-	
-	
+<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/15.png"
+	width="340"
+	height="212"
+	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/15_hua139966dc6d814c4d74c998b0cbf4283_35287_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/15_hua139966dc6d814c4d74c998b0cbf4283_35287_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="2"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
 	
 ></p>
 <h2 id="总结">总结</h2>
