@@ -12,6 +12,26 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://correctroadh.github.io/tags/</loc>
+    <lastmod>2022-09-12T18:14:48+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://correctroadh.github.io/tags/%E7%A6%8F%E5%B7%9E%E5%A4%A7%E5%AD%A6/</loc>
+    <lastmod>2022-09-12T18:14:48+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://correctroadh.github.io/tags/%E9%97%BD%E6%B1%9F%E5%AD%A6%E9%99%A2/</loc>
+    <lastmod>2022-09-12T18:14:48+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://correctroadh.github.io/tags/%E9%A3%9F%E5%A0%82/</loc>
+    <lastmod>2022-09-12T18:14:48+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://correctroadh.github.io/p/%E7%8C%AA%E9%A3%9F%E6%97%A5%E8%AE%B0%E6%88%91%E7%9A%84%E5%A4%A7%E5%AD%A6%E9%A5%AE%E9%A3%9F%E8%AE%B0%E5%BD%95/</loc>
     <lastmod>2022-09-12T18:14:48+08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -28,11 +48,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://correctroadh.github.io/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/</loc>
-    <lastmod>2022-09-06T19:35:41+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://correctroadh.github.io/tags/</loc>
     <lastmod>2022-09-06T19:35:41+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
