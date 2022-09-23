@@ -12,11 +12,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://correctroadh.github.io/p/ci%E7%9A%84%E5%AE%9E%E8%B7%B5/</loc>
-    <lastmod>2022-09-23T15:15:45+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://correctroadh.github.io/tags/gitee/</loc>
     <lastmod>2022-09-23T15:15:45+08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -33,6 +28,11 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://correctroadh.github.io/tags/</loc>
+    <lastmod>2022-09-23T15:15:45+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://correctroadh.github.io/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/</loc>
     <lastmod>2022-09-23T15:15:45+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

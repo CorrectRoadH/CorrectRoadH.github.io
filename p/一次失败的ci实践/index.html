@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='现存项目在gitee与github上的CI实践'><title>一次失败的CI实践</title>
+
+<link rel='canonical' href='https://correctroadh.github.io/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='一次失败的CI实践'>
+<meta property='og:description' content='现存项目在gitee与github上的CI实践'>
+<meta property='og:url' content='https://correctroadh.github.io/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/'>
+<meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='CICD' /><meta property='article:tag' content='Github' /><meta property='article:tag' content='Gitee' /><meta property='article:published_time' content='2022-09-23T15:15:45&#43;08:00'/><meta property='article:modified_time' content='2022-09-23T15:15:45&#43;08:00'/>
+<meta name="twitter:title" content="一次失败的CI实践">
+<meta name="twitter:description" content="现存项目在gitee与github上的CI实践">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-PDJXNW2S9J', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huac971efb212d008eef368e3014548668_655784_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐍</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">CorrectRoad&#39;s Blog</a></h1>
+            <h2 class="site-description">君子生非异也，善假于物也。</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CorrectRoadH'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='index.xml'
+                        target="_blank"
+                        title="RSS"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com/correctroad'
+                        target="_blank"
+                        title="Twitter"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' target="_blank">
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M9 11l-4 4l4 4m-4 -4h11a4 4 0 0 0 0 -8h-1" />
+</svg>
+
+
+
+                
+                <span>Refresh</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/">一次失败的CI实践</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            现存项目在gitee与github上的CI实践
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 23, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="背景">背景</h2>
+<p>最近在做的一个项目，缺少unit test。并且在合并PR时，经常出现修改的代码导致的BUG。(目前没做到一个好的Code Review)。</p>
+<p>比较适合就是先补上unit test，但是确实不太好搞。首先，这个项目比较大，现存一部分unit test，但是已经跑不通了，然后我对java和JUnit也不熟，参与项目的同学对这里的知识也比较欠缺。但是我想至少能补上e2e测试，来保证系统最基本上的运行测试。</p>
+<p>所以我的整体思路大概就形成了:把mvn package出来的jar放到docker里，然后运行docker。最后用python写的request和selenium headless进行测试。</p>
+<h2 id="实践">实践</h2>
+<p>我们有一台双核4G的百度云服务器，我们部署了Jenkins做CD。但是特别卡，还经常出现卡死的情况(通过CD时自动关闭其它应用来解决的).所以在没能在这里上Gitlab和用Jenkins实现CI。</p>
+<p>这个项目是校企合作的外包项目，老师在gitee上注册了高校组织。然后指定我们这个项目在gitee上进行合作。所以我们只能采用Gitee go(gitee 流水线)进行CI.</p>
+<h3 id="gitee">Gitee</h3>
+<p>思路的第一步:<code>maven package</code>出jar，没有问题。但是到了<code>docker build</code>出镜像时，在这里Gitee就出现问题了,我用的是官方提供的<code>镜像构建</code>。Gitee里build出的image，需要上传到<code>docker hub</code>上。我按照文档折腾了两天，轮流换了不同的地址、密码等。都没有成功。</p>
+<p><img src="/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/1.png"
+	width="1076"
+	height="1378"
+	srcset="/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/1_hu4d702702511ec7e2f93343154817ac6e_145160_480x0_resize_box_3.png 480w, /p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/1_hu4d702702511ec7e2f93343154817ac6e_145160_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="78"
+		data-flex-basis="187px"
+	
+></p>
+<p>最后只能加上gitee的官方群，才得到解答，但是从加群到通过就隔了两天(可能是因为非工作日吧)。</p>
+<p><img src="/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/2.png"
+	width="610"
+	height="572"
+	srcset="/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/2_hu7526183265a261d425804aab943bc97a_65360_480x0_resize_box_3.png 480w, /p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/2_hu7526183265a261d425804aab943bc97a_65360_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="2"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="106"
+		data-flex-basis="255px"
+	
+></p>
+<p>😅挺离谱的，既然这里要写的是<code>docker.io</code>，那你提醒的时候显示的是的<code>hub.docker.com</code>。就纯误导。</p>
+<h3 id="github上的实践">Github上的实践</h3>
+<p>在等待加群的两天中，我在github的action尝试做到这样的功能，学习、尝试了半个小时后，我成功配出了我的需求。</p>
+<p>仓库地址: <a class="link" href="https://github.com/CorrectRoadH/CICDtest"  target="_blank" rel="noopener"
+    >https://github.com/CorrectRoadH/CICDtest</a></p>
+<p><code>Github Action</code>真的很好上手，同时样例丰富。可以很方便构建出我们的CI。同时Github也有很多优点，比如Gitee Go每个阶段的产物都要通过中转，比如maven的jar是上传到gitee官方的文件服务器，然后在镜像构建时再curl下来。然后docker build出的image要上传到docker仓库，然后运行docker镜像时要再下载下来才能运行。而<code>Github Action</code>这些不同阶段是可以在一台电脑上运行，中间产物不需要额外中转。</p>
+<p><img src="/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/3.png"
+	width="2880"
+	height="1800"
+	srcset="/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/3_hu567aacc78d19fe91994fdcf1fdd46456_521643_480x0_resize_box_3.png 480w, /p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/3_hu567aacc78d19fe91994fdcf1fdd46456_521643_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="3"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<h3 id="在gitee上继续">在Gitee上继续</h3>
+<p>在官方人员的指导下，我成功上传了docker image。但是在下一步中，运行docker就卡住了。在Gitee go中，无法给docker run传参数，也就是说docker里的web服务，外部根本无法访问。</p>
+<p><img src="/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/5.png"
+	width="812"
+	height="188"
+	srcset="/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/5_hu5aa76be9843835568776c21dd0c65d6a_26925_480x0_resize_box_3.png 480w, /p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/5_hu5aa76be9843835568776c21dd0c65d6a_26925_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="5"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="431"
+		data-flex-basis="1036px"
+	
+></p>
+<p><img src="/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/4.png"
+	width="842"
+	height="720"
+	srcset="/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/4_hu903b5613421236c0cf4f74f53b933745_125137_480x0_resize_box_3.png 480w, /p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/4_hu903b5613421236c0cf4f74f53b933745_125137_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="4"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="116"
+		data-flex-basis="280px"
+	
+></p>
+<h2 id="总结">总结</h2>
+<p>这次自动化CI的实践算是失败了，主要还是技术选型的问题。目前是没有办法把项目转到Github上，主要原因就是项目里的一部分同学不会翻墙，培训起来也不太方便啥的。再继续思考一下如何实践这个CI。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/cicd/">CICD</a>
+        
+            <a href="/tags/github/">Github</a>
+        
+            <a href="/tags/gitee/">Gitee</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="CorrectRoadH/CorrectRoadH.github.io"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 CorrectRoad&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.13.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#实践">实践</a>
+      <ol>
+        <li><a href="#gitee">Gitee</a></li>
+        <li><a href="#github上的实践">Github上的实践</a></li>
+        <li><a href="#在gitee上继续">在Gitee上继续</a></li>
+      </ol>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
