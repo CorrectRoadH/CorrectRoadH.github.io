@@ -3,17 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://correctroadh.github.io/</loc>
-    <lastmod>2022-09-12T18:14:48+08:00</lastmod>
+    <lastmod>2022-09-23T15:15:45+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://correctroadh.github.io/tags/cicd/</loc>
+    <lastmod>2022-09-23T15:15:45+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://correctroadh.github.io/p/ci%E7%9A%84%E5%AE%9E%E8%B7%B5/</loc>
+    <lastmod>2022-09-23T15:15:45+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://correctroadh.github.io/tags/gitee/</loc>
+    <lastmod>2022-09-23T15:15:45+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://correctroadh.github.io/tags/github/</loc>
+    <lastmod>2022-09-23T15:15:45+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://correctroadh.github.io/post/</loc>
-    <lastmod>2022-09-12T18:14:48+08:00</lastmod>
+    <lastmod>2022-09-23T15:15:45+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://correctroadh.github.io/tags/</loc>
-    <lastmod>2022-09-12T18:14:48+08:00</lastmod>
+    <lastmod>2022-09-23T15:15:45+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
