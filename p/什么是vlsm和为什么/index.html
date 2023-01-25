@@ -22,11 +22,12 @@ VLSM的原理 IP地址是由网络号与主机号组成的,我们可以通过子
 在C类网络上划分 VLSM可以在哪些网络上使用?
 Vlsm当然可以A类B类任意网络上划分,不过一般来说C类用的更多也更直观.且在学完之后,你也可以在A类B类网络上使用VLSM了.
 我现在将为你展示不同的子网掩码和它与IP地址的联系(在C类网络中).
-前缀 子网掩码 能用的主机数 占用IP地址数 子网掩码(二进制) /24 0 254 256 00000000 /25 128 126 128 10000000 /26 192 62 64 11000000 /27 224 30 32 11100000 /28 240 14 16 11110000 /29 248 6 8 11111000 /30 252 2 4 11111100 我们可以根据一个路由接口所需要的主机数,去挑选一个合适大小的子网掩码给你所划分的新网络.'><title>什么是VLSM和为什么</title>
+前缀 子网掩码 能用的主机数 占用IP地址数 子网掩码(二进制) /24 0 254 256 00000000 /25 128 126 128 10000000 /26 192 62 64 11000000 /27 224 30 32 11100000 /28 240 14 16 11110000 /29 248 6 8 11111000 /30 252 2 4 11111100 我们可以根据一个路由接口所需要的主机数,去挑选一个合适大小的子网掩码给你所划分的新网络.'>
+<title>什么是VLSM和为什么</title>
 
 <link rel='canonical' href='https://correctroadh.github.io/p/%E4%BB%80%E4%B9%88%E6%98%AFvlsm%E5%92%8C%E4%B8%BA%E4%BB%80%E4%B9%88/'>
 
-<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='什么是VLSM和为什么'>
+<link rel="stylesheet" href="/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css"><meta property='og:title' content='什么是VLSM和为什么'>
 <meta property='og:description' content='1.What is VLSM 什么是VLSM?
 vlsm的中文名叫『可变长子网掩码』,是一种网络技术.
 2.Why is VLSM? 这章不讲原理也不讲怎么用,我们来讲讲VLSM可以帮助我们做什么.
@@ -152,6 +153,7 @@ if (!doNotTrack) {
                         href='https://github.com/CorrectRoadH'
                         target="_blank"
                         title="GitHub"
+                        rel="me"
                     >
                         
                         
@@ -171,6 +173,7 @@ if (!doNotTrack) {
                         href='index.xml'
                         target="_blank"
                         title="RSS"
+                        rel="me"
                     >
                         
                         
@@ -192,6 +195,7 @@ if (!doNotTrack) {
                         href='https://twitter.com/correctroad'
                         target="_blank"
                         title="Twitter"
+                        rel="me"
                     >
                         
                         
@@ -337,7 +341,52 @@ if (!doNotTrack) {
         </div>
     </ol>
 </aside>
-<main class="main full-width">
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#1what-is-vlsm">1.What is VLSM</a></li>
+    <li><a href="#2why-is-vlsm">2.Why is VLSM?</a>
+      <ol>
+        <li><a href="#有类网络与无类网络">有类网络与无类网络</a></li>
+      </ol>
+    </li>
+    <li><a href="#3how-is-vlsm">3.How is VLSM?</a>
+      <ol>
+        <li><a href="#vlsm的原理">VLSM的原理</a></li>
+        <li><a href="#在c类网络上划分">在C类网络上划分</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
     <article class="main-article">
     <header class="article-header">
 
@@ -352,6 +401,9 @@ if (!doNotTrack) {
         
     </div>
 
+    
+    
+    
     
     <footer class="article-time">
         
@@ -389,6 +441,7 @@ if (!doNotTrack) {
 
     
 </div>
+
 </header>
 
     <section class="article-content">
@@ -690,12 +743,12 @@ if (!doNotTrack) {
         
             2020 - 
         
-        2022 CorrectRoad&#39;s Blog
+        2023 CorrectRoad&#39;s Blog
     </section>
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.13.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.16.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 
@@ -779,50 +832,6 @@ if (!doNotTrack) {
             >
 
             </main>
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title">目录</h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ol>
-    <li><a href="#1what-is-vlsm">1.What is VLSM</a></li>
-    <li><a href="#2why-is-vlsm">2.Why is VLSM?</a>
-      <ol>
-        <li><a href="#有类网络与无类网络">有类网络与无类网络</a></li>
-      </ol>
-    </li>
-    <li><a href="#3how-is-vlsm">3.How is VLSM?</a>
-      <ol>
-        <li><a href="#vlsm的原理">VLSM的原理</a></li>
-        <li><a href="#在c类网络上划分">在C类网络上划分</a></li>
-      </ol>
-    </li>
-  </ol>
-</nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
         </div>
         <script 
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"

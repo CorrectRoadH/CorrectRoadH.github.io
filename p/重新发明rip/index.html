@@ -31,11 +31,12 @@ ip 子网 接口 192.168.0.0 255.255.255.0 f0/1 192.168.1.0 255.255.255.0 f0/2 1
 直接删掉真的好吗？如果我把这个路由已经失效的消息告诉别人,而不是让每个路由都要硬等180s会不会更好呢?
 新的删除功能 让每个路由在发送路由表的时候,带上已知的失效路由信息.同时让通知更久一些.在原先的删除机制上发动,一个路由失效180s期满后不直接删除.而是保持期满状态.而是让每个路由失效240s之后,再直接删掉.
 第四个问题 现在同时我收到两个路由告诉我,它们都可以到达路由3,我该怎么选择呢？
-路由计数 我们可以在路由信息上加上经过了几个路由,每经过一个路由的传播就增加一个,这个我就知道那条路径经过的路由最少了!'><title>重新发明RIP</title>
+路由计数 我们可以在路由信息上加上经过了几个路由,每经过一个路由的传播就增加一个,这个我就知道那条路径经过的路由最少了!'>
+<title>重新发明RIP</title>
 
 <link rel='canonical' href='https://correctroadh.github.io/p/%E9%87%8D%E6%96%B0%E5%8F%91%E6%98%8Erip/'>
 
-<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='重新发明RIP'>
+<link rel="stylesheet" href="/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css"><meta property='og:title' content='重新发明RIP'>
 <meta property='og:description' content='我想通过一步一步的发明出『RIP』.通过这样的方法,相信能对『RIP』的理解会深刻不少.
 数据的传播方式 在这个网络中,所有的机子相连在一个『交换机』上,它们就是在一个局域网中,它们是怎么通信的呢？
 主机A发给主机B一个数据包,但是其实这个局域网中的每一台机子都收到了这个数据包.但是它们会对数据做进行两次判断处理,来判断这个数据包,我是不是该接收.
@@ -179,6 +180,7 @@ if (!doNotTrack) {
                         href='https://github.com/CorrectRoadH'
                         target="_blank"
                         title="GitHub"
+                        rel="me"
                     >
                         
                         
@@ -198,6 +200,7 @@ if (!doNotTrack) {
                         href='index.xml'
                         target="_blank"
                         title="RSS"
+                        rel="me"
                     >
                         
                         
@@ -219,6 +222,7 @@ if (!doNotTrack) {
                         href='https://twitter.com/correctroad'
                         target="_blank"
                         title="Twitter"
+                        rel="me"
                     >
                         
                         
@@ -364,7 +368,69 @@ if (!doNotTrack) {
         </div>
     </ol>
 </aside>
-<main class="main full-width">
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#数据的传播方式">数据的传播方式</a></li>
+    <li><a href="#路由原理">路由原理</a></li>
+    <li><a href="#动态路由">动态路由</a>
+      <ol>
+        <li><a href="#发送功能">发送功能</a></li>
+        <li><a href="#遇到第一个问题">遇到第一个问题</a></li>
+        <li><a href="#自动失效功能">自动失效功能</a></li>
+        <li><a href="#遇到第二个问题">遇到第二个问题</a></li>
+        <li><a href="#删除功能">删除功能</a></li>
+        <li><a href="#遇到第三个问题">遇到第三个问题</a></li>
+        <li><a href="#新的删除功能">新的删除功能</a></li>
+        <li><a href="#第四个问题">第四个问题</a></li>
+        <li><a href="#路由计数">路由计数</a></li>
+        <li><a href="#第五个问题">第五个问题</a></li>
+        <li><a href="#跳数上限">跳数上限</a></li>
+        <li><a href="#第六个问题">第六个问题</a></li>
+        <li><a href="#水平分割">水平分割</a></li>
+        <li><a href="#第七个问题">第七个问题</a></li>
+        <li><a href="#保持关闭">保持关闭</a></li>
+        <li><a href="#第八个问题">第八个问题</a></li>
+        <li><a href="#广播">广播</a></li>
+        <li><a href="#rip诞生">RIP诞生!</a></li>
+        <li><a href="#遇到第九个问题">遇到第九个问题</a></li>
+        <li><a href="#组播">组播</a></li>
+        <li><a href="#第十个问题">第十个问题</a></li>
+        <li><a href="#带有子网信息的路由信息">带有子网信息的路由信息</a></li>
+        <li><a href="#新的rip">新的RIP</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
     <article class="main-article">
     <header class="article-header">
 
@@ -379,6 +445,9 @@ if (!doNotTrack) {
         
     </div>
 
+    
+    
+    
     
     <footer class="article-time">
         
@@ -416,6 +485,7 @@ if (!doNotTrack) {
 
     
 </div>
+
 </header>
 
     <section class="article-content">
@@ -757,12 +827,12 @@ if (!doNotTrack) {
         
             2020 - 
         
-        2022 CorrectRoad&#39;s Blog
+        2023 CorrectRoad&#39;s Blog
     </section>
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.13.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.16.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 
@@ -846,67 +916,6 @@ if (!doNotTrack) {
             >
 
             </main>
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title">目录</h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ol>
-    <li><a href="#数据的传播方式">数据的传播方式</a></li>
-    <li><a href="#路由原理">路由原理</a></li>
-    <li><a href="#动态路由">动态路由</a>
-      <ol>
-        <li><a href="#发送功能">发送功能</a></li>
-        <li><a href="#遇到第一个问题">遇到第一个问题</a></li>
-        <li><a href="#自动失效功能">自动失效功能</a></li>
-        <li><a href="#遇到第二个问题">遇到第二个问题</a></li>
-        <li><a href="#删除功能">删除功能</a></li>
-        <li><a href="#遇到第三个问题">遇到第三个问题</a></li>
-        <li><a href="#新的删除功能">新的删除功能</a></li>
-        <li><a href="#第四个问题">第四个问题</a></li>
-        <li><a href="#路由计数">路由计数</a></li>
-        <li><a href="#第五个问题">第五个问题</a></li>
-        <li><a href="#跳数上限">跳数上限</a></li>
-        <li><a href="#第六个问题">第六个问题</a></li>
-        <li><a href="#水平分割">水平分割</a></li>
-        <li><a href="#第七个问题">第七个问题</a></li>
-        <li><a href="#保持关闭">保持关闭</a></li>
-        <li><a href="#第八个问题">第八个问题</a></li>
-        <li><a href="#广播">广播</a></li>
-        <li><a href="#rip诞生">RIP诞生!</a></li>
-        <li><a href="#遇到第九个问题">遇到第九个问题</a></li>
-        <li><a href="#组播">组播</a></li>
-        <li><a href="#第十个问题">第十个问题</a></li>
-        <li><a href="#带有子网信息的路由信息">带有子网信息的路由信息</a></li>
-        <li><a href="#新的rip">新的RIP</a></li>
-      </ol>
-    </li>
-  </ol>
-</nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
         </div>
         <script 
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"

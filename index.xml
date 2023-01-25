@@ -6,7 +6,183 @@
         <description>Recent content on CorrectRoad&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Fri, 23 Sep 2022 15:15:45 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 25 Jan 2023 20:42:02 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>DIY NAS(黑群晖)全过程记录与填坑过程</title>
+        <link>https://correctroadh.github.io/p/diy-nas%E9%BB%91%E7%BE%A4%E6%99%96%E5%85%A8%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%E4%B8%8E%E5%A1%AB%E5%9D%91%E8%BF%87%E7%A8%8B/</link>
+        <pubDate>Wed, 25 Jan 2023 20:42:02 +0800</pubDate>
+        
+        <guid>https://correctroadh.github.io/p/diy-nas%E9%BB%91%E7%BE%A4%E6%99%96%E5%85%A8%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%E4%B8%8E%E5%A1%AB%E5%9D%91%E8%BF%87%E7%A8%8B/</guid>
+        <description>&lt;h2 id=&#34;为什么需要一台nas&#34;&gt;为什么需要一台NAS&lt;/h2&gt;
+&lt;p&gt;我之前使用Google Photo管理照片，后转移到iPhone。但是因为Google Photo容量满了之后，使用TakeOut导出了Google里的照片并删除。所以我需要一个工具合并两边的照片。&lt;/p&gt;
+&lt;p&gt;文件同步与存储。我使用Synchting在多个设备，我想要一个永远在线的设备为我的台式与笔记本之中做为中转同步文件。&lt;/p&gt;
+&lt;h2 id=&#34;挑选过程&#34;&gt;挑选过程&lt;/h2&gt;
+&lt;p&gt;我主要从常见的群晖与威联通还是DIY NAS黑晖中进行一个挑选。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;群晖
+&lt;ul&gt;
+&lt;li&gt;群晖看了ds220+和ds920+与ds923+。三个型号，但是三个型号对性能与价格都不够满意。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;威联通
+&lt;ul&gt;
+&lt;li&gt;对其中一款还算满意。但是想到威联通这个系统比较差。但是其实网上对他的评论还凑合。看了App Store中的app里的评分，群辉的drive比威联通好的多。所以我还是想了解一下Diy NAS之后再说&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;diy nas
+&lt;ul&gt;
+&lt;li&gt;难点就是硬件的挑选、安装与后期洗白与升级。不过看起来，其实做起来简单。了解了一下就放弃买威联通决定DIY 黑群晖。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;diy-nas的过程&#34;&gt;DIY NAS的过程&lt;/h2&gt;
+&lt;h3 id=&#34;学习黑晖的相关知识&#34;&gt;学习黑晖的相关知识&lt;/h3&gt;
+&lt;p&gt;黑群的博客&lt;br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://wp.gxnas.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;gxnas的博客&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;http://www.gebi1.com/thread-301584-1-1.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;2022年组建群晖实体机的一些建议&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;挑选硬件&#34;&gt;挑选硬件&lt;/h3&gt;
+&lt;p&gt;作为一个完全的黑群晖小白，我以为黑群晖的硬件像黑苹果一样非常的苛刻。但是想直接抄作业，但是无论是在v2ex、隔壁网、bilibili都没有找到一个合适的黑群晖的配置单。&lt;/p&gt;
+&lt;p&gt;不过在隔壁网、bilibili还是看到黑群晕硬件的挑选政策，主要就是黑群晖对硬件是比较宽容，我基于 &lt;a class=&#34;link&#34; href=&#34;http://www.gebi1.com/thread-301584-1-1.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;2022年组建群晖实体机的一些建议&lt;/a&gt; 这个帖子，挑选了 i3-8100t + z370作为我的主板。&lt;/p&gt;
+&lt;h3 id=&#34;如何安装黑群晖&#34;&gt;如何安装黑群晖&lt;/h3&gt;
+&lt;p&gt;我看了bilibili上的视频&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.bilibili.com/video/BV1z8411G7Rv&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.bilibili.com/video/BV1z8411G7Rv&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;引导
+&lt;ul&gt;
+&lt;li&gt;ARPL
+&lt;ul&gt;
+&lt;li&gt;这个是一个引导制作工具，通过识别配置生成黑群的型号&lt;/li&gt;
+&lt;li&gt;然后生成一个引导&lt;/li&gt;
+&lt;li&gt;然后这个引导就是装在机子上了，然后就可以直接装群辉了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;下载群辉7.1.1
+&lt;ul&gt;
+&lt;li&gt;然后把群辉写到u盘里。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;群晖的后续&#34;&gt;群晖的后续&lt;/h2&gt;
+&lt;h3 id=&#34;洗白&#34;&gt;洗白&lt;/h3&gt;
+&lt;p&gt;b站视频
+闲鱼买码&lt;/p&gt;
+&lt;h4 id=&#34;黑群与白群有什么区别&#34;&gt;黑群与白群有什么区别&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;功能点&lt;/th&gt;
+&lt;th&gt;黑群&lt;/th&gt;
+&lt;th&gt;半洗&lt;/th&gt;
+&lt;th&gt;全洗&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;quickConnection&lt;/td&gt;
+&lt;td&gt;不行&lt;/td&gt;
+&lt;td&gt;不行&lt;/td&gt;
+&lt;td&gt;6可以 7不行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h5 id=&#34;其它可修复的功能点&#34;&gt;其它可修复的功能点&lt;/h5&gt;
+&lt;h5 id=&#34;没有人脸识别&#34;&gt;没有人脸识别&lt;/h5&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.daibei.info/%E9%BB%91%E7%BE%A4%E6%99%96dsm7-1-1-synology-photos%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E8%A1%A5%E4%B8%81.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;黑群晖DSM7.1.1 Synology Photos人脸识别补丁
+&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://wp.gxnas.com/11592.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;黑群晖DSM7.X的Synology Photos套件没有人脸识别的解决方法（2023年1月7日更新）&lt;/a&gt;&lt;/p&gt;
+&lt;h5 id=&#34;不能播放hevc的视频&#34;&gt;不能播放hevc的视频&lt;/h5&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://wp.gxnas.com/11819.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;DSM7.X版本的各种坑，黑群晖安装/升级须知！（2022年7月9日更新）&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;照片管理&#34;&gt;照片管理&lt;/h3&gt;
+&lt;p&gt;导入google照片
+通过google photos里take out导出，然后用github上的工具把json里的信息写到了照片里。然后通过ftp上传到群晖的photos文件夹下。&lt;/p&gt;
+&lt;p&gt;导入icloud照片
+直接在iPhone上安装synogoly driver。&lt;/p&gt;
+&lt;h4 id=&#34;照片去重&#34;&gt;照片去重&lt;/h4&gt;
+&lt;p&gt;通过存储空间分析器找到重复的照片，然后通过cvs转出文件目录，通过脚本删除。类似这样的shell命令。也是在b站上找视频学的。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat needToDelete.txt&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;grep GooglePhotos&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;xargs -I &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; rm -f &lt;span class=&#34;s2&#34;&gt;&amp;#34;{}&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;docker管理&#34;&gt;Docker管理&lt;/h3&gt;
+&lt;p&gt;主要就是感觉下载特别的慢，然后按网上的换源方法没有用。通过搭建了openclash搞透明代理直接解决问题。&lt;/p&gt;
+&lt;h3 id=&#34;图书管理&#34;&gt;图书管理&lt;/h3&gt;
+&lt;p&gt;搭建了calibre-web，但是感觉不好用。就放弃了。目前没有找到好用的方案&lt;/p&gt;
+&lt;h3 id=&#34;影音管理&#34;&gt;影音管理&lt;/h3&gt;
+&lt;p&gt;搭建jellyfin，直接docker一把梭。&lt;/p&gt;
+&lt;h4 id=&#34;jellyfin的硬解&#34;&gt;jellyfin的硬解&lt;/h4&gt;
+&lt;p&gt;方案来源:
+&lt;a class=&#34;link&#34; href=&#34;https://wp.gxnas.com/4912.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;群晖用Jellyfin实现GPU硬解实时转码&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo docker run -d --name jellyfin &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-v /volume1/homes/jellyfin/config:/config &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-v /volume1/homes/qbittorrent/downloads:/video &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-v /volume1/av:/av &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;-p 8096:8096 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;--device&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/dev/dri/renderD128 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;--restart unless-stopped &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;jellyfin/jellyfin
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;与icloud的双向同步&#34;&gt;与icloud的双向同步&lt;/h3&gt;
+&lt;p&gt;先说结果，没有成功。&lt;/p&gt;
+&lt;p&gt;为什么要会有这种需求呢?我这个主要是为了logseq的同步问题。我的目前是通过icloud+syncthing同步。但是比如我在Linux上写了一点Logseq，我就不能在iOS上继续写，必须要先打开Macbook，把数据从syncting上同步过来然后同步到iCloud上才行。如果能有一个第三方双向同步，就可以不要Macbook中转。&lt;/p&gt;
+&lt;p&gt;我找了一下dockerHub，是找到有一些叫icloud相关的docker，结果仔细一下，只能下载iCloud文件不能上传。不是双向同步，没有办法实在解决不了。&lt;/p&gt;
+&lt;p&gt;不过是也不是完全不可以，不过需要一个windows挂在后台，因为Windows有可以双向同步的官方iCloud。&lt;/p&gt;
+&lt;h3 id=&#34;公网访问&#34;&gt;公网访问&lt;/h3&gt;
+&lt;h4 id=&#34;zerotier&#34;&gt;zerotier&lt;/h4&gt;
+&lt;h5 id=&#34;在群晖上安装zerotier&#34;&gt;在群晖上安装zerotier&lt;/h5&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.zerotier.com/devices/synology/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://docs.zerotier.com/devices/synology/&lt;/a&gt;&lt;br&gt;
+直接按官方教程一把梭，然后就可以很方便的访问到nas了 。&lt;/p&gt;
+&lt;h5 id=&#34;安装moon&#34;&gt;安装moon&lt;/h5&gt;
+&lt;p&gt;但是官方速度还是不够快，我们可以通过搭建moon，让速度更快一点。&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/zetion_3/article/details/124046219&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;zerotier搭建moon模式_zetion_3的博客-CSDN博客&lt;/a&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://tvtv.fun/vps/001.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;No.001 简单搭建 Zerotier Moon 为虚拟网络加速 | 开源周末&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;在nas和macOS上同时加入这个moon。&lt;/p&gt;
+&lt;p&gt;但是令人遗憾的是，在移动端不能实用moon加速。&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://discuss.zerotier.com/t/how-to-add-moon-for-ios/7624/2&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;How to add moon for ios? - Community Support / iOS/iPadOS - ZeroTier Discussions&lt;/a&gt;&lt;/p&gt;
+&lt;h5 id=&#34;实用体验&#34;&gt;实用体验&lt;/h5&gt;
+&lt;p&gt;我的大概测试速度是。非局域网访问(但是在一个路由器下，就是套层nat)通过zerotier能跑到500多kb。非局域网加只能无moon能跑到50~100kb。有moon之后速度带到2M多。&lt;/p&gt;
+&lt;p&gt;然后在我搞了公网ipv6之后，这个速度能直接跳满上传，速度直接到了6MB/S。&lt;/p&gt;
+&lt;h4 id=&#34;frp&#34;&gt;frp&lt;/h4&gt;
+&lt;p&gt;但是后者的好处就是，在手机上也能享受公网服务器的加速。这个简单，直接按少数派的教程一把过了。&lt;/p&gt;
+&lt;p&gt;其实本来是不想搞的，但是后面有一天发现zerotier坏了，访问不到了。就搞了frp。但是最后发现是因为openclash和zerotier冲突了。把openclash里的设置改一改，让openclas只代理常见端口就好了。&lt;/p&gt;
+&lt;h4 id=&#34;公网ipv6域名ddns&#34;&gt;公网ipv6+域名+ddns&lt;/h4&gt;
+&lt;p&gt;当前的方法，非常的好用。&lt;/p&gt;
+&lt;p&gt;公网ipv6倒是搞了一下下午，先是光猫改桥接了，但是没有pppoe的账号密码。然后在光猫里的连接信息中把input的type从password改成text。拿到宽带账号密码。&lt;/p&gt;
+&lt;p&gt;然后折腾路由器，openWRT是支持ipv6的，先是按网上的方法折腾了半天都没有成功。最近重置然后跟着一个youtube的视频做，最后成功了。&lt;/p&gt;
+&lt;p&gt;然后是域名。花一块钱买了一个top域名，然后用ddns-go做了ddns。挺好用的，连接挺快的。内网也不用额外处理ip地址。&lt;/p&gt;
+&lt;p&gt;然后ssl证书，阿里云搞了一个免费的。然后nas防火墙把8080、443、还有80端口给关了，这样就访问不了。不会被停家宽。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>一次失败的CI实践</title>
         <link>https://correctroadh.github.io/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/</link>
         <pubDate>Fri, 23 Sep 2022 15:15:45 +0800</pubDate>
@@ -971,7 +1147,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;na&#34;&gt;ref&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;ref&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;na&#34;&gt;className&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;table-root&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;err&#34;&gt;//&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;动态修改css&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;，&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;让位置与光标位置一致&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;err&#34;&gt;//&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;动态修改&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;css&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;，让位置与光标位置一致&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             &lt;span class=&#34;na&#34;&gt;style&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{{&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;top&lt;/span&gt;: &lt;span class=&#34;kt&#34;&gt;top&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;top&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;px&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                 &lt;span class=&#34;nx&#34;&gt;left&lt;/span&gt;: &lt;span class=&#34;kt&#34;&gt;left&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;left&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;px&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
@@ -1348,19 +1524,19 @@
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;err&#34;&gt;left:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;0,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;err&#34;&gt;pos:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;0,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;err&#34;&gt;rect:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;err&#34;&gt;bottom:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;211,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;err&#34;&gt;height:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;25,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;err&#34;&gt;left:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;88,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;err&#34;&gt;right:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;747,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;err&#34;&gt;top:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;186,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;err&#34;&gt;width:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;659,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;err&#34;&gt;x:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;88,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;err&#34;&gt;y:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;186&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;err&#34;&gt;top:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;    left:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;0,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;    pos:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;0,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;    rect:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;        bottom:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;211,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;        height:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;25,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;        left:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;88,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;        right:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;747,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;        top:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;186,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;        width:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;659,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;        x:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;88,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;        y:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;186&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;    top:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
