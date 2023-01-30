@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: correctroadh.github.io
+Token: b0ac775696a8cbf3df560d4a0b1b382945404b261bad099cbf9cc0ce38052464
