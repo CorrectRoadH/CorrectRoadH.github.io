@@ -1,19 +1,33 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='使用rebase对commit进行合并、删除、重写消息、重排序'>
-<title>Git的rebase的拓展</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='AI是否会带来编程上的改变? 开篇 这篇短文是我最近一些想法的总合与扩展，讨论关于Ai对未来编程的一些改变。许多观点只是一个大概的逻辑，希望能和大家一起讨论。
+编程语言上的改变 我前几天在写Flutter，其中把数据类转换成json。我抄了一段
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 factory HistoryPomodoro.fromJson(Map&amp;lt;String, dynamic&amp;gt; json) =&amp;gt; HistoryPomodoro( DateTime.parse(json[&amp;#34;startTime&amp;#34;]), DateTime.parse(json[&amp;#34;endTime&amp;#34;]), json[&amp;#34;time&amp;#34;], json[&amp;#34;note&amp;#34;], json[&amp;#34;status&amp;#34;], ); // a function toJson covert itself all the data to json Map&amp;lt;String, dynamic&amp;gt; toJson() =&amp;gt; { &amp;#34;startTime&amp;#34;: startTime.toIso8601String(), &amp;#34;endTime&amp;#34;: endTime.toIso8601String(), &amp;#34;time&amp;#34;: time, &amp;#34;note&amp;#34;: note, &amp;#34;status&amp;#34;: status, }; 这种写法确实让我觉得太奇怪了，居然要把属性成员名与json字段名一一对应。这也太累了吧。我之前在写其它语言中从来没有这种体验。但是我想或者是因为Dart中没有Java的反射机制这样导致的。
+这是Dart语言的缺陷，但是在Ai的帮助下，我可以快速的生成这些代码，其实写起来并不累。也就是AI弥补了语言本身的缺陷。 过去程序员写C&#43;&#43;时需要进行内存管理会有很重的心智负担。所以人们创造像Java之类的语言来降低人们的心智担负。但是随着未来AI的发展，由AI来生产安全的代码。会不会让C&#43;&#43;这种效率更高的语言渐渐被使用的更多。甚至汇编语言。
+编程工具上的改变 Flutter、Electron给大家带来许多生产力的提升，只要编写一次代码就能在不同平台上运行。但是用起来并没有Native应用舒服。随着AI的发展，编写代码的更加的容易，编写应用的成本更低。写不同平台的Native应用的成本也会降低，那么Native应用是否有可能更也会有更多起来。
+编程范式的改变 平时我们常常要求代码的可读性、就算降低一点性能也是可以接受了。像最近的Copilt X甚至可以帮人们重构现有代码。我认为未来会有一些代码是完全由AI编写的，维护也是由AI维护。比如假设一个函数做了xxx功能，然后公司要求加个yyy功能。程序员可以直接让AI进行重写这个函数。这些代码可能可读性很低，但是AI能看的懂也能继续在上面加功能。这些代码没有什么设计模式、也没有什么开闭原则，但是因为没有这些抽象反而运行效率更高。'>
+<title>AI是否会带来编程上的改变?</title>
 
-<link rel='canonical' href='https://correctroadh.github.io/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/'>
+<link rel='canonical' href='https://correctroadh.github.io/p/ai%E6%98%AF%E5%90%A6%E4%BC%9A%E5%B8%A6%E6%9D%A5%E7%BC%96%E7%A8%8B%E4%B8%8A%E7%9A%84%E6%94%B9%E5%8F%98/'>
 
-<link rel="stylesheet" href="/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css"><meta property='og:title' content='Git的rebase的拓展'>
-<meta property='og:description' content='使用rebase对commit进行合并、删除、重写消息、重排序'>
-<meta property='og:url' content='https://correctroadh.github.io/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/'>
+<link rel="stylesheet" href="/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css"><meta property='og:title' content='AI是否会带来编程上的改变?'>
+<meta property='og:description' content='AI是否会带来编程上的改变? 开篇 这篇短文是我最近一些想法的总合与扩展，讨论关于Ai对未来编程的一些改变。许多观点只是一个大概的逻辑，希望能和大家一起讨论。
+编程语言上的改变 我前几天在写Flutter，其中把数据类转换成json。我抄了一段
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 factory HistoryPomodoro.fromJson(Map&amp;lt;String, dynamic&amp;gt; json) =&amp;gt; HistoryPomodoro( DateTime.parse(json[&amp;#34;startTime&amp;#34;]), DateTime.parse(json[&amp;#34;endTime&amp;#34;]), json[&amp;#34;time&amp;#34;], json[&amp;#34;note&amp;#34;], json[&amp;#34;status&amp;#34;], ); // a function toJson covert itself all the data to json Map&amp;lt;String, dynamic&amp;gt; toJson() =&amp;gt; { &amp;#34;startTime&amp;#34;: startTime.toIso8601String(), &amp;#34;endTime&amp;#34;: endTime.toIso8601String(), &amp;#34;time&amp;#34;: time, &amp;#34;note&amp;#34;: note, &amp;#34;status&amp;#34;: status, }; 这种写法确实让我觉得太奇怪了，居然要把属性成员名与json字段名一一对应。这也太累了吧。我之前在写其它语言中从来没有这种体验。但是我想或者是因为Dart中没有Java的反射机制这样导致的。
+这是Dart语言的缺陷，但是在Ai的帮助下，我可以快速的生成这些代码，其实写起来并不累。也就是AI弥补了语言本身的缺陷。 过去程序员写C&#43;&#43;时需要进行内存管理会有很重的心智负担。所以人们创造像Java之类的语言来降低人们的心智担负。但是随着未来AI的发展，由AI来生产安全的代码。会不会让C&#43;&#43;这种效率更高的语言渐渐被使用的更多。甚至汇编语言。
+编程工具上的改变 Flutter、Electron给大家带来许多生产力的提升，只要编写一次代码就能在不同平台上运行。但是用起来并没有Native应用舒服。随着AI的发展，编写代码的更加的容易，编写应用的成本更低。写不同平台的Native应用的成本也会降低，那么Native应用是否有可能更也会有更多起来。
+编程范式的改变 平时我们常常要求代码的可读性、就算降低一点性能也是可以接受了。像最近的Copilt X甚至可以帮人们重构现有代码。我认为未来会有一些代码是完全由AI编写的，维护也是由AI维护。比如假设一个函数做了xxx功能，然后公司要求加个yyy功能。程序员可以直接让AI进行重写这个函数。这些代码可能可读性很低，但是AI能看的懂也能继续在上面加功能。这些代码没有什么设计模式、也没有什么开闭原则，但是因为没有这些抽象反而运行效率更高。'>
+<meta property='og:url' content='https://correctroadh.github.io/p/ai%E6%98%AF%E5%90%A6%E4%BC%9A%E5%B8%A6%E6%9D%A5%E7%BC%96%E7%A8%8B%E4%B8%8A%E7%9A%84%E6%94%B9%E5%8F%98/'>
 <meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Git' /><meta property='article:published_time' content='2022-09-06T19:35:41&#43;08:00'/><meta property='article:modified_time' content='2022-09-06T19:35:41&#43;08:00'/><meta property='og:image' content='https://correctroadh.github.io/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/cover.png' />
-<meta name="twitter:title" content="Git的rebase的拓展">
-<meta name="twitter:description" content="使用rebase对commit进行合并、删除、重写消息、重排序"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://correctroadh.github.io/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/cover.png' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2023-03-26T13:19:02&#43;08:00'/><meta property='article:modified_time' content='2023-03-26T13:19:02&#43;08:00'/>
+<meta name="twitter:title" content="AI是否会带来编程上的改变?">
+<meta name="twitter:description" content="AI是否会带来编程上的改变? 开篇 这篇短文是我最近一些想法的总合与扩展，讨论关于Ai对未来编程的一些改变。许多观点只是一个大概的逻辑，希望能和大家一起讨论。
+编程语言上的改变 我前几天在写Flutter，其中把数据类转换成json。我抄了一段
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 factory HistoryPomodoro.fromJson(Map&amp;lt;String, dynamic&amp;gt; json) =&amp;gt; HistoryPomodoro( DateTime.parse(json[&amp;#34;startTime&amp;#34;]), DateTime.parse(json[&amp;#34;endTime&amp;#34;]), json[&amp;#34;time&amp;#34;], json[&amp;#34;note&amp;#34;], json[&amp;#34;status&amp;#34;], ); // a function toJson covert itself all the data to json Map&amp;lt;String, dynamic&amp;gt; toJson() =&amp;gt; { &amp;#34;startTime&amp;#34;: startTime.toIso8601String(), &amp;#34;endTime&amp;#34;: endTime.toIso8601String(), &amp;#34;time&amp;#34;: time, &amp;#34;note&amp;#34;: note, &amp;#34;status&amp;#34;: status, }; 这种写法确实让我觉得太奇怪了，居然要把属性成员名与json字段名一一对应。这也太累了吧。我之前在写其它语言中从来没有这种体验。但是我想或者是因为Dart中没有Java的反射机制这样导致的。
+这是Dart语言的缺陷，但是在Ai的帮助下，我可以快速的生成这些代码，其实写起来并不累。也就是AI弥补了语言本身的缺陷。 过去程序员写C&#43;&#43;时需要进行内存管理会有很重的心智负担。所以人们创造像Java之类的语言来降低人们的心智担负。但是随着未来AI的发展，由AI来生产安全的代码。会不会让C&#43;&#43;这种效率更高的语言渐渐被使用的更多。甚至汇编语言。
+编程工具上的改变 Flutter、Electron给大家带来许多生产力的提升，只要编写一次代码就能在不同平台上运行。但是用起来并没有Native应用舒服。随着AI的发展，编写代码的更加的容易，编写应用的成本更低。写不同平台的Native应用的成本也会降低，那么Native应用是否有可能更也会有更多起来。
+编程范式的改变 平时我们常常要求代码的可读性、就算降低一点性能也是可以接受了。像最近的Copilt X甚至可以帮人们重构现有代码。我认为未来会有一些代码是完全由AI编写的，维护也是由AI维护。比如假设一个函数做了xxx功能，然后公司要求加个yyy功能。程序员可以直接让AI进行重写这个函数。这些代码可能可读性很低，但是AI能看的懂也能继续在上面加功能。这些代码没有什么设计模式、也没有什么开闭原则，但是因为没有这些抽象反而运行效率更高。">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
 <script>
 var doNotTrack = false;
@@ -302,12 +316,14 @@ if (!doNotTrack) {
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#简介">简介</a></li>
-    <li><a href="#使用rebase合并commit">使用rebase合并commit</a></li>
-    <li><a href="#调整commit的顺序">调整commit的顺序</a></li>
-    <li><a href="#重写历史commit的消息">重写历史commit的消息</a></li>
-    <li><a href="#删除指定commit">删除指定commit</a></li>
-    <li><a href="#总结">总结</a></li>
+    <li><a href="#ai是否会带来编程上的改变">AI是否会带来编程上的改变?</a>
+      <ol>
+        <li><a href="#开篇">开篇</a></li>
+        <li><a href="#编程语言上的改变">编程语言上的改变</a></li>
+        <li><a href="#编程工具上的改变">编程工具上的改变</a></li>
+        <li><a href="#编程范式的改变">编程范式的改变</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -319,33 +335,17 @@ if (!doNotTrack) {
 
 
             <main class="main full-width">
-    <article class="has-image main-article">
+    <article class="main-article">
     <header class="article-header">
-        <div class="article-image">
-            <a href="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/">
-                <img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/cover_hu9a7624b95bd32cccd49c073b1ec448b4_108027_800x0_resize_box_3.png"
-                        srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/cover_hu9a7624b95bd32cccd49c073b1ec448b4_108027_800x0_resize_box_3.png 800w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/cover_hu9a7624b95bd32cccd49c073b1ec448b4_108027_1600x0_resize_box_3.png 1600w"
-                        width="800" 
-                        height="480" 
-                        loading="lazy"
-                        alt="Featured image of post Git的rebase的拓展" />
-                
-            </a>
-        </div>
-    
 
     <div class="article-details">
     
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/">Git的rebase的拓展</a>
+            <a href="/p/ai%E6%98%AF%E5%90%A6%E4%BC%9A%E5%B8%A6%E6%9D%A5%E7%BC%96%E7%A8%8B%E4%B8%8A%E7%9A%84%E6%94%B9%E5%8F%98/">AI是否会带来编程上的改变?</a>
         </h2>
     
-        
-        <h3 class="article-subtitle">
-            使用rebase对commit进行合并、删除、重写消息、重排序
-        </h3>
         
     </div>
 
@@ -365,7 +365,7 @@ if (!doNotTrack) {
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Sep 06, 2022</time>
+                <time class="article-time--published">Mar 26, 2023</time>
             </div>
         
 
@@ -395,260 +395,62 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="简介">简介</h2>
-<p>最近在看<strong>raywenderlich</strong>家的<em>Advanced Git</em>，<strong>raywenderlich</strong>的出的书，我一直挺喜欢的。这本<em>Advanced Git</em>第三章讲了一些关于<code>rebase</code>的拓展操作让我觉得非常的有用。所以在这里记录了一下。</p>
-<p>提供一个供练习的git库 <a class="link" href="https://github.com/CorrectRoadH/git-practice"  target="_blank" rel="noopener"
-    >https://github.com/CorrectRoadH/git-practice</a></p>
-<h2 id="使用rebase合并commit">使用rebase合并commit</h2>
-<p>如果我们有多个commit时，如果我们想把多个commit合并成一个时</p>
-<p><code>git log --oneline --graph</code></p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/1.png"
-	width="1094"
-	height="428"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/1_hu8ed5266b39fa5c8ca6ad9323d3248c74_183799_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/1_hu8ed5266b39fa5c8ca6ad9323d3248c74_183799_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="1"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="255"
-		data-flex-basis="613px"
-	
-></p>
-<p>以这个log为例，我们想把commit 2 与 3 合并成一个commit。</p>
-<p>我们就需要<code>rebase -i </code>到2之前的commit，比如这里为<code>git rebase 20f0d49</code>。</p>
-<p>然后我们就进到这样的一个页面。</p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/2.png"
-	width="1184"
-	height="724"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/2_hu00fb851e40ad9e37c0133d6e39d5feab_382335_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/2_hu00fb851e40ad9e37c0133d6e39d5feab_382335_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="163"
-		data-flex-basis="392px"
-	
-></p>
-<p>我们把3的<code>pick</code>改成<code>squash</code>或者<code>s</code>都行，这样3与3的上面那个(2)都会进行合并。</p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/3.png"
-	width="326"
-	height="240"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/3_hu794b97485123b64ac3c94bef4fe117c2_49112_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/3_hu794b97485123b64ac3c94bef4fe117c2_49112_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="135"
-		data-flex-basis="326px"
-	
-></p>
-<p>然后退出(esc,:wq)，看到这里应该不会有不会用vim的同学吧。🤔</p>
-<p>在退出vim之后，又会进到另一个vim。在这里编辑2、3所合并的新commit的commit message。</p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/4.png"
-	width="1238"
-	height="1214"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/4_hu447063b46b4231981f15fedfcf00bfa9_588104_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/4_hu447063b46b4231981f15fedfcf00bfa9_588104_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="101"
-		data-flex-basis="244px"
-	
-></p>
-<p>在这里，我们直接<code>gg</code>、<code>dG</code>，把整个文件清空，然后写上整合2和3的新commit的消息。</p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/5.png"
-	width="342"
-	height="416"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/5_hu25232beea5695d82ff37fddf9edbdb32_51064_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/5_hu25232beea5695d82ff37fddf9edbdb32_51064_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="82"
-		data-flex-basis="197px"
-	
-></p>
-<p>继续保存退出。</p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/6.png"
-	width="1068"
-	height="324"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/6_hu0946562b36029eca3d4cf6dd70dfcc58_145950_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/6_hu0946562b36029eca3d4cf6dd70dfcc58_145950_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="329"
-		data-flex-basis="791px"
-	
-></p>
-<p>现在我们看git log。合并完成!</p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/7.png"
-	width="610"
-	height="296"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/7_hu0bb664a9bc1f012f2603a488f98ade41_66219_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/7_hu0bb664a9bc1f012f2603a488f98ade41_66219_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="206"
-		data-flex-basis="494px"
-	
-></p>
-<h2 id="调整commit的顺序">调整commit的顺序</h2>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/8.png"
-	width="920"
-	height="318"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/8_hu5fa7bcba172a7ccaf53bc2cbadd7b0b8_109582_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/8_hu5fa7bcba172a7ccaf53bc2cbadd7b0b8_109582_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="289"
-		data-flex-basis="694px"
-	
-></p>
-<p>我们想把2与3的位置交换的话</p>
-<p><code>git rebase -i 1的hash</code></p>
-<p>然后进入VIM</p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/9.png"
-	width="1530"
-	height="1756"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/9_hu884f7619fc0eacf315267a498c632eb4_951830_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/9_hu884f7619fc0eacf315267a498c632eb4_951830_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="87"
-		data-flex-basis="209px"
-	
-></p>
-<p>交换你想交换的commit的顺序。(比如可以使用<code>dd</code>和<code>p</code>)</p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/10.png"
-	width="1078"
-	height="412"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/10_hua87bbc8fa20a60d8024484da8d89fce8_165879_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/10_hua87bbc8fa20a60d8024484da8d89fce8_165879_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="261"
-		data-flex-basis="627px"
-	
-></p>
-<p>然后退出vim就可以了</p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/11.png"
-	width="1604"
-	height="156"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/11_huc0bd84a8b3fd8ac60b60beb707d1f142_60198_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/11_huc0bd84a8b3fd8ac60b60beb707d1f142_60198_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="1028"
-		data-flex-basis="2467px"
-	
-></p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/12.png"
-	width="580"
-	height="310"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/12_hu3577cb320b5f4c69b7d8ec8253d6f1ce_63988_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/12_hu3577cb320b5f4c69b7d8ec8253d6f1ce_63988_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="187"
-		data-flex-basis="449px"
-	
-></p>
-<p>交换成功!</p>
-<h2 id="重写历史commit的消息">重写历史commit的消息</h2>
-<p>同上，直接rebase -i进去，然后修改的commit消息。</p>
-<p>在你要重写历史的commit之前把<code>pick</code>改成<code>reword</code>或者 <code>r</code></p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/13.png"
-	width="1122"
-	height="338"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/13_hu6ddfb6a3828528e183a8dc759215a889_170696_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/13_hu6ddfb6a3828528e183a8dc759215a889_170696_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="331"
-		data-flex-basis="796px"
-	
-></p>
-<p>然后保存退出vim，接下来进来这里，</p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/14.png"
-	width="1716"
-	height="902"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/14_hu08b2afbe9f70b3698d3e6e8c25f3b241_416334_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/14_hu08b2afbe9f70b3698d3e6e8c25f3b241_416334_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="190"
-		data-flex-basis="456px"
-	
-></p>
-<p>这里我们可以直接清空，然后把新的 commit 消息写下。然后保存退出就ok了。</p>
-<h2 id="删除指定commit">删除指定commit</h2>
-<p>同上，进入到rebase interact之后，我们把要删的commit前面的pick改成d或者drop之后保存退出就ok了。</p>
-<p><img src="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/15.png"
-	width="340"
-	height="212"
-	srcset="/p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/15_hua139966dc6d814c4d74c998b0cbf4283_35287_480x0_resize_box_3.png 480w, /p/git%E7%9A%84rebase%E7%9A%84%E6%8B%93%E5%B1%95/15_hua139966dc6d814c4d74c998b0cbf4283_35287_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="160"
-		data-flex-basis="384px"
-	
-></p>
-<h2 id="总结">总结</h2>
-<p>rebase通过<code>-i</code>(interact)提供了大量有用的功能，同时非常的好记、好上手。</p>
+    <h2 id="ai是否会带来编程上的改变">AI是否会带来编程上的改变?</h2>
+<h3 id="开篇">开篇</h3>
+<p>这篇短文是我最近一些想法的总合与扩展，讨论关于Ai对未来编程的一些改变。许多观点只是一个大概的逻辑，希望能和大家一起讨论。</p>
+<h3 id="编程语言上的改变">编程语言上的改变</h3>
+<p>我前几天在写Flutter，其中把数据类转换成json。我抄了一段</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl">    <span class="kd">factory</span> <span class="n">HistoryPomodoro</span><span class="p">.</span><span class="n">fromJson</span><span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">dynamic</span><span class="o">&gt;</span> <span class="n">json</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">HistoryPomodoro</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">DateTime</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="n">json</span><span class="p">[</span><span class="s2">&#34;startTime&#34;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">DateTime</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="n">json</span><span class="p">[</span><span class="s2">&#34;endTime&#34;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">json</span><span class="p">[</span><span class="s2">&#34;time&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="n">json</span><span class="p">[</span><span class="s2">&#34;note&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="n">json</span><span class="p">[</span><span class="s2">&#34;status&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// a function toJson covert itself all the data to json
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">dynamic</span><span class="o">&gt;</span> <span class="n">toJson</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;startTime&#34;</span><span class="o">:</span> <span class="n">startTime</span><span class="p">.</span><span class="n">toIso8601String</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;endTime&#34;</span><span class="o">:</span> <span class="n">endTime</span><span class="p">.</span><span class="n">toIso8601String</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;time&#34;</span><span class="o">:</span> <span class="n">time</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;note&#34;</span><span class="o">:</span> <span class="n">note</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;status&#34;</span><span class="o">:</span> <span class="n">status</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这种写法确实让我觉得太奇怪了，居然要把属性成员名与json字段名一一对应。这也太累了吧。我之前在写其它语言中从来没有这种体验。但是我想或者是因为Dart中没有Java的反射机制这样导致的。</p>
+<p>这是Dart语言的缺陷，但是在Ai的帮助下，我可以快速的生成这些代码，其实写起来并不累。也就是AI弥补了语言本身的缺陷。
+过去程序员写C++时需要进行内存管理会有很重的心智负担。所以人们创造像Java之类的语言来降低人们的心智担负。但是随着未来AI的发展，由AI来生产安全的代码。会不会让C++这种效率更高的语言渐渐被使用的更多。甚至汇编语言。</p>
+<h3 id="编程工具上的改变">编程工具上的改变</h3>
+<p>Flutter、Electron给大家带来许多生产力的提升，只要编写一次代码就能在不同平台上运行。但是用起来并没有Native应用舒服。随着AI的发展，编写代码的更加的容易，编写应用的成本更低。写不同平台的Native应用的成本也会降低，那么Native应用是否有可能更也会有更多起来。</p>
+<h3 id="编程范式的改变">编程范式的改变</h3>
+<p>平时我们常常要求代码的可读性、就算降低一点性能也是可以接受了。像最近的Copilt X甚至可以帮人们重构现有代码。我认为未来会有一些代码是完全由AI编写的，维护也是由AI维护。比如假设一个函数做了xxx功能，然后公司要求加个yyy功能。程序员可以直接让AI进行重写这个函数。这些代码可能可读性很低，但是AI能看的懂也能继续在上面加功能。这些代码没有什么设计模式、也没有什么开闭原则，但是因为没有这些抽象反而运行效率更高。</p>
 
 </section>
 
 
     <footer class="article-footer">
     
-    <section class="article-tags">
-        
-            <a href="/tags/git/">Git</a>
-        
-    </section>
-
 
     
     <section class="article-copyright">
