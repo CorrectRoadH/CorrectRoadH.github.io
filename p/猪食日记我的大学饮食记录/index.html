@@ -10,7 +10,7 @@
 
 <link rel='canonical' href='https://correctroadh.github.io/p/%E7%8C%AA%E9%A3%9F%E6%97%A5%E8%AE%B0%E6%88%91%E7%9A%84%E5%A4%A7%E5%AD%A6%E9%A5%AE%E9%A3%9F%E8%AE%B0%E5%BD%95/'>
 
-<link rel="stylesheet" href="/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css"><meta property='og:title' content='猪食日记🐷我的大学饮食记录'>
+<link rel="stylesheet" href="/scss/style.min.ff300df33b80e2ac49809c825614392ed1c7b27591d65d3c4043602cd162e25f.css"><meta property='og:title' content='猪食日记🐷我的大学饮食记录'>
 <meta property='og:description' content='大家好，我是CorrectRoadH，一名大学生，这个猪食日记是我大学生活至今的一部分饮食记录。一方面是记录另一方面是给自己避坑，防止下次吃饭再吃到同一家不好吃的饭。😆
 我个人的口味是不吃辣的，所以可能会有一部分或许好吃，但是会辣的食物被我评到低分。🥸
 我的猪食日记是记录在Craft里的，还有一部分早期的是记录在Notion中，大概从大一就开始记录了，现在正好发现Craft有分享功能，就分享出来给大家排排坑。
@@ -164,7 +164,6 @@ if (!doNotTrack) {
         
         
         
-
         <li >
             <a href='/' target="_blank">
                 
@@ -185,7 +184,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/about/' >
                 
@@ -205,7 +203,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/' >
                 
@@ -224,7 +221,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/archives/' >
                 
@@ -245,7 +241,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/search/' >
                 
@@ -445,6 +440,8 @@ if (!doNotTrack) {
 </style>
 
 <script>
+    let utterancesLoaded = false;
+
     function setUtterancesTheme(theme) {
         let utterances = document.querySelector('.utterances iframe');
         if (utterances) {
@@ -460,10 +457,14 @@ if (!doNotTrack) {
 
     addEventListener('message', event => {
         if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
         setUtterancesTheme(document.documentElement.dataset.scheme)
     });
 
     window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
         setUtterancesTheme(e.detail)
     })
 </script>
@@ -482,7 +483,7 @@ if (!doNotTrack) {
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.16.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.17.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 

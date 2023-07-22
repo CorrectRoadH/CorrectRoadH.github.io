@@ -6,7 +6,31 @@
         <description>Recent content in Tags on CorrectRoad&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Fri, 23 Sep 2022 15:15:45 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 22 Jul 2023 13:40:55 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>CasaOS</title>
+        <link>https://correctroadh.github.io/tags/casaos/</link>
+        <pubDate>Sat, 22 Jul 2023 13:40:55 +0800</pubDate>
+        
+        <guid>https://correctroadh.github.io/tags/casaos/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Frontend</title>
+        <link>https://correctroadh.github.io/tags/frontend/</link>
+        <pubDate>Sat, 22 Jul 2023 13:40:55 +0800</pubDate>
+        
+        <guid>https://correctroadh.github.io/tags/frontend/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Vue</title>
+        <link>https://correctroadh.github.io/tags/vue/</link>
+        <pubDate>Sat, 22 Jul 2023 13:40:55 +0800</pubDate>
+        
+        <guid>https://correctroadh.github.io/tags/vue/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>CICD</title>
         <link>https://correctroadh.github.io/tags/cicd/</link>
         <pubDate>Fri, 23 Sep 2022 15:15:45 +0800</pubDate>

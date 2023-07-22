@@ -34,7 +34,7 @@ I3WM 的配置 由 Mike Gancarz 所提出的 UNIX 哲学中的第五条'>
 
 <link rel='canonical' href='https://correctroadh.github.io/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm/'>
 
-<link rel="stylesheet" href="/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css"><meta property='og:title' content='深入浅出配置I3WM'>
+<link rel="stylesheet" href="/scss/style.min.ff300df33b80e2ac49809c825614392ed1c7b27591d65d3c4043602cd162e25f.css"><meta property='og:title' content='深入浅出配置I3WM'>
 <meta property='og:description' content='什么是I3WM 我可以从本文中学习到什么? 学习完本文,你将学会配置一个漂亮的 I3WM 桌面.
 有什么要求吗?
 本文需要你拥有一点 Linux 基础,比如会使用 VIM.
@@ -235,7 +235,6 @@ if (!doNotTrack) {
         
         
         
-
         <li >
             <a href='/' target="_blank">
                 
@@ -256,7 +255,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/about/' >
                 
@@ -276,7 +274,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/' >
                 
@@ -295,7 +292,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/archives/' >
                 
@@ -316,7 +312,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/search/' >
                 
@@ -765,6 +760,8 @@ if (!doNotTrack) {
 </style>
 
 <script>
+    let utterancesLoaded = false;
+
     function setUtterancesTheme(theme) {
         let utterances = document.querySelector('.utterances iframe');
         if (utterances) {
@@ -780,10 +777,14 @@ if (!doNotTrack) {
 
     addEventListener('message', event => {
         if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
         setUtterancesTheme(document.documentElement.dataset.scheme)
     });
 
     window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
         setUtterancesTheme(e.detail)
     })
 </script>
@@ -802,7 +803,7 @@ if (!doNotTrack) {
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.16.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.17.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 

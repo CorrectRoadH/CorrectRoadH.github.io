@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://correctroadh.github.io/p/%E6%88%91%E7%9A%84%E5%BE%AE%E7%A7%AF%E5%88%86%E7%AC%94%E8%AE%B0/'>
 
-<link rel="stylesheet" href="/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css"><meta property='og:title' content='我的微积分笔记'>
+<link rel="stylesheet" href="/scss/style.min.ff300df33b80e2ac49809c825614392ed1c7b27591d65d3c4043602cd162e25f.css"><meta property='og:title' content='我的微积分笔记'>
 <meta property='og:description' content='关注解题步骤，适合考前速通或者复习。'>
 <meta property='og:url' content='https://correctroadh.github.io/p/%E6%88%91%E7%9A%84%E5%BE%AE%E7%A7%AF%E5%88%86%E7%AC%94%E8%AE%B0/'>
 <meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
@@ -151,7 +151,6 @@ if (!doNotTrack) {
         
         
         
-
         <li >
             <a href='/' target="_blank">
                 
@@ -172,7 +171,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/about/' >
                 
@@ -192,7 +190,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/' >
                 
@@ -211,7 +208,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/archives/' >
                 
@@ -232,7 +228,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/search/' >
                 
@@ -418,6 +413,8 @@ if (!doNotTrack) {
 </style>
 
 <script>
+    let utterancesLoaded = false;
+
     function setUtterancesTheme(theme) {
         let utterances = document.querySelector('.utterances iframe');
         if (utterances) {
@@ -433,10 +430,14 @@ if (!doNotTrack) {
 
     addEventListener('message', event => {
         if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
         setUtterancesTheme(document.documentElement.dataset.scheme)
     });
 
     window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
         setUtterancesTheme(e.detail)
     })
 </script>
@@ -455,7 +456,7 @@ if (!doNotTrack) {
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.16.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.17.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 

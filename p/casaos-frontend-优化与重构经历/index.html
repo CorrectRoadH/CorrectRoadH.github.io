@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='最近成为 IceWhale 的实习生🥳。主要工作是分配到了后端的开发，但是看到 CasaOS-UI 的这个代码质量确实不能忍呀🤪。直接上手重构，还好同事们都比较支持。😚看来 IceWhale 这个家还是不能没有我呀，也希望我在未来能成为像 Twitter 上那些前端网红吧。
+目前的问题与目标 先让我们看看 CasaOS-UI 的问题。
+代码版本管理混乱，分叉严重 目前 CasaOS-UI 有三个分支 main、0.4.6(未来发版的本来)、 特殊版(做一些特殊的功能)。其中每个 branch 都有特殊的代码，从任何一个分支 merge 或者 rebase 过去都要解决一堆冲突的问题。 这种问题说实话，我还真是第一次见。😗看来之前的同事在这堆屎山上确实糊了不少屎上去。
+组件难以阅读 原来的组件许多都长达几百行，大量的 methods 和 data，看到长长 html 就能让人推动阅读欲望。 随便来一张截图来看看🤣 相信大家已经有点头晕了吧。
+像这个文件可是高达 1964 行呢!
+代码冗余 组件中存在大量没有用到函数、变量，还有一些被注释掉的功能、业务代码。这些只通过看其实根本不知道哪些会被调用到，哪些不会被调用到，在之前的开发中，因为这个问题，导致了许多时间的浪费。
+带大家看看一些吧🤣 没有被用到的 mixins
+在实际中永远不会被调到到的 set 函数(当然目前这里已经改了)
+使用 Mixins 来实现复用，而不是 UseHook 使用 Mixins 来实现复用，而不是 UseHook，这个最大的问题就是很难判断目前复用的这个函数是来自哪个 Mixins 的，和某个 Mixins 到底有没有被使用到。当然或者能有什么插件能解决这个问题，不过目前我是不知道的。
+其它问题 CSS live load 无效 这个应该算是其它工具链没有配置好，导致修改 CSS 之后需要手动刷新页面才能生效。
+CSS 混乱 同时使用了 Sass、Bulma CSS，导致代码风格不统一，难以维护。还有大量的 CSS 是写在组件外面。'>
+<title>CasaOS Frontend 优化与重构经历</title>
+
+<link rel='canonical' href='https://correctroadh.github.io/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/'>
+
+<link rel="stylesheet" href="/scss/style.min.ff300df33b80e2ac49809c825614392ed1c7b27591d65d3c4043602cd162e25f.css"><meta property='og:title' content='CasaOS Frontend 优化与重构经历'>
+<meta property='og:description' content='最近成为 IceWhale 的实习生🥳。主要工作是分配到了后端的开发，但是看到 CasaOS-UI 的这个代码质量确实不能忍呀🤪。直接上手重构，还好同事们都比较支持。😚看来 IceWhale 这个家还是不能没有我呀，也希望我在未来能成为像 Twitter 上那些前端网红吧。
+目前的问题与目标 先让我们看看 CasaOS-UI 的问题。
+代码版本管理混乱，分叉严重 目前 CasaOS-UI 有三个分支 main、0.4.6(未来发版的本来)、 特殊版(做一些特殊的功能)。其中每个 branch 都有特殊的代码，从任何一个分支 merge 或者 rebase 过去都要解决一堆冲突的问题。 这种问题说实话，我还真是第一次见。😗看来之前的同事在这堆屎山上确实糊了不少屎上去。
+组件难以阅读 原来的组件许多都长达几百行，大量的 methods 和 data，看到长长 html 就能让人推动阅读欲望。 随便来一张截图来看看🤣 相信大家已经有点头晕了吧。
+像这个文件可是高达 1964 行呢!
+代码冗余 组件中存在大量没有用到函数、变量，还有一些被注释掉的功能、业务代码。这些只通过看其实根本不知道哪些会被调用到，哪些不会被调用到，在之前的开发中，因为这个问题，导致了许多时间的浪费。
+带大家看看一些吧🤣 没有被用到的 mixins
+在实际中永远不会被调到到的 set 函数(当然目前这里已经改了)
+使用 Mixins 来实现复用，而不是 UseHook 使用 Mixins 来实现复用，而不是 UseHook，这个最大的问题就是很难判断目前复用的这个函数是来自哪个 Mixins 的，和某个 Mixins 到底有没有被使用到。当然或者能有什么插件能解决这个问题，不过目前我是不知道的。
+其它问题 CSS live load 无效 这个应该算是其它工具链没有配置好，导致修改 CSS 之后需要手动刷新页面才能生效。
+CSS 混乱 同时使用了 Sass、Bulma CSS，导致代码风格不统一，难以维护。还有大量的 CSS 是写在组件外面。'>
+<meta property='og:url' content='https://correctroadh.github.io/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/'>
+<meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='CasaOS' /><meta property='article:tag' content='Vue' /><meta property='article:tag' content='Frontend' /><meta property='article:published_time' content='2023-07-22T13:40:55&#43;08:00'/><meta property='article:modified_time' content='2023-07-22T13:40:55&#43;08:00'/><meta property='og:image' content='https://correctroadh.github.io/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/cover.png' />
+<meta name="twitter:title" content="CasaOS Frontend 优化与重构经历">
+<meta name="twitter:description" content="最近成为 IceWhale 的实习生🥳。主要工作是分配到了后端的开发，但是看到 CasaOS-UI 的这个代码质量确实不能忍呀🤪。直接上手重构，还好同事们都比较支持。😚看来 IceWhale 这个家还是不能没有我呀，也希望我在未来能成为像 Twitter 上那些前端网红吧。
+目前的问题与目标 先让我们看看 CasaOS-UI 的问题。
+代码版本管理混乱，分叉严重 目前 CasaOS-UI 有三个分支 main、0.4.6(未来发版的本来)、 特殊版(做一些特殊的功能)。其中每个 branch 都有特殊的代码，从任何一个分支 merge 或者 rebase 过去都要解决一堆冲突的问题。 这种问题说实话，我还真是第一次见。😗看来之前的同事在这堆屎山上确实糊了不少屎上去。
+组件难以阅读 原来的组件许多都长达几百行，大量的 methods 和 data，看到长长 html 就能让人推动阅读欲望。 随便来一张截图来看看🤣 相信大家已经有点头晕了吧。
+像这个文件可是高达 1964 行呢!
+代码冗余 组件中存在大量没有用到函数、变量，还有一些被注释掉的功能、业务代码。这些只通过看其实根本不知道哪些会被调用到，哪些不会被调用到，在之前的开发中，因为这个问题，导致了许多时间的浪费。
+带大家看看一些吧🤣 没有被用到的 mixins
+在实际中永远不会被调到到的 set 函数(当然目前这里已经改了)
+使用 Mixins 来实现复用，而不是 UseHook 使用 Mixins 来实现复用，而不是 UseHook，这个最大的问题就是很难判断目前复用的这个函数是来自哪个 Mixins 的，和某个 Mixins 到底有没有被使用到。当然或者能有什么插件能解决这个问题，不过目前我是不知道的。
+其它问题 CSS live load 无效 这个应该算是其它工具链没有配置好，导致修改 CSS 之后需要手动刷新页面才能生效。
+CSS 混乱 同时使用了 Sass、Bulma CSS，导致代码风格不统一，难以维护。还有大量的 CSS 是写在组件外面。"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://correctroadh.github.io/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/cover.png' />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-PDJXNW2S9J', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huac971efb212d008eef368e3014548668_655784_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐍</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">CorrectRoad&#39;s Blog</a></h1>
+            <h2 class="site-description">君子生非异也，善假于物也。</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CorrectRoadH'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com/correctroad'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' target="_blank">
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M9 11l-4 4l4 4m-4 -4h11a4 4 0 0 0 0 -8h-1" />
+</svg>
+
+
+
+                
+                <span>Refresh</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#目前的问题与目标">目前的问题与目标</a>
+      <ol>
+        <li><a href="#代码版本管理混乱分叉严重">代码版本管理混乱，分叉严重</a></li>
+        <li><a href="#组件难以阅读">组件难以阅读</a></li>
+        <li><a href="#代码冗余">代码冗余</a></li>
+        <li><a href="#使用-mixins-来实现复用而不是-usehook">使用 Mixins 来实现复用，而不是 UseHook</a></li>
+        <li><a href="#其它问题">其它问题</a>
+          <ol>
+            <li><a href="#css-live-load-无效">CSS live load 无效</a></li>
+            <li><a href="#css-混乱">CSS 混乱</a></li>
+          </ol>
+        </li>
+        <li><a href="#目标">目标</a></li>
+      </ol>
+    </li>
+    <li><a href="#重构的内容">重构的内容</a>
+      <ol>
+        <li><a href="#从-options-api-重构成-composition-api">从 Options API 重构成 Composition API</a></li>
+        <li><a href="#从-mixins-重构成-usehook">从 Mixins 重构成 UseHook</a></li>
+        <li><a href="#代码结构的优化">代码结构的优化</a></li>
+      </ol>
+    </li>
+    <li><a href="#还没有解决的问题">还没有解决的问题</a>
+      <ol>
+        <li><a href="#css-的问题">CSS 的问题</a></li>
+        <li><a href="#代码分叉的问题">代码分叉的问题</a></li>
+        <li><a href="#提取一些公共的组件">提取一些公共的组件</a></li>
+        <li><a href="#其它工具">其它工具</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/">
+                <img src="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/cover_hu8fe515577ad132023e18faa427bca333_324433_800x0_resize_box_3.png"
+                        srcset="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/cover_hu8fe515577ad132023e18faa427bca333_324433_800x0_resize_box_3.png 800w, /p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/cover_hu8fe515577ad132023e18faa427bca333_324433_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="300" 
+                        loading="lazy"
+                        alt="Featured image of post CasaOS Frontend 优化与重构经历" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/">CasaOS Frontend 优化与重构经历</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 22, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>最近成为 IceWhale 的实习生🥳。主要工作是分配到了后端的开发，但是看到 CasaOS-UI 的这个代码质量确实不能忍呀🤪。直接上手重构，还好同事们都比较支持。😚看来 IceWhale 这个家还是不能没有我呀，也希望我在未来能成为像 Twitter 上那些前端网红吧。</p>
+<h2 id="目前的问题与目标">目前的问题与目标</h2>
+<p>先让我们看看 CasaOS-UI 的问题。</p>
+<h3 id="代码版本管理混乱分叉严重">代码版本管理混乱，分叉严重</h3>
+<p>目前 CasaOS-UI 有三个分支 main、0.4.6(未来发版的本来)、 特殊版(做一些特殊的功能)。其中每个 branch 都有特殊的代码，从任何一个分支 merge 或者 rebase 过去都要解决一堆冲突的问题。
+这种问题说实话，我还真是第一次见。😗看来之前的同事在这堆屎山上确实糊了不少屎上去。</p>
+<h3 id="组件难以阅读">组件难以阅读</h3>
+<p>原来的组件许多都长达几百行，大量的 methods 和 data，看到长长 html 就能让人推动阅读欲望。
+随便来一张截图来看看🤣 相信大家已经有点头晕了吧。</p>
+<p><img src="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/1.png"
+	width="2104"
+	height="2076"
+	srcset="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/1_hu08a6230b4cd6a720a762ef2cacdd5f6f_653018_480x0_resize_box_3.png 480w, /p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/1_hu08a6230b4cd6a720a762ef2cacdd5f6f_653018_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="长长的html"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="101"
+		data-flex-basis="243px"
+	
+></p>
+<p>像这个文件可是高达 1964 行呢!</p>
+<p><img src="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/2.png"
+	width="1448"
+	height="1700"
+	srcset="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/2_hu343e2e4d0cce60bd61d69b49be1456e0_297219_480x0_resize_box_3.png 480w, /p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/2_hu343e2e4d0cce60bd61d69b49be1456e0_297219_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="高达 1964 行的文件"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="85"
+		data-flex-basis="204px"
+	
+></p>
+<h3 id="代码冗余">代码冗余</h3>
+<p>组件中存在大量没有用到函数、变量，还有一些被注释掉的功能、业务代码。这些只通过看其实根本不知道哪些会被调用到，哪些不会被调用到，在之前的开发中，因为这个问题，导致了许多时间的浪费。</p>
+<p>带大家看看一些吧🤣
+没有被用到的 mixins</p>
+<p><img src="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/3.png"
+	width="1514"
+	height="832"
+	srcset="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/3_hue73cc9473d4dde6b665881e76cc491ab_131030_480x0_resize_box_3.png 480w, /p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/3_hue73cc9473d4dde6b665881e76cc491ab_131030_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="没有被用到的 mixins"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="181"
+		data-flex-basis="436px"
+	
+></p>
+<p>在实际中永远不会被调到到的 set 函数(当然目前这里已经改了)</p>
+<p><img src="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/4.png"
+	width="1030"
+	height="630"
+	srcset="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/4_huc5ab9498afda6eae0f40fd81972fa830_86905_480x0_resize_box_3.png 480w, /p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/4_huc5ab9498afda6eae0f40fd81972fa830_86905_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="在实际中永远不会被调到到的 set 函数"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="163"
+		data-flex-basis="392px"
+	
+></p>
+<h3 id="使用-mixins-来实现复用而不是-usehook">使用 Mixins 来实现复用，而不是 UseHook</h3>
+<p>使用 Mixins 来实现复用，而不是 UseHook，这个最大的问题就是很难判断目前复用的这个函数是来自哪个 Mixins 的，和某个 Mixins 到底有没有被使用到。当然或者能有什么插件能解决这个问题，不过目前我是不知道的。</p>
+<h3 id="其它问题">其它问题</h3>
+<h4 id="css-live-load-无效">CSS live load 无效</h4>
+<p>这个应该算是其它工具链没有配置好，导致修改 CSS 之后需要手动刷新页面才能生效。</p>
+<h4 id="css-混乱">CSS 混乱</h4>
+<p>同时使用了 Sass、Bulma CSS，导致代码风格不统一，难以维护。还有大量的 CSS 是写在组件外面。</p>
+<h3 id="目标">目标</h3>
+<p>重构的目标肯定是为了还技术债，降低未来的开发、维护成本。就 CasaOS-UI 的重构还有一个目标就是为了逐步转移以老旧的技术栈，在未来的开发能转移至 Vue3 中。</p>
+<h2 id="重构的内容">重构的内容</h2>
+<h3 id="从-options-api-重构成-composition-api">从 Options API 重构成 Composition API</h3>
+<p>基本没有太大问题，直接把 data 里的数据放到 ref、reactive 里就好了。
+props用<code>defineProps</code>用重写，而本来methods中的方法用剪头函数重写，基本都没有遇到问题。</p>
+<h3 id="从-mixins-重构成-usehook">从 Mixins 重构成 UseHook</h3>
+<p>原来的通过 Mixins 来利用代码的方式，确实让我感觉不舒服，不过这个复用也是非常简单的。基本上就是改改就完成了。</p>
+<h3 id="代码结构的优化">代码结构的优化</h3>
+<p>本来代码就是一个个组件，现在代码通过多级文件夹来组合代码，尽量对外来屏蔽小组件，只暴露应该暴露的组件。</p>
+<p>比如这个组件本来是一个 247 行的组件，然后我把它拆成多个小组件，但是这些小组件没有 export 出去。让代码看起来更舒服了一些。👀
+<img src="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/old.png"
+	width="640"
+	height="202"
+	srcset="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/old_hu3be2ca1a5d7745439f4d3a9e4821676d_23192_480x0_resize_box_3.png 480w, /p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/old_hu3be2ca1a5d7745439f4d3a9e4821676d_23192_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="old code"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="316"
+		data-flex-basis="760px"
+	
+>
+<img src="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/new.png"
+	width="592"
+	height="654"
+	srcset="/p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/new_hu11506c527940d7bbc054a0c1c25dbc55_67867_480x0_resize_box_3.png 480w, /p/casaos-frontend-%E4%BC%98%E5%8C%96%E4%B8%8E%E9%87%8D%E6%9E%84%E7%BB%8F%E5%8E%86/new_hu11506c527940d7bbc054a0c1c25dbc55_67867_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="new code"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="90"
+		data-flex-basis="217px"
+	
+></p>
+<h2 id="还没有解决的问题">还没有解决的问题</h2>
+<h3 id="css-的问题">CSS 的问题</h3>
+<p>目前代码使用了 Sass、 Bulma CSS 等一堆CSS，目前重写成本太大，所以重构基本都不碰CSS相关的部分。</p>
+<h3 id="代码分叉的问题">代码分叉的问题</h3>
+<p>目前代码有几个branch，难以合并，这个确实需要较大的时间去推动把 main 和 版本分支 先 rebase 一下，解决一些冲突，以后通过设计，统一使用 main 分支来写代码，功能通过 guard 来实现版本开关。</p>
+<h3 id="提取一些公共的组件">提取一些公共的组件</h3>
+<p>我们代码中大量直接使用了第三方组件库，如<code>buefy</code>，这个对我们扩展有很大的影响，比如我们如果要实现dark mode之类，CSS挺难整。然后这个<code>buefy</code>也不支持Vue3，难以升级，最后是如果想加入一些好的组件实践也非常的困难(比如让组件支持快捷键)。</p>
+<p>我个人的想法是把这些都提取出来，比如用<code>IWButton</code>(icewhale)来把原来的<code>b-button</code>来包一层，就是先把自己的组件包<code>buefy</code>包一层，来解耦出来，然后再通过 Headless UI库来逐步的替换<code>buefy</code>。</p>
+<p>然后再进一步，CasaOS 是希望能支持第三方模块的，如果能把这些组件写好样式直接给第三方模块用，那就是非常好的。比如实现一个 IceWhale-UI。这样开发第三方模块的开发者就可以通过直接使用组件库来获得和 CasaOS 一样的界面风格了。</p>
+<p>但是在后续研究中发现如果要实现一个组件库同时支持 Vue2、Vue3 是比较麻烦的，然后我想用的 HeadlessUI 又是一个只支持 Vue3 的库，所以这个问题还是需要再研究一下。🤔 后续有进展的话再来更新博客。</p>
+<h3 id="其它工具">其它工具</h3>
+<p>整体代码风格还是比较差劲的，但是我目前还是没有上 eslint 和自动格式化工具，主要是怕改动太大，把其它几个分支的代码都搞出冲突来了。这个在后续解决完分支问题之后还是要上的。
+然后是缺乏测试，其实这个项目还是有一些业务复杂度在的，所以上单测还是很有必要的，但是这个也是花费一些时间把工具链搭建好。🤔</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/casaos/">CasaOS</a>
+        
+            <a href="/tags/vue/">Vue</a>
+        
+            <a href="/tags/frontend/">Frontend</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="CorrectRoadH/CorrectRoadH.github.io"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2023 CorrectRoad&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.17.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

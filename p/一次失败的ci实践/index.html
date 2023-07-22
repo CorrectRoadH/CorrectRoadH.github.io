@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://correctroadh.github.io/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/'>
 
-<link rel="stylesheet" href="/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css"><meta property='og:title' content='一次失败的CI实践'>
+<link rel="stylesheet" href="/scss/style.min.ff300df33b80e2ac49809c825614392ed1c7b27591d65d3c4043602cd162e25f.css"><meta property='og:title' content='一次失败的CI实践'>
 <meta property='og:description' content='现存项目在gitee与github上的CI实践'>
 <meta property='og:url' content='https://correctroadh.github.io/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/'>
 <meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
@@ -151,7 +151,6 @@ if (!doNotTrack) {
         
         
         
-
         <li >
             <a href='/' target="_blank">
                 
@@ -172,7 +171,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/about/' >
                 
@@ -192,7 +190,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/' >
                 
@@ -211,7 +208,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/archives/' >
                 
@@ -232,7 +228,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/search/' >
                 
@@ -533,6 +528,8 @@ if (!doNotTrack) {
 </style>
 
 <script>
+    let utterancesLoaded = false;
+
     function setUtterancesTheme(theme) {
         let utterances = document.querySelector('.utterances iframe');
         if (utterances) {
@@ -548,10 +545,14 @@ if (!doNotTrack) {
 
     addEventListener('message', event => {
         if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
         setUtterancesTheme(document.documentElement.dataset.scheme)
     });
 
     window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
         setUtterancesTheme(e.detail)
     })
 </script>
@@ -570,7 +571,7 @@ if (!doNotTrack) {
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.16.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.17.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 
