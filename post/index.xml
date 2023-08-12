@@ -7,17 +7,17 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <lastBuildDate>Sat, 12 Aug 2023 14:04:36 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>浏览器插件从开发到上架全记</title>
-        <link>https://correctroadh.github.io/p/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/</link>
+        <title>一款浏览器插件从开发到上架全记</title>
+        <link>https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/</link>
         <pubDate>Sat, 12 Aug 2023 14:04:36 +0800</pubDate>
         
-        <guid>https://correctroadh.github.io/p/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/</guid>
-        <description>&lt;h2 id=&#34;前情&#34;&gt;前情&lt;/h2&gt;
+        <guid>https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/</guid>
+        <description>&lt;img src="https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/thumbnail.png" alt="Featured image of post 一款浏览器插件从开发到上架全记" /&gt;&lt;h2 id=&#34;前情&#34;&gt;前情&lt;/h2&gt;
 &lt;p&gt;前几天突然来了灵感，于是提笔就写，在每天下班之后都肝到凌晨，终于在今天基本完成了程序了。也上架了各大浏览器商店。这里记录一下这个过程与踩的坑。&lt;/p&gt;
 &lt;h2 id=&#34;浏览器插件基本知识&#34;&gt;浏览器插件基本知识&lt;/h2&gt;
-&lt;p&gt;Content Script : 插件当进入插件需要的网页时执行的 JS 脚本
-Background.js  : 插件后台运行的 JS 脚本， 有一些浏览器的特殊的 API
-Manifest.json  : 大概类型一个插件的元数据，里面包含了插件的名称、描述、版本、权限等等。然后目前有两个版本，一个是 MV2 一个是 MV3，MV3 是比较新的版本，但是有些浏览器还不支持，比如 Firefox。&lt;/p&gt;
+&lt;p&gt;Content Script : 插件当进入插件需要的网页时执行的 JS 脚本&lt;/p&gt;
+&lt;p&gt;Background.js  : 插件后台运行的 JS 脚本， 有一些浏览器的特殊的 API&lt;/p&gt;
+&lt;p&gt;Manifest.json  : 大概类型一个插件的元数据，里面包含了插件的名称、描述、版本、权限等等。然后目前有两个版本，一个是 MV2 一个是 MV3，MV3 是比较新的版本，但是有些浏览器还不支持，比如 Firefox。&lt;/p&gt;
 &lt;h2 id=&#34;开发&#34;&gt;开发&lt;/h2&gt;
 &lt;p&gt;最大的问题就是不同的浏览器的插件有一点不同，然后又不是完全不同🤯。最开始是只想上架份额最大的 Chrome ，所以在Github找了一个针对 Chrome + React 的手脚架，肝了一天肝出来之后发现 Chrome 上架要等很久很久，没有办法只能尝试看看能不能上架 Firefox ，没有想到原来的代码能在 Firefox 跑起来，但是会有一些小问题。 因为 Firefox 对 manifest MV3 的兼容不是很好。&lt;/p&gt;
 &lt;p&gt;但是原来那些代码手脚架在这里写的比较死，无奈只能重新找。最后找到了这个: &lt;a class=&#34;link&#34; href=&#34;https://github.com/WebExp0528/React-Extension-Boilerplate&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -28,7 +28,7 @@ Manifest.json  : 大概类型一个插件的元数据，里面包含了插件的
 &lt;p&gt;首先就是 Content Script 只执行一次的问题，比如我这个插件是在 Github 仓库页显示这个项目的技术栈，如果用户先进来一次，然后进组织，再从组织进一个仓库，这样新仓库里并没有调用这个 Content Script。我不确定有没有更优雅的解决方式，但是我直接加了一个 background.js，然后在 background.js 里监听 tab 的变化，然后发送事件重新执行 Content Script。&lt;/p&gt;
 &lt;p&gt;然后就是 Firefox 的 manifest.json 里的权限问题，有个 Permission 中我只能写 &amp;lt;all_urls&amp;gt; 不能写 &lt;code&gt;*://github.com/*&lt;/code&gt;, 否则后者就是不让我发请求，但是我不确定是哪里坑，后续要是找到了就来更新一下。&lt;/p&gt;
 &lt;p&gt;然后是 I18N 的问题，这个插件不能直接把 locale 的 json 放到 public 了。所以我自己架了一台 Nginx 专门放这个 locale 的 Json，然后我是有 React 的 i18next，还遇到了 useSuspense 的问题。 最后我是按这个&lt;a class=&#34;link&#34; href=&#34;https://medium.com/@byeduardoac/using-react-i18next-within-chrome-extension-manifest-v3-1d6f16a43556&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;教程&lt;/a&gt;里调了一下就成功了&lt;/p&gt;
+    &gt;教程&lt;/a&gt;里调了一下就成功了。&lt;/p&gt;
 &lt;h2 id=&#34;上架&#34;&gt;上架&lt;/h2&gt;
 &lt;p&gt;开发的工作的坑基本都能靠肝解决，但是上架这个遇到的坑只能靠等。 我最先上架的是 Chrome ，但是想上架应用商店得先交 5 美元注册一个开发者，交完之后还得审核你的插件很久很久。 无奈只能转战其它浏览器先整起来。 最后因为我的这个插件涉及到了 Host Permission (就是要写入 content script 到 Github)。所以需要更多的审核。最后提示可能需要 30 天才能通过审核。 当然最后其实并没有用到这么久，大概3-4天就通过了。&lt;/p&gt;
 &lt;p&gt;然后就是上架 Firefox 了，与 Chrome 不同的是 Firefox 上架是免费的，但是需要审核。但是 Firefox 的审核速度比 Chrome 快多了，大概半天就通过了。不过提交插件的时候是需要提交自己的代码的。🤣我不确定那些商业插件是不是也需要提交代码。或者怎么整，会不会出现代码泄露的问题。也没有试过传个假代码会怎么样。&lt;/p&gt;
@@ -43,20 +43,28 @@ Manifest.json  : 大概类型一个插件的元数据，里面包含了插件的
 &lt;p&gt;如果你感兴趣也可以现在就试试这个插件:
 Firefox: &lt;a class=&#34;link&#34; href=&#34;https://addons.mozilla.org/en-US/firefox/addon/tech-stack/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://addons.mozilla.org/en-US/firefox/addon/tech-stack/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/1.png&#34;
-	
-	
-	
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/1.png&#34;
+	width=&#34;2674&#34;
+	height=&#34;1608&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/1_hu63d2a50a08d71167d76b436672056884_534179_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/1_hu63d2a50a08d71167d76b436672056884_534179_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
-&gt;
-&lt;img src=&#34;https://correctroadh.github.io/2.png&#34;
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;166&#34;
+		data-flex-basis=&#34;399px&#34;
 	
-	
-	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/2.png&#34;
+	width=&#34;1400&#34;
+	height=&#34;560&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/2_huff19d7e6ec1369590a870119a40f694e_133048_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/2_huff19d7e6ec1369590a870119a40f694e_133048_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;250&#34;
+		data-flex-basis=&#34;600px&#34;
 	
 &gt;&lt;/p&gt;
 </description>
