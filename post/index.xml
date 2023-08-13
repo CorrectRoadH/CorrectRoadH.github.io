@@ -6,7 +6,111 @@
         <description>Recent content in Posts on CorrectRoad&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sat, 12 Aug 2023 14:04:36 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 12 Aug 2023 14:04:47 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>在 Golang 的 Echo 框架中如何简单的防护刷接口攻击</title>
+        <link>https://correctroadh.github.io/p/%E5%9C%A8-golang-%E7%9A%84-echo-%E6%A1%86%E6%9E%B6%E4%B8%AD%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E9%98%B2%E6%8A%A4%E5%88%B7%E6%8E%A5%E5%8F%A3%E6%94%BB%E5%87%BB/</link>
+        <pubDate>Sat, 12 Aug 2023 14:04:47 +0800</pubDate>
+        
+        <guid>https://correctroadh.github.io/p/%E5%9C%A8-golang-%E7%9A%84-echo-%E6%A1%86%E6%9E%B6%E4%B8%AD%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E9%98%B2%E6%8A%A4%E5%88%B7%E6%8E%A5%E5%8F%A3%E6%94%BB%E5%87%BB/</guid>
+        <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近在做一个 Side Project，计划等差不多完成之后就发到 V2EX 之类宣传一下。但是根据之前的经验，在 V2EX 上会有一些用户会对别人来宣传的网站进行攻击，可能是出于恶作剧吧。太难的先不说，最起码的对着没有鉴权的接口硬刷的简单攻击可以防御一下。&lt;/p&gt;
+&lt;h2 id=&#34;解决思路&#34;&gt;解决思路&lt;/h2&gt;
+&lt;p&gt;很容易想到简单的解决方案，建个 map 把访问者的 ip 和统计的次数存起来。然后短时间访问超过一定次数就给 Ban 掉。说干就干。 我这个产品的后台是用 Go + Echo 写的，所以就用 Go 来实现个中间件。&lt;/p&gt;
+&lt;p&gt;代码放在&lt;a class=&#34;link&#34; href=&#34;https://github.com/CorrectRoadH/echo-ban-ip&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;这里&lt;/a&gt;了: &lt;code&gt;https://github.com/CorrectRoadH/echo-ban-ip&lt;/code&gt;  (这个名字确实反复了好久🤣，本来想像 FilterRequest 之类的，但是想来想去还是 ban IP 最简单直接，所以就叫这个名字了)。&lt;/p&gt;
+&lt;p&gt;最基础的用例在这里:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;go get github.com/CorrectRoadH/echo-ban-ip&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kn&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;s&#34;&gt;&amp;#34;net/http&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;s&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;nx&#34;&gt;banip&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;github.com/CorrectRoadH/echo-ban-ip&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;s&#34;&gt;&amp;#34;github.com/labstack/echo/v4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;echo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;New&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;Use&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;banip&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;FilterRequestConfig&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;banip&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;FilterConfig&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;nx&#34;&gt;LimitTime&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;         &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Minute&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;nx&#34;&gt;LimitRequestCount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;60&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;nx&#34;&gt;BanTime&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;           &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Hour&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;p&#34;&gt;}))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;GET&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;/&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;c&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;echo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Context&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;error&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;StatusOK&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Hello, World!&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Logger&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;Fatal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;Start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;:1323&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;我还根据 Echo 的一些基本的实践加上了 &lt;code&gt;Skiper&lt;/code&gt;、&lt;code&gt;Custom Deny Hander&lt;/code&gt;、 &lt;code&gt;Custom Error Hander&lt;/code&gt;之类的可选项。具体的使用方式可以看项目中的 &lt;a class=&#34;link&#34; href=&#34;https://github.com/CorrectRoadH/echo-ban-ip&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;README.md&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;展望&#34;&gt;展望&lt;/h2&gt;
+&lt;p&gt;🤔 感觉只是简单的这些限制手段还是不太够，比如说能不能多级限制政策，比如一分钟60次、两分钟100次，十分钟500次之类更多限制，防止攻击者来卡这个边际线来攻击。&lt;/p&gt;
+&lt;p&gt;再比如按访问者的类型来限制，一眼就是机器人(比如从UA、指纹来判断)一分钟30次的限制，但是比如有一些带Cookie、Token之类的用户可以有更高的限制条件。但是我这里确实没有想到这种分级条件是当成业务里写好，还是当成中间件去做。放到中间去做唯一的问题就是会让简单的中间件变的复杂了，尽管能实现各种通用的需求，但是用户上手起来可能有点学习成本了。&lt;/p&gt;
+&lt;h2 id=&#34;运营广告时间&#34;&gt;运营(广告)时间&lt;/h2&gt;
+&lt;p&gt;👀我来带上我的 Side Project 来宣传一下: Tech Stack, 一款浏览器插件，可以在访问 Github 公共存储库时，该扩展将显示该项目所用的技术栈。像这样:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/p/%E5%9C%A8-golang-%E7%9A%84-echo-%E6%A1%86%E6%9E%B6%E4%B8%AD%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E9%98%B2%E6%8A%A4%E5%88%B7%E6%8E%A5%E5%8F%A3%E6%94%BB%E5%87%BB/1.png&#34;
+	width=&#34;2674&#34;
+	height=&#34;1608&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E5%9C%A8-golang-%E7%9A%84-echo-%E6%A1%86%E6%9E%B6%E4%B8%AD%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E9%98%B2%E6%8A%A4%E5%88%B7%E6%8E%A5%E5%8F%A3%E6%94%BB%E5%87%BB/1_hu63d2a50a08d71167d76b436672056884_534179_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E5%9C%A8-golang-%E7%9A%84-echo-%E6%A1%86%E6%9E%B6%E4%B8%AD%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E9%98%B2%E6%8A%A4%E5%88%B7%E6%8E%A5%E5%8F%A3%E6%94%BB%E5%87%BB/1_hu63d2a50a08d71167d76b436672056884_534179_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;166&#34;
+		data-flex-basis=&#34;399px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/p/%E5%9C%A8-golang-%E7%9A%84-echo-%E6%A1%86%E6%9E%B6%E4%B8%AD%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E9%98%B2%E6%8A%A4%E5%88%B7%E6%8E%A5%E5%8F%A3%E6%94%BB%E5%87%BB/2.png&#34;
+	width=&#34;1400&#34;
+	height=&#34;560&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E5%9C%A8-golang-%E7%9A%84-echo-%E6%A1%86%E6%9E%B6%E4%B8%AD%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E9%98%B2%E6%8A%A4%E5%88%B7%E6%8E%A5%E5%8F%A3%E6%94%BB%E5%87%BB/2_huff19d7e6ec1369590a870119a40f694e_133048_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E5%9C%A8-golang-%E7%9A%84-echo-%E6%A1%86%E6%9E%B6%E4%B8%AD%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E9%98%B2%E6%8A%A4%E5%88%B7%E6%8E%A5%E5%8F%A3%E6%94%BB%E5%87%BB/2_huff19d7e6ec1369590a870119a40f694e_133048_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;250&#34;
+		data-flex-basis=&#34;600px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;目前已经在 firefox 上架了， Chrome和Edge还在审核中。欢迎大家来试试一下。&lt;/p&gt;
+&lt;p&gt;Firefox: &lt;a class=&#34;link&#34; href=&#34;https://addons.mozilla.org/en-US/firefox/addon/tech-stack/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://addons.mozilla.org/en-US/firefox/addon/tech-stack/&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>一款浏览器插件从开发到上架全记</title>
         <link>https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/</link>
         <pubDate>Sat, 12 Aug 2023 14:04:36 +0800</pubDate>
