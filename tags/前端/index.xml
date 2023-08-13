@@ -25,12 +25,15 @@
 &lt;p&gt;中间借鉴了不少 &lt;a class=&#34;link&#34; href=&#34;https://github.com/coolpace/V2EX_Polish&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;V2ex Polish&lt;/a&gt; 的代码，感觉写的真不错。可惜这个用的 UI 库，我不太会用，不然我直接用这套架构写我自己的插件了。&lt;/p&gt;
 &lt;h2 id=&#34;踩坑&#34;&gt;踩坑&lt;/h2&gt;
+&lt;h3 id=&#34;网络请求的坑&#34;&gt;网络请求的坑&lt;/h3&gt;
 &lt;p&gt;首先就是 Content Script 只执行一次的问题，比如我这个插件是在 Github 仓库页显示这个项目的技术栈，如果用户先进来一次，然后进组织，再从组织进一个仓库，这样新仓库里并没有调用这个 Content Script。我不确定有没有更优雅的解决方式，但是我直接加了一个 background.js，然后在 background.js 里监听 tab 的变化，然后发送事件重新执行 Content Script。&lt;/p&gt;
 &lt;p&gt;然后就是 Firefox 的 manifest.json 里的权限问题，有个 Permission 中我只能写 &amp;lt;all_urls&amp;gt; 不能写 &lt;code&gt;*://github.com/*&lt;/code&gt;, 否则后者就是不让我发请求，但是我不确定是哪里坑，后续要是找到了就来更新一下。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;UPDATE&lt;/em&gt;
 🤣这里要改的被请求的网站的地址。比如后端地址是&lt;code&gt;xxx.zeabur.app&lt;/code&gt;，那么应该在 Permission 加上这个，而不是&lt;code&gt;github.com&lt;/code&gt;。&lt;/p&gt;
+&lt;h1 id=&#34;i18n-的坑&#34;&gt;I18N 的坑&lt;/h1&gt;
 &lt;p&gt;然后是 I18N 的问题，这个插件不能直接把 locale 的 json 放到 public 了。所以我自己架了一台 Nginx 专门放这个 locale 的 Json，然后我是有 React 的 i18next，还遇到了 useSuspense 的问题。 最后我是按这个&lt;a class=&#34;link&#34; href=&#34;https://medium.com/@byeduardoac/using-react-i18next-within-chrome-extension-manifest-v3-1d6f16a43556&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;教程&lt;/a&gt;里调了一下就成功了。&lt;/p&gt;
+&lt;h1 id=&#34;cookies-的坑&#34;&gt;Cookies 的坑&lt;/h1&gt;
 &lt;p&gt;最后是Cookie的坑，插件运行在Github.com网站，但是我的后端是在另一个网站，我先是折腾了好久，发现拿到的这个Cookie，根本设置不到浏览器中。然后发现是要在前端请求时加上 &lt;code&gt;credentials: &#39;include&#39;&lt;/code&gt;。像这样:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
