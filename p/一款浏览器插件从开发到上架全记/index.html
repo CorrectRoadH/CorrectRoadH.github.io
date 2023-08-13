@@ -393,7 +393,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 2 分钟
                 </time>
             </div>
         
@@ -423,9 +423,54 @@ if (!doNotTrack) {
 <h2 id="踩坑">踩坑</h2>
 <p>首先就是 Content Script 只执行一次的问题，比如我这个插件是在 Github 仓库页显示这个项目的技术栈，如果用户先进来一次，然后进组织，再从组织进一个仓库，这样新仓库里并没有调用这个 Content Script。我不确定有没有更优雅的解决方式，但是我直接加了一个 background.js，然后在 background.js 里监听 tab 的变化，然后发送事件重新执行 Content Script。</p>
 <p>然后就是 Firefox 的 manifest.json 里的权限问题，有个 Permission 中我只能写 &lt;all_urls&gt; 不能写 <code>*://github.com/*</code>, 否则后者就是不让我发请求，但是我不确定是哪里坑，后续要是找到了就来更新一下。</p>
+<p><em>UPDATE</em>
+🤣这里要改的被请求的网站的地址。比如后端地址是<code>xxx.zeabur.app</code>，那么应该在 Permission 加上这个，而不是<code>github.com</code>。</p>
 <p>然后是 I18N 的问题，这个插件不能直接把 locale 的 json 放到 public 了。所以我自己架了一台 Nginx 专门放这个 locale 的 Json，然后我是有 React 的 i18next，还遇到了 useSuspense 的问题。 最后我是按这个<a class="link" href="https://medium.com/@byeduardoac/using-react-i18next-within-chrome-extension-manifest-v3-1d6f16a43556"  target="_blank" rel="noopener"
     >教程</a>里调了一下就成功了。</p>
-<h2 id="上架">上架</h2>
+<p>最后是Cookie的坑，插件运行在Github.com网站，但是我的后端是在另一个网站，我先是折腾了好久，发现拿到的这个Cookie，根本设置不到浏览器中。然后发现是要在前端请求时加上 <code>credentials: 'include'</code>。像这样:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl">    <span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;xxxx&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">credentials</span><span class="o">:</span> <span class="s1">&#39;include&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}).</span><span class="k">catch</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后提醒我<code>Access-Control-Allow-Credentials</code>响应头应该设成<code>true</code>，而我是空。🤔我看了一下代码，明明我设置了呀!</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">c</span><span class="p">.</span><span class="nf">Response</span><span class="p">().</span><span class="nf">Header</span><span class="p">().</span><span class="nf">Set</span><span class="p">(</span><span class="s">&#34;Access-Control-Allow-Credentials&#34;</span><span class="p">,</span> <span class="s">&#34;true&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>折腾到最后发现是 Echo 的坑，得在中间件写，我也不知道为什么会这样。最后如中间件这样设就OK了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl">	<span class="nx">e</span><span class="p">.</span><span class="nf">Use</span><span class="p">(</span><span class="nx">middleware</span><span class="p">.</span><span class="nf">CORSWithConfig</span><span class="p">(</span><span class="nx">middleware</span><span class="p">.</span><span class="nx">CORSConfig</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">AllowOrigins</span><span class="p">:</span>     <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;https://github.com&#34;</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">AllowHeaders</span><span class="p">:</span>     <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="nx">echo</span><span class="p">.</span><span class="nx">HeaderOrigin</span><span class="p">,</span> <span class="nx">echo</span><span class="p">.</span><span class="nx">HeaderContentType</span><span class="p">,</span> <span class="nx">echo</span><span class="p">.</span><span class="nx">HeaderAccept</span><span class="p">,</span> <span class="nx">echo</span><span class="p">.</span><span class="nx">HeaderAccessControlAllowCredentials</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">AllowMethods</span><span class="p">:</span>     <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="nx">http</span><span class="p">.</span><span class="nx">MethodGet</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nx">MethodPost</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nx">MethodOptions</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">AllowCredentials</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="上架">上架</h2>
 <p>开发的工作的坑基本都能靠肝解决，但是上架这个遇到的坑只能靠等。 我最先上架的是 Chrome ，但是想上架应用商店得先交 5 美元注册一个开发者，交完之后还得审核你的插件很久很久。 无奈只能转战其它浏览器先整起来。 最后因为我的这个插件涉及到了 Host Permission (就是要写入 content script 到 Github)。所以需要更多的审核。最后提示可能需要 30 天才能通过审核。 当然最后其实并没有用到这么久，大概3-4天就通过了。</p>
 <p>然后就是上架 Firefox 了，与 Chrome 不同的是 Firefox 上架是免费的，但是需要审核。但是 Firefox 的审核速度比 Chrome 快多了，大概半天就通过了。不过提交插件的时候是需要提交自己的代码的。🤣我不确定那些商业插件是不是也需要提交代码。或者怎么整，会不会出现代码泄露的问题。也没有试过传个假代码会怎么样。</p>
 <p>最后就是 Edge 了，虽然 Edge 也是免费上架的，但是整体的体验是非常差劲的。 首先就是要注册一个开发者计划，需要填 State , 我先后填了 福建 、 Fujian 都过不了，最后搜索了一下要填缩写，比如北京就是 BJ。 我填了一下 FJ 才过。这里真的尬住了，感觉这个应该是美国的习惯吧，把州名缩写，但是在中国确实没有人把省名缩写的。</p>
