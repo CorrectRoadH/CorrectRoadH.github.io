@@ -11,7 +11,7 @@
 
 <link rel='canonical' href='https://correctroadh.github.io/p/ai%E6%98%AF%E5%90%A6%E4%BC%9A%E5%B8%A6%E6%9D%A5%E7%BC%96%E7%A8%8B%E4%B8%8A%E7%9A%84%E6%94%B9%E5%8F%98/'>
 
-<link rel="stylesheet" href="/scss/style.min.ff300df33b80e2ac49809c825614392ed1c7b27591d65d3c4043602cd162e25f.css"><meta property='og:title' content='AI是否会带来编程上的改变?'>
+<link rel="stylesheet" href="/scss/style.min.f2f21d9d961219a01621263328d8997e1ae3b4f0371d455628df1fdc27d57bd6.css"><meta property='og:title' content='AI是否会带来编程上的改变?'>
 <meta property='og:description' content='AI是否会带来编程上的改变? 开篇 这篇短文是我最近一些想法的总合与扩展，讨论关于Ai对未来编程的一些改变。许多观点只是一个大概的逻辑，希望能和大家一起讨论。
 编程语言上的改变 我前几天在写Flutter，其中把数据类转换成json。我抄了一段
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 factory HistoryPomodoro.fromJson(Map&amp;lt;String, dynamic&amp;gt; json) =&amp;gt; HistoryPomodoro( DateTime.parse(json[&amp;#34;startTime&amp;#34;]), DateTime.parse(json[&amp;#34;endTime&amp;#34;]), json[&amp;#34;time&amp;#34;], json[&amp;#34;note&amp;#34;], json[&amp;#34;status&amp;#34;], ); // a function toJson covert itself all the data to json Map&amp;lt;String, dynamic&amp;gt; toJson() =&amp;gt; { &amp;#34;startTime&amp;#34;: startTime.toIso8601String(), &amp;#34;endTime&amp;#34;: endTime.toIso8601String(), &amp;#34;time&amp;#34;: time, &amp;#34;note&amp;#34;: note, &amp;#34;status&amp;#34;: status, }; 这种写法确实让我觉得太奇怪了，居然要把属性成员名与json字段名一一对应。这也太累了吧。我之前在写其它语言中从来没有这种体验。但是我想或者是因为Dart中没有Java的反射机制这样导致的。
@@ -531,7 +531,7 @@ if (!doNotTrack) {
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.17.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.18.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 
