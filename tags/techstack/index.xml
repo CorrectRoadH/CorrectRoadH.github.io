@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>TechStack on CorrectRoad&#39;s Blog</title>
+        <link>https://correctroadh.github.io/tags/techstack/</link>
+        <description>Recent content in TechStack on CorrectRoad&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Fri, 18 Aug 2023 22:45:00 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/tags/techstack/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>TechStack背后的故事: 因需求诞生的特殊数据结构:正则Map</title>
+        <link>https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/</link>
+        <pubDate>Fri, 18 Aug 2023 22:45:00 +0800</pubDate>
+        
+        <guid>https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/</guid>
+        <description>&lt;img src="https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/cover.png" alt="Featured image of post TechStack背后的故事: 因需求诞生的特殊数据结构:正则Map" /&gt;&lt;h2 id=&#34;前情&#34;&gt;前情&lt;/h2&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/Get-Tech-Stack/TechStack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;TechStack&lt;/a&gt; 是一个用于显示一个 Github 项目的技术栈的浏览器插件。在开发它的过程中，我遇到一个挺有意思的技术需求。&lt;/p&gt;
+&lt;p&gt;比如在 package.json 中，我们可以通过依赖项 react 直接映射到 React 技术栈。但是有些依赖并不是这样。 比如 &lt;code&gt;@radix-ui/react-checkbox&lt;/code&gt; 和 &lt;code&gt;@radix-ui/react-icons&lt;/code&gt; 它们都属于 Radix UI 的一部分，如果让这些依赖直接对应到 Radix 呢?&lt;/p&gt;
+&lt;p&gt;我觉得大部分人都很想容易想到正则。对，可以写一个正则，大概是这样&lt;code&gt;@radix-ui/[\\w-]+&lt;/code&gt;，如果被它匹配到就是 Radix。&lt;/p&gt;
+&lt;p&gt;所以我就想搞一个数据结构，一个 key 可以是 string 也可以是正则的map。🤔
+就像这样&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;react =&amp;gt; map(与react对应) =&amp;gt; React
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;@radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\\w-]+对应) =&amp;gt; Radix
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;@radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\\w-]+对应)=&amp;gt; Radix
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;开工!&lt;/p&gt;
+&lt;h2 id=&#34;实现第一版&#34;&gt;实现第一版&lt;/h2&gt;
+&lt;p&gt;先大概验证一下想法的可行性，我直接干了一个map，大概像这样&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 伪代码
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;type&lt;/span&gt;  &lt;span class=&#34;nx&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;T&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;any&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;intermap&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;T&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;regexp&lt;/span&gt;   &lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;string&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;Store&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;key&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;err&#34;&gt;直接存&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;StoreRegexp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;key&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;err&#34;&gt;存到正则表达式数组中&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 这里这个看到，返回值比一般的map多了一个 match ，是为了方便调试知道这个string是被哪个正则表达式匹配到的
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;Load&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;key&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;actual&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;loaded&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;bool&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;match&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;err&#34;&gt;如果&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;intermap&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;中没有就去遍历所有的正则表达式&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;当我们去取一个值时，遍历所有的正则表达式。可以看到这个实现的时间复杂度为 O(n)，n 为正则表达式的数量。这个复杂度其实在我的业务中是可以接受的，因为正则表达式的数量不会太多。🤔但是都要做成库的话，肯定不能止步于此。&lt;/p&gt;
+&lt;h2 id=&#34;benchmark&#34;&gt;benchmark&lt;/h2&gt;
+&lt;p&gt;先来做个benchmark，不然怎么能知道后面提升多少呢!&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;➜  benchmark git:(main) ✗  go test -bench=&amp;#39;Map$&amp;#39; . 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;goos: darwin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;goarch: arm64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pkg: github.com/CorrectRoadH/regexp_map/benchmark
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;BenchmarkMap-10                          3756829               371.5 ns/op
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;BenchmarkRegexpMap-10                    4147221               365.4 ns/op
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;BenchmarkPureRegepxRegexpMap-10           142440              8531 ns/op &amp;lt;- 重点在这里，全是正则表达式key的测试
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;BenchmarkAllxRegexpMap-10                 136924              8788 ns/op &amp;lt;- 重点在这里，混合正则表达式key和普通key的测试
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;PASS
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这里看起来数据量小的时候还凑合，直接上大数据量&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;➜  benchmark git:(main) ✗  go test -bench=&amp;#39;Map$&amp;#39; -benchtime=5s . 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;goos: darwin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;goarch: arm64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pkg: github.com/CorrectRoadH/regexp_map/benchmark
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Benchmark_Map-10                        18406218               366.6 ns/op
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Benchmark_RegexpMap-10                  19119948               423.1 ns/op
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Benchmark_PureRegepx_RegexpMap-10          10000           4082512 ns/op &amp;lt;- 可以看到性能影响还是非常明显的
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Benchmark_All_RegexpMap-10                 10000           4097201 ns/op 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;PASS
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ok      github.com/CorrectRoadH/regexp_map/benchmark    179.822s
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;大概测了一下，可以看到当数据量达到10000时，就慢的可怜。😭&lt;/p&gt;
+&lt;h2 id=&#34;实现第二版&#34;&gt;实现第二版&lt;/h2&gt;
+&lt;p&gt;🤔我当然不能满足这么差的性能表现呀! 怎么做呢? 凭我的直觉，我感觉可能用一个二分再搭一个树就能把时间复杂度优化到Log(N)，感觉这个性能是可以勉强接受的。&lt;/p&gt;
+&lt;p&gt;直接开工，大概代码如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;T&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;any&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;nx&#34;&gt;internalMap&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;T&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;nx&#34;&gt;regexMap&lt;/span&gt;    &lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;string&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;nx&#34;&gt;RegexpTree&lt;/span&gt;  &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;RegexpNode&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;StoreRegex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;key&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;internalMap&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;nil&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;internalMap&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;make&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;RegexpTree&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;nil&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;RegexpTree&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;RegexpNode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;nx&#34;&gt;_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;ok&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;internalMap&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;key&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;ok&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;// 正则已经在树中存在的情况就只要替换值
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;		&lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;internalMap&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;key&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;err&#34;&gt;把正则插到树中&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;benchmark-1&#34;&gt;benchmark&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;➜  benchmark git:(main) ✗  go test -bench=&amp;#39;Map$&amp;#39; -benchtime 1s .   
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;goos: darwin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;goarch: arm64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pkg: github.com/CorrectRoadH/regexp_map/benchmark
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Benchmark_PureRegepx_RegexpMap-10           9561           4392539 ns/op &amp;lt;--旧的
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Benchmark_PureRegepx_V2RegexpMap-10        10000           9758544 ns/op &amp;lt;--新的
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;PASS
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ok      github.com/CorrectRoadH/regexp_map/benchmark    140.046s
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🤔可以看到其实性能不增反降，这很反直觉，不应该是这样。直接上 pprof，看看问题在哪里。&lt;/p&gt;
+&lt;p&gt;通过pprof，我定位到时间大概花了 Regexp Compile 和 GC 上，后者先不管，先看看前者。我们现在的 regexp 是在 Store 时生成的，所以明显会有多次不必要浪费的 Compile，所以这个可以lazy一下，当用到时再 Compile。&lt;/p&gt;
+&lt;p&gt;我原来的代码大概是 Insert 时 compile 正则，现在是 Find 时 compile 正则&lt;/p&gt;
+&lt;p&gt;因为原来Insert之后可能还会有Insert，会让原来的编译出来正则用不上，所以这个编译其实是无用的。&lt;/p&gt;
+&lt;h2 id=&#34;lazy-compile&#34;&gt;Lazy compile&lt;/h2&gt;
+&lt;p&gt;在把代码改了一下之后，就OK了。可以看到性能提升了很多。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;go test -bench=&amp;#39;Map$&amp;#39; -benchtime 5s .
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;goos: darwin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;goarch: arm64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pkg: github.com/CorrectRoadH/regexp_map/benchmark
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Benchmark_PureRegepx_RegexpMap-10      	   10000	   4339141 ns/op
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Benchmark_PureRegepx_V2RegexpMap-10    	   10000	    631144 ns/op &amp;lt;--- 可以看到性能提升很明显
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;PASS
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ok  	github.com/CorrectRoadH/regexp_map/benchmark	50.718s
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;其它优化&#34;&gt;其它优化&lt;/h2&gt;
+&lt;p&gt;然后就是在树上继续修修改改，看看能不能把GC时间也减掉一点(就是少用指针)🤔。&lt;/p&gt;
+&lt;h3 id=&#34;如何保持树的平衡&#34;&gt;如何保持树的平衡&lt;/h3&gt;
+&lt;p&gt;平衡树，大家很容易想到红黑树。但是其实红黑树并不适合我们，因为红黑树会改变节点的顺序，而顺序会重建 regexp。所以我们目前是尽可能在插入时保证树的平衡。🤔&lt;/p&gt;
+&lt;p&gt;所以我想到一个很骚的平衡算法🤪 随机插入，通过随机性来保证树的平衡。🤣目前看来其实还能接受。&lt;/p&gt;
+&lt;h3 id=&#34;后续优化&#34;&gt;后续优化&lt;/h3&gt;
+&lt;p&gt;其实二叉树并不是正则Map一个适合的树，完全可以上多叉树🤔所以后续的优化就是上多叉树。后续我研究一下 B 树，看看能不能把借鉴一下相关的思想。&lt;/p&gt;
+&lt;h3 id=&#34;安全性检查&#34;&gt;安全性检查&lt;/h3&gt;
+&lt;p&gt;可以看到这个Map是有一个要求的，也就是每个正则表达式都要能匹配到一个唯一的值。所以我们需要一个安全性检查，来保证这个要求。&lt;/p&gt;
+&lt;p&gt;这个实现也很简单，就是判断是不是左右能匹配的上，如果左右子树都匹配的上就是出问题了。&lt;/p&gt;
+&lt;p&gt;但是这个目前没有一个好的表现方式，我打算额外做一个函数，比如 安全的Load。在这里取值时额外检查，如果遇到问题就是 panic。&lt;/p&gt;
+&lt;h3 id=&#34;线程安全&#34;&gt;线程安全&lt;/h3&gt;
+&lt;p&gt;这个是还没有做的，目前还是用普通的 Map，后续考虑用 sync.Map 加一些其它机制来实现线程安全。&lt;/p&gt;
+&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
+&lt;p&gt;从一个需求到落地代码，大概用了一个晚上+一个中午。还挺兴奋的，特别是每次跑通测试，或者一个 benchmark 相较之前有所提升的时候。🤣 还是挺有成就感的。&lt;/p&gt;
+&lt;h2 id=&#34;其它&#34;&gt;其它&lt;/h2&gt;
+&lt;p&gt;目前这个 Regexp Map 已经在 Github 上了，可以在这里找到文档和代码 : &lt;a class=&#34;link&#34; href=&#34;https://github.com/CorrectRoadH/regexp_map&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/CorrectRoadH/regexp_map&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;然后就是运营时间😗
+TechStack 是一个用于显示一个 Github 项目的技术栈的浏览器插件。可以快速判断一个Github项目的技术栈，一眼判断出是不是假开源项目。目前已正式结束测试，欢迎大家来试试。&lt;/p&gt;
+&lt;p&gt;Chrome: &lt;a class=&#34;link&#34; href=&#34;https://chrome.google.com/webstore/detail/tech-stack-show-github-re/lbhjnhabgddabnagncmcgomggeadlbhh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://chrome.google.com/webstore/detail/tech-stack-show-github-re/lbhjnhabgddabnagncmcgomggeadlbhh&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Firefox:  &lt;a class=&#34;link&#34; href=&#34;https://addons.mozilla.org/en-US/firefox/addon/tech-stack/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://addons.mozilla.org/en-US/firefox/addon/tech-stack/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;比如这个: FastGPT，虽然看到这个是一个前端项目，不过能看到有调 OpenAI 和用到 Postgres ，所以一眼就可以判断出应该是一个真的开源项目，也可以大概判断出实现思路，比如是用 Postgres 做向量数据库。
+&lt;img src=&#34;https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/1.png&#34;
+	width=&#34;2510&#34;
+	height=&#34;1404&#34;
+	srcset=&#34;https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/1_hu9e495b11715eedb57980995a088af5ea_375435_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/1_hu9e495b11715eedb57980995a088af5ea_375435_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;178&#34;
+		data-flex-basis=&#34;429px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>一款浏览器插件从开发到上架全记</title>
+        <link>https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/</link>
+        <pubDate>Sat, 12 Aug 2023 14:04:36 +0800</pubDate>
+        
+        <guid>https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/</guid>
+        <description>&lt;img src="https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/thumbnail.png" alt="Featured image of post 一款浏览器插件从开发到上架全记" /&gt;&lt;h2 id=&#34;前情&#34;&gt;前情&lt;/h2&gt;
+&lt;p&gt;前几天突然来了灵感，于是提笔就写，在每天下班之后都肝到凌晨，终于在今天基本完成了程序了。也上架了各大浏览器商店。这里记录一下这个过程与踩的坑。&lt;/p&gt;
+&lt;h2 id=&#34;浏览器插件基本知识&#34;&gt;浏览器插件基本知识&lt;/h2&gt;
+&lt;p&gt;Content Script : 插件当进入插件需要的网页时执行的 JS 脚本&lt;/p&gt;
+&lt;p&gt;Background.js  : 插件后台运行的 JS 脚本， 有一些浏览器的特殊的 API&lt;/p&gt;
+&lt;p&gt;Manifest.json  : 大概类型一个插件的元数据，里面包含了插件的名称、描述、版本、权限等等。然后目前有两个版本，一个是 MV2 一个是 MV3，MV3 是比较新的版本，但是有些浏览器还不支持，比如 Firefox。&lt;/p&gt;
+&lt;h2 id=&#34;开发&#34;&gt;开发&lt;/h2&gt;
+&lt;p&gt;最大的问题就是不同的浏览器的插件有一点不同，然后又不是完全不同🤯。最开始是只想上架份额最大的 Chrome ，所以在Github找了一个针对 Chrome + React 的手脚架，肝了一天肝出来之后发现 Chrome 上架要等很久很久，没有办法只能尝试看看能不能上架 Firefox ，没有想到原来的代码能在 Firefox 跑起来，但是会有一些小问题。 因为 Firefox 对 manifest MV3 的兼容不是很好。&lt;/p&gt;
+&lt;p&gt;但是原来那些代码手脚架在这里写的比较死，无奈只能重新找。最后找到了这个: &lt;a class=&#34;link&#34; href=&#34;https://github.com/WebExp0528/React-Extension-Boilerplate&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/WebExp0528/React-Extension-Boilerplate&lt;/a&gt; ，然后把原来的代码搬了过来。然后又调了半天 Webpack。完成了对多端浏览器的兼容。&lt;/p&gt;
+&lt;p&gt;中间借鉴了不少 &lt;a class=&#34;link&#34; href=&#34;https://github.com/coolpace/V2EX_Polish&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;V2ex Polish&lt;/a&gt; 的代码，感觉写的真不错。可惜这个用的 UI 库，我不太会用，不然我直接用这套架构写我自己的插件了。&lt;/p&gt;
+&lt;h2 id=&#34;踩坑&#34;&gt;踩坑&lt;/h2&gt;
+&lt;h3 id=&#34;网络请求的坑&#34;&gt;网络请求的坑&lt;/h3&gt;
+&lt;p&gt;首先就是 Content Script 只执行一次的问题，比如我这个插件是在 Github 仓库页显示这个项目的技术栈，如果用户先进来一次，然后进组织，再从组织进一个仓库，这样新仓库里并没有调用这个 Content Script。我不确定有没有更优雅的解决方式，但是我直接加了一个 background.js，然后在 background.js 里监听 tab 的变化，然后发送事件重新执行 Content Script。&lt;/p&gt;
+&lt;p&gt;然后就是 Firefox 的 manifest.json 里的权限问题，有个 Permission 中我只能写 &amp;lt;all_urls&amp;gt; 不能写 &lt;code&gt;*://github.com/*&lt;/code&gt;, 否则后者就是不让我发请求，但是我不确定是哪里坑，后续要是找到了就来更新一下。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;UPDATE&lt;/em&gt;
+🤣这里要改的被请求的网站的地址。比如后端地址是&lt;code&gt;xxx.zeabur.app&lt;/code&gt;，那么应该在 Permission 加上这个，而不是&lt;code&gt;github.com&lt;/code&gt;。&lt;/p&gt;
+&lt;h1 id=&#34;i18n-的坑&#34;&gt;I18N 的坑&lt;/h1&gt;
+&lt;p&gt;然后是 I18N 的问题，这个插件不能直接把 locale 的 json 放到 public 了。所以我自己架了一台 Nginx 专门放这个 locale 的 Json，然后我是有 React 的 i18next，还遇到了 useSuspense 的问题。 最后我是按这个&lt;a class=&#34;link&#34; href=&#34;https://medium.com/@byeduardoac/using-react-i18next-within-chrome-extension-manifest-v3-1d6f16a43556&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;教程&lt;/a&gt;里调了一下就成功了。&lt;/p&gt;
+&lt;h1 id=&#34;cookies-的坑&#34;&gt;Cookies 的坑&lt;/h1&gt;
+&lt;p&gt;最后是Cookie的坑，插件运行在Github.com网站，但是我的后端是在另一个网站，我先是折腾了好久，发现拿到的这个Cookie，根本设置不到浏览器中。然后发现是要在前端请求时加上 &lt;code&gt;credentials: &#39;include&#39;&lt;/code&gt;。像这样:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;fetch&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;xxxx&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nx&#34;&gt;method&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;POST&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nx&#34;&gt;credentials&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;include&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}).&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;catch&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;err&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后提醒我&lt;code&gt;Access-Control-Allow-Credentials&lt;/code&gt;响应头应该设成&lt;code&gt;true&lt;/code&gt;，而我是空。🤔我看了一下代码，明明我设置了呀!&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;Response&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;().&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;().&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;Set&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Access-Control-Allow-Credentials&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;true&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;折腾到最后发现是 Echo 的坑，得在中间件写，我也不知道为什么会这样。最后如中间件这样设就OK了。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;Use&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;middleware&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;CORSWithConfig&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;middleware&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;CORSConfig&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;nx&#34;&gt;AllowOrigins&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;     &lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;https://github.com&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;nx&#34;&gt;AllowHeaders&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;     &lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;echo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;HeaderOrigin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;echo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;HeaderContentType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;echo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;HeaderAccept&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;echo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;HeaderAccessControlAllowCredentials&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;nx&#34;&gt;AllowMethods&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;     &lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;MethodGet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;MethodPost&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;MethodOptions&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;nx&#34;&gt;AllowCredentials&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;p&#34;&gt;}))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;上架&#34;&gt;上架&lt;/h2&gt;
+&lt;p&gt;开发的工作的坑基本都能靠肝解决，但是上架这个遇到的坑只能靠等。 我最先上架的是 Chrome ，但是想上架应用商店得先交 5 美元注册一个开发者，交完之后还得审核你的插件很久很久。 无奈只能转战其它浏览器先整起来。 最后因为我的这个插件涉及到了 Host Permission (就是要写入 content script 到 Github)。所以需要更多的审核。最后提示可能需要 30 天才能通过审核。 当然最后其实并没有用到这么久，大概3-4天就通过了。&lt;/p&gt;
+&lt;p&gt;然后就是上架 Firefox 了，与 Chrome 不同的是 Firefox 上架是免费的，但是需要审核。但是 Firefox 的审核速度比 Chrome 快多了，大概半天就通过了。不过提交插件的时候是需要提交自己的代码的。🤣我不确定那些商业插件是不是也需要提交代码。或者怎么整，会不会出现代码泄露的问题。也没有试过传个假代码会怎么样。&lt;/p&gt;
+&lt;p&gt;最后就是 Edge 了，虽然 Edge 也是免费上架的，但是整体的体验是非常差劲的。 首先就是要注册一个开发者计划，需要填 State , 我先后填了 福建 、 Fujian 都过不了，最后搜索了一下要填缩写，比如北京就是 BJ。 我填了一下 FJ 才过。这里真的尬住了，感觉这个应该是美国的习惯吧，把州名缩写，但是在中国确实没有人把省名缩写的。&lt;/p&gt;
+&lt;p&gt;然后就是这个整个 Developer experience 体验最差的也是 Edge，像谷歌的 Developer DashBoard, 感觉挺流畅加好看的。用起来引导也自然，基本靠直觉就完了。firefox 虽然风格有点10几年前的风格，但是也挺流畅的。但是微软的那个 Partner Center 真的像一坨屎，风格尽管很现代，但是卡的一批。真不知道前后端是用什么写的。&lt;/p&gt;
+&lt;h2 id=&#34;技术的感悟&#34;&gt;技术的感悟&lt;/h2&gt;
+&lt;p&gt;之前写 React 大多都是写配置好的项目中的写应用，所以感觉 Javascript 和 React差的很多。但是这次不得不在 Javascript 代码中去手动的去调用&lt;code&gt;ReactDOM.createRoot&lt;/code&gt;然后去render。这一下就感觉一些思维上转换， React只是一种特殊的 Javascript 代码。&lt;/p&gt;
+&lt;p&gt;然后就是 Webpack，之前也从来没有配置过，但是这次不得不配了，但是其实真配起来感觉也不太难，也基本符合直觉。&lt;/p&gt;
+&lt;h2 id=&#34;插件的推广&#34;&gt;插件的推广&lt;/h2&gt;
+&lt;p&gt;🤔 大概把项目的 &lt;a class=&#34;link&#34; href=&#34;https://github.com/Get-Tech-Stack/TechStack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Homepage&lt;/a&gt; 搭建了一下。 然后在自己的一些朋友群里私下分享了一下，先来一波内测，看看有没有一些大的问题，等后续上架各大商店，把插件的权限仅可能减少(现在了为了开发方便，是把可能能用到的权限都申了，但是实际上用不到这么多)，然后还有防刷 API 的都解决一下，计划在 V2EX 上还有 Twitter 上发些内容做一些推广。😄&lt;/p&gt;
+&lt;p&gt;如果你感兴趣也可以现在就试试这个插件:
+Firefox: &lt;a class=&#34;link&#34; href=&#34;https://addons.mozilla.org/en-US/firefox/addon/tech-stack/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://addons.mozilla.org/en-US/firefox/addon/tech-stack/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Chrome: &lt;a class=&#34;link&#34; href=&#34;https://chrome.google.com/webstore/detail/tech-stack-show-github-re/lbhjnhabgddabnagncmcgomggeadlbhh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://chrome.google.com/webstore/detail/tech-stack-show-github-re/lbhjnhabgddabnagncmcgomggeadlbhh&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/1.png&#34;
+	width=&#34;2674&#34;
+	height=&#34;1608&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/1_hu63d2a50a08d71167d76b436672056884_534179_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/1_hu63d2a50a08d71167d76b436672056884_534179_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;166&#34;
+		data-flex-basis=&#34;399px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/2.png&#34;
+	width=&#34;1400&#34;
+	height=&#34;560&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/2_huff19d7e6ec1369590a870119a40f694e_133048_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/2_huff19d7e6ec1369590a870119a40f694e_133048_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;250&#34;
+		data-flex-basis=&#34;600px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

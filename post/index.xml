@@ -13,15 +13,25 @@
         
         <guid>https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/</guid>
         <description>&lt;img src="https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/cover.png" alt="Featured image of post TechStack背后的故事: 因需求诞生的特殊数据结构:正则Map" /&gt;&lt;h2 id=&#34;前情&#34;&gt;前情&lt;/h2&gt;
-&lt;p&gt;TechStack 是一个用于显示一个 Github 项目的技术栈的浏览器插件。在开发它的过程中，我遇到一个挺有意思的技术需求。&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/Get-Tech-Stack/TechStack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;TechStack&lt;/a&gt; 是一个用于显示一个 Github 项目的技术栈的浏览器插件。在开发它的过程中，我遇到一个挺有意思的技术需求。&lt;/p&gt;
 &lt;p&gt;比如在 package.json 中，我们可以通过依赖项 react 直接映射到 React 技术栈。但是有些依赖并不是这样。 比如 &lt;code&gt;@radix-ui/react-checkbox&lt;/code&gt; 和 &lt;code&gt;@radix-ui/react-icons&lt;/code&gt; 它们都属于 Radix UI 的一部分，如果让这些依赖直接对应到 Radix 呢?&lt;/p&gt;
 &lt;p&gt;我觉得大部分人都很想容易想到正则。对，可以写一个正则，大概是这样&lt;code&gt;@radix-ui/[\\w-]+&lt;/code&gt;，如果被它匹配到就是 Radix。&lt;/p&gt;
 &lt;p&gt;所以我就想搞一个数据结构，一个 key 可以是 string 也可以是正则的map。🤔
 就像这样&lt;/p&gt;
-&lt;p&gt;react =&amp;gt; map(与react对应) =&amp;gt; React&lt;/p&gt;
-&lt;p&gt;@radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\w-]+对应) =&amp;gt; Radix&lt;/p&gt;
-&lt;p&gt;@radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\w-]+对应)=&amp;gt; Radix&lt;/p&gt;
-&lt;p&gt;开工!&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;react =&amp;gt; map(与react对应) =&amp;gt; React
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;@radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\\w-]+对应) =&amp;gt; Radix
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;@radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\\w-]+对应)=&amp;gt; Radix
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;开工!&lt;/p&gt;
 &lt;h2 id=&#34;实现第一版&#34;&gt;实现第一版&lt;/h2&gt;
 &lt;p&gt;先大概验证一下想法的可行性，我直接干了一个map，大概像这样&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -454,8 +464,8 @@ Chrome: &lt;a class=&#34;link&#34; href=&#34;https://chrome.google.com/webstore/
     &gt;Homepage&lt;/a&gt; 搭建了一下。 然后在自己的一些朋友群里私下分享了一下，先来一波内测，看看有没有一些大的问题，等后续上架各大商店，把插件的权限仅可能减少(现在了为了开发方便，是把可能能用到的权限都申了，但是实际上用不到这么多)，然后还有防刷 API 的都解决一下，计划在 V2EX 上还有 Twitter 上发些内容做一些推广。😄&lt;/p&gt;
 &lt;p&gt;如果你感兴趣也可以现在就试试这个插件:
 Firefox: &lt;a class=&#34;link&#34; href=&#34;https://addons.mozilla.org/en-US/firefox/addon/tech-stack/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://addons.mozilla.org/en-US/firefox/addon/tech-stack/&lt;/a&gt;
-Chrome: &lt;a class=&#34;link&#34; href=&#34;https://chrome.google.com/webstore/detail/tech-stack-show-github-re/lbhjnhabgddabnagncmcgomggeadlbhh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://addons.mozilla.org/en-US/firefox/addon/tech-stack/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Chrome: &lt;a class=&#34;link&#34; href=&#34;https://chrome.google.com/webstore/detail/tech-stack-show-github-re/lbhjnhabgddabnagncmcgomggeadlbhh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://chrome.google.com/webstore/detail/tech-stack-show-github-re/lbhjnhabgddabnagncmcgomggeadlbhh&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/p/%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E4%B8%8A%E6%9E%B6%E5%85%A8%E8%AE%B0/1.png&#34;
 	width=&#34;2674&#34;
