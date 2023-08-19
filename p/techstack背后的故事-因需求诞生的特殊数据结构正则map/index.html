@@ -5,7 +5,7 @@
 比如在 package.json 中，我们可以通过依赖项 react 直接映射到 React 技术栈。但是有些依赖并不是这样。 比如 @radix-ui/react-checkbox 和 @radix-ui/react-icons 它们都属于 Radix UI 的一部分，如果让这些依赖直接对应到 Radix 呢?
 我觉得大部分人都很想容易想到正则。对，可以写一个正则，大概是这样@radix-ui/[\\w-]&#43;，如果被它匹配到就是 Radix。
 所以我就想搞一个数据结构，一个 key 可以是 string 也可以是正则的map。🤔 就像这样
-1 2 3 react =&amp;gt; map(与react对应) =&amp;gt; React @radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\\w-]&#43;对应) =&amp;gt; Radix @radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\\w-]&#43;对应)=&amp;gt; Radix 开工!
+1 2 3 4 5 6 7 8 map = { &amp;#34;react&amp;#34;: &amp;#34;React&amp;#34;, &amp;#34;@radix-ui/[\\w-]&#43;&amp;#34;: &amp;#34;Radix&amp;#34; } map[&amp;#34;react&amp;#34;] =&amp;gt; &amp;#34;React&amp;#34; map[&amp;#34;@radix-ui/react-checkbox&amp;#34;] =&amp;gt; &amp;#34;Radix&amp;#34; map[&amp;#34;@radix-ui/react-icons&amp;#34;] =&amp;gt; &amp;#34;Radix&amp;#34; 开工!
 实现第一版 先大概验证一下想法的可行性，我直接干了一个map，大概像这样
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 // 伪代码 type Map[T any] struct { intermap map[string]T regexp []string } func (r *Map[T])Store(key string, value T) { 直接存 } func (r *Map[T])StoreRegexp(key string, value T) { 存到正则表达式数组中 } // 这里这个看到，返回值比一般的map多了一个 match ，是为了方便调试知道这个string是被哪个正则表达式匹配到的 func (r *Map[T]) Load(key string) (actual T, loaded bool, match string) { 如果intermap中没有就去遍历所有的正则表达式.'>
 <title>TechStack背后的故事: 因需求诞生的特殊数据结构:正则Map</title>
@@ -17,7 +17,7 @@
 比如在 package.json 中，我们可以通过依赖项 react 直接映射到 React 技术栈。但是有些依赖并不是这样。 比如 @radix-ui/react-checkbox 和 @radix-ui/react-icons 它们都属于 Radix UI 的一部分，如果让这些依赖直接对应到 Radix 呢?
 我觉得大部分人都很想容易想到正则。对，可以写一个正则，大概是这样@radix-ui/[\\w-]&#43;，如果被它匹配到就是 Radix。
 所以我就想搞一个数据结构，一个 key 可以是 string 也可以是正则的map。🤔 就像这样
-1 2 3 react =&amp;gt; map(与react对应) =&amp;gt; React @radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\\w-]&#43;对应) =&amp;gt; Radix @radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\\w-]&#43;对应)=&amp;gt; Radix 开工!
+1 2 3 4 5 6 7 8 map = { &amp;#34;react&amp;#34;: &amp;#34;React&amp;#34;, &amp;#34;@radix-ui/[\\w-]&#43;&amp;#34;: &amp;#34;Radix&amp;#34; } map[&amp;#34;react&amp;#34;] =&amp;gt; &amp;#34;React&amp;#34; map[&amp;#34;@radix-ui/react-checkbox&amp;#34;] =&amp;gt; &amp;#34;Radix&amp;#34; map[&amp;#34;@radix-ui/react-icons&amp;#34;] =&amp;gt; &amp;#34;Radix&amp;#34; 开工!
 实现第一版 先大概验证一下想法的可行性，我直接干了一个map，大概像这样
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 // 伪代码 type Map[T any] struct { intermap map[string]T regexp []string } func (r *Map[T])Store(key string, value T) { 直接存 } func (r *Map[T])StoreRegexp(key string, value T) { 存到正则表达式数组中 } // 这里这个看到，返回值比一般的map多了一个 match ，是为了方便调试知道这个string是被哪个正则表达式匹配到的 func (r *Map[T]) Load(key string) (actual T, loaded bool, match string) { 如果intermap中没有就去遍历所有的正则表达式.'>
 <meta property='og:url' content='https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/'>
@@ -28,7 +28,7 @@
 比如在 package.json 中，我们可以通过依赖项 react 直接映射到 React 技术栈。但是有些依赖并不是这样。 比如 @radix-ui/react-checkbox 和 @radix-ui/react-icons 它们都属于 Radix UI 的一部分，如果让这些依赖直接对应到 Radix 呢?
 我觉得大部分人都很想容易想到正则。对，可以写一个正则，大概是这样@radix-ui/[\\w-]&#43;，如果被它匹配到就是 Radix。
 所以我就想搞一个数据结构，一个 key 可以是 string 也可以是正则的map。🤔 就像这样
-1 2 3 react =&amp;gt; map(与react对应) =&amp;gt; React @radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\\w-]&#43;对应) =&amp;gt; Radix @radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\\w-]&#43;对应)=&amp;gt; Radix 开工!
+1 2 3 4 5 6 7 8 map = { &amp;#34;react&amp;#34;: &amp;#34;React&amp;#34;, &amp;#34;@radix-ui/[\\w-]&#43;&amp;#34;: &amp;#34;Radix&amp;#34; } map[&amp;#34;react&amp;#34;] =&amp;gt; &amp;#34;React&amp;#34; map[&amp;#34;@radix-ui/react-checkbox&amp;#34;] =&amp;gt; &amp;#34;Radix&amp;#34; map[&amp;#34;@radix-ui/react-icons&amp;#34;] =&amp;gt; &amp;#34;Radix&amp;#34; 开工!
 实现第一版 先大概验证一下想法的可行性，我直接干了一个map，大概像这样
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 // 伪代码 type Map[T any] struct { intermap map[string]T regexp []string } func (r *Map[T])Store(key string, value T) { 直接存 } func (r *Map[T])StoreRegexp(key string, value T) { 存到正则表达式数组中 } // 这里这个看到，返回值比一般的map多了一个 match ，是为了方便调试知道这个string是被哪个正则表达式匹配到的 func (r *Map[T]) Load(key string) (actual T, loaded bool, match string) { 如果intermap中没有就去遍历所有的正则表达式."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/cover.png' />
@@ -426,11 +426,21 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">react =&gt; map(与react对应) =&gt; React
-</span></span><span class="line"><span class="cl">@radix-ui/react-icons =&gt; map(与@radix-ui/[\\w-]+对应) =&gt; Radix
-</span></span><span class="line"><span class="cl">@radix-ui/react-icons =&gt; map(与@radix-ui/[\\w-]+对应)=&gt; Radix
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">map = {
+</span></span><span class="line"><span class="cl">	&#34;react&#34;: &#34;React&#34;,
+</span></span><span class="line"><span class="cl">	&#34;@radix-ui/[\\w-]+&#34;: &#34;Radix&#34;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">map[&#34;react&#34;] =&gt; &#34;React&#34;
+</span></span><span class="line"><span class="cl">map[&#34;@radix-ui/react-checkbox&#34;] =&gt; &#34;Radix&#34;
+</span></span><span class="line"><span class="cl">map[&#34;@radix-ui/react-icons&#34;] =&gt; &#34;Radix&#34;
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>开工!</p>
