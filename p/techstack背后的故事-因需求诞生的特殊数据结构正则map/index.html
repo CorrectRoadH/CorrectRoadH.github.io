@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='前情 TechStack 是一个用于显示一个 Github 项目的技术栈的浏览器插件。在开发它的过程中，我遇到一个挺有意思的技术需求。
+比如在 package.json 中，我们可以通过依赖项 react 直接映射到 React 技术栈。但是有些依赖并不是这样。 比如 @radix-ui/react-checkbox 和 @radix-ui/react-icons 它们都属于 Radix UI 的一部分，如果让这些依赖直接对应到 Radix 呢?
+我觉得大部分人都很想容易想到正则。对，可以写一个正则，大概是这样@radix-ui/[\\w-]&#43;，如果被它匹配到就是 Radix。
+所以我就想搞一个数据结构，一个 key 可以是 string 也可以是正则的map。🤔 就像这样
+react =&amp;gt; map(与react对应) =&amp;gt; React
+@radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\w-]&#43;对应) =&amp;gt; Radix
+@radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\w-]&#43;对应)=&amp;gt; Radix
+开工!
+实现第一版 先大概验证一下想法的可行性，我直接干了一个map，大概像这样
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 // 伪代码 type Map[T any] struct { intermap map[string]T regexp []string } func (r *Map[T])Store(key string, value T) { 直接存 } func (r *Map[T])StoreRegexp(key string, value T) { 存到正则表达式数组中 } // 这里这个看到，返回值比一般的map多了一个 match ，是为了方便调试知道这个string是被哪个正则表达式匹配到的 func (r *Map[T]) Load(key string) (actual T, loaded bool, match string) { 如果intermap中没有就去遍历所有的正则表达式.'>
+<title>TechStack背后的故事: 因需求诞生的特殊数据结构:正则Map</title>
+
+<link rel='canonical' href='https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/'>
+
+<link rel="stylesheet" href="/scss/style.min.f2f21d9d961219a01621263328d8997e1ae3b4f0371d455628df1fdc27d57bd6.css"><meta property='og:title' content='TechStack背后的故事: 因需求诞生的特殊数据结构:正则Map'>
+<meta property='og:description' content='前情 TechStack 是一个用于显示一个 Github 项目的技术栈的浏览器插件。在开发它的过程中，我遇到一个挺有意思的技术需求。
+比如在 package.json 中，我们可以通过依赖项 react 直接映射到 React 技术栈。但是有些依赖并不是这样。 比如 @radix-ui/react-checkbox 和 @radix-ui/react-icons 它们都属于 Radix UI 的一部分，如果让这些依赖直接对应到 Radix 呢?
+我觉得大部分人都很想容易想到正则。对，可以写一个正则，大概是这样@radix-ui/[\\w-]&#43;，如果被它匹配到就是 Radix。
+所以我就想搞一个数据结构，一个 key 可以是 string 也可以是正则的map。🤔 就像这样
+react =&amp;gt; map(与react对应) =&amp;gt; React
+@radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\w-]&#43;对应) =&amp;gt; Radix
+@radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\w-]&#43;对应)=&amp;gt; Radix
+开工!
+实现第一版 先大概验证一下想法的可行性，我直接干了一个map，大概像这样
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 // 伪代码 type Map[T any] struct { intermap map[string]T regexp []string } func (r *Map[T])Store(key string, value T) { 直接存 } func (r *Map[T])StoreRegexp(key string, value T) { 存到正则表达式数组中 } // 这里这个看到，返回值比一般的map多了一个 match ，是为了方便调试知道这个string是被哪个正则表达式匹配到的 func (r *Map[T]) Load(key string) (actual T, loaded bool, match string) { 如果intermap中没有就去遍历所有的正则表达式.'>
+<meta property='og:url' content='https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/'>
+<meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2023-08-18T22:45:00&#43;08:00'/><meta property='article:modified_time' content='2023-08-18T22:45:00&#43;08:00'/><meta property='og:image' content='https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/cover.png' />
+<meta name="twitter:title" content="TechStack背后的故事: 因需求诞生的特殊数据结构:正则Map">
+<meta name="twitter:description" content="前情 TechStack 是一个用于显示一个 Github 项目的技术栈的浏览器插件。在开发它的过程中，我遇到一个挺有意思的技术需求。
+比如在 package.json 中，我们可以通过依赖项 react 直接映射到 React 技术栈。但是有些依赖并不是这样。 比如 @radix-ui/react-checkbox 和 @radix-ui/react-icons 它们都属于 Radix UI 的一部分，如果让这些依赖直接对应到 Radix 呢?
+我觉得大部分人都很想容易想到正则。对，可以写一个正则，大概是这样@radix-ui/[\\w-]&#43;，如果被它匹配到就是 Radix。
+所以我就想搞一个数据结构，一个 key 可以是 string 也可以是正则的map。🤔 就像这样
+react =&amp;gt; map(与react对应) =&amp;gt; React
+@radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\w-]&#43;对应) =&amp;gt; Radix
+@radix-ui/react-icons =&amp;gt; map(与@radix-ui/[\w-]&#43;对应)=&amp;gt; Radix
+开工!
+实现第一版 先大概验证一下想法的可行性，我直接干了一个map，大概像这样
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 // 伪代码 type Map[T any] struct { intermap map[string]T regexp []string } func (r *Map[T])Store(key string, value T) { 直接存 } func (r *Map[T])StoreRegexp(key string, value T) { 存到正则表达式数组中 } // 这里这个看到，返回值比一般的map多了一个 match ，是为了方便调试知道这个string是被哪个正则表达式匹配到的 func (r *Map[T]) Load(key string) (actual T, loaded bool, match string) { 如果intermap中没有就去遍历所有的正则表达式."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/cover.png' />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-PDJXNW2S9J', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huac971efb212d008eef368e3014548668_655784_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐍</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">CorrectRoad&#39;s Blog</a></h1>
+            <h2 class="site-description">君子生非异也，善假于物也。</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CorrectRoadH'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com/correctroad'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' target="_blank">
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M9 11l-4 4l4 4m-4 -4h11a4 4 0 0 0 0 -8h-1" />
+</svg>
+
+
+
+                
+                <span>Refresh</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#前情">前情</a></li>
+    <li><a href="#实现第一版">实现第一版</a></li>
+    <li><a href="#benchmark">benchmark</a></li>
+    <li><a href="#实现第二版">实现第二版</a></li>
+    <li><a href="#benchmark-1">benchmark</a></li>
+    <li><a href="#lazy-compile">Lazy compile</a></li>
+    <li><a href="#其它优化">其它优化</a>
+      <ol>
+        <li><a href="#如何保持树的平衡">如何保持树的平衡</a></li>
+        <li><a href="#后续优化">后续优化</a></li>
+        <li><a href="#安全性检查">安全性检查</a></li>
+        <li><a href="#线程安全">线程安全</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ol>
+    </li>
+    <li><a href="#其它">其它</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/">
+                <img src="/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/cover_hu470c5030ec556928d879153cb77d3471_84127_800x0_resize_box_3.png"
+                        srcset="/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/cover_hu470c5030ec556928d879153cb77d3471_84127_800x0_resize_box_3.png 800w, /p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/cover_hu470c5030ec556928d879153cb77d3471_84127_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="139" 
+                        loading="lazy"
+                        alt="Featured image of post TechStack背后的故事: 因需求诞生的特殊数据结构:正则Map" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/">TechStack背后的故事: 因需求诞生的特殊数据结构:正则Map</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 18, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="前情">前情</h2>
+<p>TechStack 是一个用于显示一个 Github 项目的技术栈的浏览器插件。在开发它的过程中，我遇到一个挺有意思的技术需求。</p>
+<p>比如在 package.json 中，我们可以通过依赖项 react 直接映射到 React 技术栈。但是有些依赖并不是这样。 比如 <code>@radix-ui/react-checkbox</code> 和 <code>@radix-ui/react-icons</code> 它们都属于 Radix UI 的一部分，如果让这些依赖直接对应到 Radix 呢?</p>
+<p>我觉得大部分人都很想容易想到正则。对，可以写一个正则，大概是这样<code>@radix-ui/[\\w-]+</code>，如果被它匹配到就是 Radix。</p>
+<p>所以我就想搞一个数据结构，一个 key 可以是 string 也可以是正则的map。🤔
+就像这样</p>
+<p>react =&gt; map(与react对应) =&gt; React</p>
+<p>@radix-ui/react-icons =&gt; map(与@radix-ui/[\w-]+对应) =&gt; Radix</p>
+<p>@radix-ui/react-icons =&gt; map(与@radix-ui/[\w-]+对应)=&gt; Radix</p>
+<p>开工!</p>
+<h2 id="实现第一版">实现第一版</h2>
+<p>先大概验证一下想法的可行性，我直接干了一个map，大概像这样</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 伪代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span>  <span class="nx">Map</span><span class="p">[</span><span class="nx">T</span> <span class="nx">any</span><span class="p">]</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">intermap</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">T</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">regexp</span>   <span class="p">[]</span><span class="kt">string</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">Map</span><span class="p">[</span><span class="nx">T</span><span class="p">])</span><span class="nf">Store</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">直接存</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">Map</span><span class="p">[</span><span class="nx">T</span><span class="p">])</span><span class="nf">StoreRegexp</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">存到正则表达式数组中</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 这里这个看到，返回值比一般的map多了一个 match ，是为了方便调试知道这个string是被哪个正则表达式匹配到的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">Map</span><span class="p">[</span><span class="nx">T</span><span class="p">])</span> <span class="nf">Load</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span>  <span class="p">(</span><span class="nx">actual</span> <span class="nx">T</span><span class="p">,</span> <span class="nx">loaded</span> <span class="kt">bool</span><span class="p">,</span> <span class="nx">match</span> <span class="kt">string</span><span class="p">)</span>  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">如果</span><span class="nx">intermap</span><span class="err">中没有就去遍历所有的正则表达式</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当我们去取一个值时，遍历所有的正则表达式。可以看到这个实现的时间复杂度为 O(n)，n 为正则表达式的数量。这个复杂度其实在我的业务中是可以接受的，因为正则表达式的数量不会太多。🤔但是都要做成库的话，肯定不能止步于此。</p>
+<h2 id="benchmark">benchmark</h2>
+<p>先来做个benchmark，不然怎么能知道后面提升多少呢!</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">➜  benchmark git:(main) ✗  go test -bench=&#39;Map$&#39; . 
+</span></span><span class="line"><span class="cl">goos: darwin
+</span></span><span class="line"><span class="cl">goarch: arm64
+</span></span><span class="line"><span class="cl">pkg: github.com/CorrectRoadH/regexp_map/benchmark
+</span></span><span class="line"><span class="cl">BenchmarkMap-10                          3756829               371.5 ns/op
+</span></span><span class="line"><span class="cl">BenchmarkRegexpMap-10                    4147221               365.4 ns/op
+</span></span><span class="line"><span class="cl">BenchmarkPureRegepxRegexpMap-10           142440              8531 ns/op &lt;- 重点在这里，全是正则表达式key的测试
+</span></span><span class="line"><span class="cl">BenchmarkAllxRegexpMap-10                 136924              8788 ns/op &lt;- 重点在这里，混合正则表达式key和普通key的测试
+</span></span><span class="line"><span class="cl">PASS
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里看起来数据量小的时候还凑合，直接上大数据量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">➜  benchmark git:(main) ✗  go test -bench=&#39;Map$&#39; -benchtime=5s . 
+</span></span><span class="line"><span class="cl">goos: darwin
+</span></span><span class="line"><span class="cl">goarch: arm64
+</span></span><span class="line"><span class="cl">pkg: github.com/CorrectRoadH/regexp_map/benchmark
+</span></span><span class="line"><span class="cl">Benchmark_Map-10                        18406218               366.6 ns/op
+</span></span><span class="line"><span class="cl">Benchmark_RegexpMap-10                  19119948               423.1 ns/op
+</span></span><span class="line"><span class="cl">Benchmark_PureRegepx_RegexpMap-10          10000           4082512 ns/op &lt;- 可以看到性能影响还是非常明显的
+</span></span><span class="line"><span class="cl">Benchmark_All_RegexpMap-10                 10000           4097201 ns/op 
+</span></span><span class="line"><span class="cl">PASS
+</span></span><span class="line"><span class="cl">ok      github.com/CorrectRoadH/regexp_map/benchmark    179.822s
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>大概测了一下，可以看到当数据量达到10000时，就慢的可怜。😭</p>
+<h2 id="实现第二版">实现第二版</h2>
+<p>🤔我当然不能满足这么差的性能表现呀! 怎么做呢? 凭我的直觉，我感觉可能用一个二分再搭一个树就能把时间复杂度优化到Log(N)，感觉这个性能是可以勉强接受的。</p>
+<p>直接开工，大概代码如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Map</span><span class="p">[</span><span class="nx">T</span> <span class="nx">any</span><span class="p">]</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">internalMap</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">T</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">regexMap</span>    <span class="p">[]</span><span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">RegexpTree</span>  <span class="o">*</span><span class="nx">RegexpNode</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">Map</span><span class="p">[</span><span class="nx">T</span><span class="p">])</span> <span class="nf">StoreRegex</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">r</span><span class="p">.</span><span class="nx">internalMap</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">r</span><span class="p">.</span><span class="nx">internalMap</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">T</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">r</span><span class="p">.</span><span class="nx">RegexpTree</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">r</span><span class="p">.</span><span class="nx">RegexpTree</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">RegexpNode</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">internalMap</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 正则已经在树中存在的情况就只要替换值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">r</span><span class="p">.</span><span class="nx">internalMap</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">value</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="err">把正则插到树中</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="benchmark-1">benchmark</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">➜  benchmark git:(main) ✗  go test -bench=&#39;Map$&#39; -benchtime 1s .   
+</span></span><span class="line"><span class="cl">goos: darwin
+</span></span><span class="line"><span class="cl">goarch: arm64
+</span></span><span class="line"><span class="cl">pkg: github.com/CorrectRoadH/regexp_map/benchmark
+</span></span><span class="line"><span class="cl">Benchmark_PureRegepx_RegexpMap-10           9561           4392539 ns/op &lt;--旧的
+</span></span><span class="line"><span class="cl">Benchmark_PureRegepx_V2RegexpMap-10        10000           9758544 ns/op &lt;--新的
+</span></span><span class="line"><span class="cl">PASS
+</span></span><span class="line"><span class="cl">ok      github.com/CorrectRoadH/regexp_map/benchmark    140.046s
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>🤔可以看到其实性能不增反降，这很反直觉，不应该是这样。直接上 pprof，看看问题在哪里。</p>
+<p>通过pprof，我定位到时间大概花了 Regexp Compile 和 GC 上，后者先不管，先看看前者。我们现在的 regexp 是在 Store 时生成的，所以明显会有多次不必要浪费的 Compile，所以这个可以lazy一下，当用到时再 Compile。</p>
+<p>我原来的代码大概是 Insert 时 compile 正则，现在是 Find 时 compile 正则</p>
+<p>因为原来Insert之后可能还会有Insert，会让原来的编译出来正则用不上，所以这个编译其实是无用的。</p>
+<h2 id="lazy-compile">Lazy compile</h2>
+<p>在把代码改了一下之后，就OK了。可以看到性能提升了很多。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">go test -bench=&#39;Map$&#39; -benchtime 5s .
+</span></span><span class="line"><span class="cl">goos: darwin
+</span></span><span class="line"><span class="cl">goarch: arm64
+</span></span><span class="line"><span class="cl">pkg: github.com/CorrectRoadH/regexp_map/benchmark
+</span></span><span class="line"><span class="cl">Benchmark_PureRegepx_RegexpMap-10      	   10000	   4339141 ns/op
+</span></span><span class="line"><span class="cl">Benchmark_PureRegepx_V2RegexpMap-10    	   10000	    631144 ns/op &lt;--- 可以看到性能提升很明显
+</span></span><span class="line"><span class="cl">PASS
+</span></span><span class="line"><span class="cl">ok  	github.com/CorrectRoadH/regexp_map/benchmark	50.718s
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="其它优化">其它优化</h2>
+<p>然后就是在树上继续修修改改，看看能不能把GC时间也减掉一点(就是少用指针)🤔。</p>
+<h3 id="如何保持树的平衡">如何保持树的平衡</h3>
+<p>平衡树，大家很容易想到红黑树。但是其实红黑树并不适合我们，因为红黑树会改变节点的顺序，而顺序会重建 regexp。所以我们目前是尽可能在插入时保证树的平衡。🤔</p>
+<p>所以我想到一个很骚的平衡算法🤪 随机插入，通过随机性来保证树的平衡。🤣目前看来其实还能接受。</p>
+<h3 id="后续优化">后续优化</h3>
+<p>其实二叉树并不是正则Map一个适合的树，完全可以上多叉树🤔所以后续的优化就是上多叉树。后续我研究一下 B 树，看看能不能把借鉴一下相关的思想。</p>
+<h3 id="安全性检查">安全性检查</h3>
+<p>可以看到这个Map是有一个要求的，也就是每个正则表达式都要能匹配到一个唯一的值。所以我们需要一个安全性检查，来保证这个要求。</p>
+<p>这个实现也很简单，就是判断是不是左右能匹配的上，如果左右子树都匹配的上就是出问题了。</p>
+<p>但是这个目前没有一个好的表现方式，我打算额外做一个函数，比如 安全的Load。在这里取值时额外检查，如果遇到问题就是 panic。</p>
+<h3 id="线程安全">线程安全</h3>
+<p>这个是还没有做的，目前还是用普通的 Map，后续考虑用 sync.Map 加一些其它机制来实现线程安全。</p>
+<h3 id="总结">总结</h3>
+<p>从一个需求到落地代码，大概用了一个晚上+一个中午。还挺兴奋的，特别是每次跑通测试，或者一个 benchmark 相较之前有所提升的时候。🤣 还是挺有成就感的。</p>
+<h2 id="其它">其它</h2>
+<p>目前这个 Regexp Map 已经在 Github 上了，可以在这里找到文档和代码 : <a class="link" href="https://github.com/CorrectRoadH/regexp_map"  target="_blank" rel="noopener"
+    >https://github.com/CorrectRoadH/regexp_map</a></p>
+<p>然后就是运营时间😗
+TechStack 是一个用于显示一个 Github 项目的技术栈的浏览器插件。可以快速判断一个Github项目的技术栈，一眼判断出是不是假开源项目。目前已正式结束测试，欢迎大家来试试。</p>
+<p>Chrome: <a class="link" href="https://chrome.google.com/webstore/detail/tech-stack-show-github-re/lbhjnhabgddabnagncmcgomggeadlbhh"  target="_blank" rel="noopener"
+    >https://chrome.google.com/webstore/detail/tech-stack-show-github-re/lbhjnhabgddabnagncmcgomggeadlbhh</a></p>
+<p>Firefox:  <a class="link" href="https://addons.mozilla.org/en-US/firefox/addon/tech-stack/"  target="_blank" rel="noopener"
+    >https://addons.mozilla.org/en-US/firefox/addon/tech-stack/</a></p>
+<p>比如这个: FastGPT，虽然看到这个是一个前端项目，不过能看到有调 OpenAI 和用到 Postgres ，所以一眼就可以判断出应该是一个真的开源项目，也可以大概判断出实现思路，比如是用 Postgres 做向量数据库。
+<img src="/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/1.png"
+	width="2510"
+	height="1404"
+	srcset="/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/1_hu9e495b11715eedb57980995a088af5ea_375435_480x0_resize_box_3.png 480w, /p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/1_hu9e495b11715eedb57980995a088af5ea_375435_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="178"
+		data-flex-basis="429px"
+	
+></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="CorrectRoadH/CorrectRoadH.github.io"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2023 CorrectRoad&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.18.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
