@@ -1,0 +1,516 @@
+{
+	"filename":"package.json",
+	"techstacks":[
+		{
+			"dep_name":"react",
+			"name":"React",
+			"icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/react.svg",
+			"homepage":"https://reactjs.org/",
+			"category":"frontend framework"
+		},
+		{
+			"dep_name":"vue",
+			"name":"VUE",
+			"icon":"https://avatars.githubusercontent.com/u/6128107?s=200&v=4",
+			"homepage":"https://vuejs.org/",
+			"category":"frontend framework"
+		},
+		{
+			"dep_name":"@angular/core",
+			"name":"Angular",
+			"icon":"https://avatars.githubusercontent.com/u/139426?s=200&v=4",
+			"homepage":"https://angular.io/",
+			"category":"frontend framework"
+		},
+		{
+			"dep_name":"solid-js",
+			"name":"Solid",
+			"icon":"https://avatars.githubusercontent.com/u/79226042?s=48&v=4",
+			"homepage":"https://www.solidjs.com/",
+			"category":"frontend framework"
+		},
+		{
+			"dep_name":"svelte",
+			"name":"Svelte",
+			"icon":"https://avatars.githubusercontent.com/u/23617963?s=200&v=4",
+			"homepage":"https://svelte.dev/",
+			"category":"frontend framework"
+		},
+		{
+			"dep_name":"jquery",
+			"name":"jQuery",
+			"icon":"https://avatars.githubusercontent.com/u/70142?s=200&v=4",
+			"homepage":"https://jquery.com/",
+			"category":"frontend framework"
+		},
+		{
+			"dep_name":"qwik",
+			"name":"Qwik",
+			"icon":"https://avatars.githubusercontent.com/u/35700027?s=48&v=4",
+			"homepage":"https://qwik.dev/",
+			"category":"frontend framework"
+		},
+		{
+			"dep_name":"i18next",
+			"name":"i18next",
+			"icon":"https://avatars.githubusercontent.com/u/8546082?s=200&v=4",
+			"homepage":"https://www.i18next.com/",
+			"category":"i18n"
+		},
+		{
+			"dep_name":"vue-i18n",
+			"name":"Vue-i18n",
+			"icon":"https://avatars.githubusercontent.com/u/6128107?s=200&v=4",
+			"homepage":"https://kazupon.github.io/vue-i18n/",
+			"category":"i18n"
+		},
+		{
+			"dep_name":"@nuxtjs/i18n",
+			"name":"Nuxtjs i18n",
+			"icon":"https://avatars.githubusercontent.com/u/23360933?s=48&v=4",
+			"homepage":"https://nuxtjs.org/",
+			"category":"i18n"
+		},
+		{
+			"dep_name":"react-redux",
+			"name":"React Redux",
+			"icon":"https://avatars.githubusercontent.com/u/13142323?s=48&v=4",
+			"homepage":"https://react-redux.js.org/",
+			"category":"state management"
+		},
+		{
+			"dep_name":"zustand",
+			"name":"Zustand",
+			"icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/zustand.png",
+			"homepage":"https://zustand-demo.pmnd.rs/",
+			"category":"state management"
+		},
+		{
+			"dep_name":"jotai",
+			"name":"Jotai",
+			"icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/jotai.png",
+			"homepage":"https://jotai.org/",
+			"category":"state management"
+		},
+		{
+			"dep_name":"vuex",
+			"name":"Vuex",
+			"icon":"https://avatars.githubusercontent.com/u/6128107?s=48&v=4",
+			"homepage":"https://vuex.vuejs.org/",
+			"category":"state management"
+		},
+		{
+			"dep_name":"pinia",
+			"name":"Pinia",
+			"icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/pinia.png",
+			"homepage":"https://pinia.esm.dev/",
+			"category":"state management"
+		},
+		{
+			"dep_name":"@pinia/nuxt",
+			"name":"Pinia",
+			"icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/pinia.png",
+			"homepage":"https://pinia.esm.dev/",
+			"category":"state management"
+		},
+		{
+			"dep_name":"tailwindcss",
+			"name":"Tailwind CSS",
+			"icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/tailwindcss.png",
+			"homepage":"https://tailwindcss.com/",
+			"category":"css framework"
+		},
+		{
+			"dep_name":"sass",
+			"name":"Sass",
+			"icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/sass.png",
+			"homepage":"https://sass-lang.com/",
+			"category":"css framework"
+		},
+		{
+			"dep_name":"postcss",
+			"name":"PostCSS",
+			"icon":"https://avatars.githubusercontent.com/u/8296347?s=48&v=4",
+			"homepage":"https://postcss.org/",
+			"category":"css framework"
+		},
+		{
+			"dep_name":"less",
+			"name":"Less",
+			"icon":"https://avatars.githubusercontent.com/u/3538330?s=48&v=4",
+			"homepage":"https://lesscss.org/",
+			"category":"css framework"
+		},
+		{
+			"dep_name":"styled-components",
+			"name":"Styled components",
+			"icon":"https://avatars.githubusercontent.com/u/20658825?s=48&v=4",
+			"homepage":"https://styled-components.com/",
+			"category":"css framework"
+		},
+		{
+			"dep_name":"bootstrap",
+			"name":"Bootstrap",
+			"icon":"https://avatars.githubusercontent.com/u/2918581?s=48&v=4",
+			"homepage":"https://getbootstrap.com/",
+			"category":"css framework"
+		},
+		{
+			"dep_name":"bulma",
+			"name":"Bulma",
+			"icon":"https://avatars.githubusercontent.com/u/1254808?s=48&v=4",
+			"homepage":"https://bulma.io/",
+			"category":"css framework"
+		},
+		{
+			"dep_name":"materialize-css@next",
+			"name":"MaterializeCSS",
+			"icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/materialize.svg",
+			"homepage":"https://materializecss.com/getting-started.html",
+			"category":"css framework"
+		},
+		{
+			"dep_name":"@emotion/react",
+			"name":"Emotion",
+			"icon":"https://avatars.githubusercontent.com/u/31557565?s=48&v=4",
+			"homepage":"https://emotion.sh/docs/introduction",
+			"category":"css framework"
+		},
+		{
+			"dep_name":"@emotion/css",
+			"name":"Emotion",
+			"icon":"https://avatars.githubusercontent.com/u/31557565?s=48&v=4",
+			"homepage":"https://emotion.sh/docs/introduction",
+			"category":"css framework"
+		},
+		{
+			"dep_name":"@emotion/styled",
+			"name":"Emotion",
+			"icon":"https://avatars.githubusercontent.com/u/31557565?s=48&v=4",
+			"homepage":"https://emotion.sh/docs/introduction",
+			"category":"css framework"
+		},
+		{
+			"dep_name":"element-ui",
+			"name":"Element UI",
+			"icon":"https://avatars.githubusercontent.com/u/12810740?s=48&v=4",
+			"homepage":"https://www.naiveui.com/en-US/os-theme",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"primevue",
+			"name":"Prime Vue",
+			"icon":"https://avatars.githubusercontent.com/u/3494069?s=48&v=4",
+			"homepage":"https://primevue.org/",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"primereact",
+			"name":"Prime React",
+			"icon":"https://avatars.githubusercontent.com/u/3494069?s=48&v=4",
+			"homepage":"https://primereact.org/",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"element-plus",
+			"name":"Element Plus",
+			"icon":"https://avatars.githubusercontent.com/u/68583457?s=48&v=4",
+			"homepage":"https://element-plus.org/en-US/",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"naive-ui",
+			"name":"Naive UI",
+			"icon":"https://avatars.githubusercontent.com/u/109735111?s=48&v=4",
+			"homepage":"https://element.eleme.io/#/zh-CN/",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"@headlessui/react",
+			"name":"Headless UI",
+			"icon":"https://avatars.githubusercontent.com/u/67109815?s=48&v=4",
+			"homepage":"https://headlessui.com/",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"@headlessui/vue",
+			"name":"Headless UI",
+			"icon":"https://avatars.githubusercontent.com/u/67109815?s=48&v=4",
+			"homepage":"https://headlessui.com/",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"daisyui",
+			"name":"daisyUI",
+			"icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/daisyui.png",
+			"homepage":"https://daisyui.com/",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"antd",
+			"name":"Ant Design",
+			"icon":"https://avatars.githubusercontent.com/u/12101536?s=48&v=4",
+			"homepage":"https://ant.design/",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"buefy",
+			"name":"Buefy",
+			"icon":"https://avatars.githubusercontent.com/u/26799900?s=48&v=4",
+			"homepage":"https://buefy.org/",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"@radix-ui/[\\w-]+",
+			"kind":"regexp",
+			"name":"Radix UI",
+			"icon":"https://avatars.githubusercontent.com/u/75042455?s=48&v=4",
+			"homepage":"https://www.radix-ui.com/primitives",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"@mui/[\\w-]+",
+			"kind":"regexp",
+			"name":"MUI",
+			"icon":"https://avatars.githubusercontent.com/u/33663932?s=48&v=4",
+			"homepage":"https://mui.com/core/",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"@chakra-ui/[\\w-]+",
+			"kind":"regexp",
+			"name":"Chakra",
+			"icon":"https://avatars.githubusercontent.com/u/54212428?s=48&v=4",
+			"homepage":"https://chakra-ui.com/",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"@nivo",
+			"name":"Nivo",
+			"_comment":"需要换头像",
+			"icon":"https://avatars.githubusercontent.com/u/501642?s=48&v=4",
+			"homepage":"https://nivo.rocks/",
+			"category":"UI Library"
+		},
+		{
+			"dep_name":"@pankod/refine[\\w-]+",
+			"kind":"regexp",
+			"name":"Refine",
+			"icon":"https://avatars.githubusercontent.com/u/104967037?s=48&v=4",
+			"homepage":"https://github.com/refinedev/refine",
+			"category":"boilerplate"
+		},
+		{
+			"dep_name":"next",
+			"name":"Next.js",
+			"icon":"https://avatars.githubusercontent.com/u/14985020?s=48&v=4",
+			"homepage":"https://nextjs.org/",
+			"category":"ssr framework"
+		},
+		{
+			"dep_name":"@remix-run/react",
+			"name":"Remix",
+			"icon":"https://avatars.githubusercontent.com/u/64235328?s=48&v=4",
+			"homepage":"https://remix.run/",
+			"category":"ssr framework"
+		},
+		{
+			"dep_name":"nuxt",
+			"name":"Nuxt.js",
+			"icon":"https://avatars.githubusercontent.com/u/23360933?s=48&v=4",
+			"homepage":"https://nuxtjs.org/",
+			"category":"ssr framework"
+		},
+		{
+			"dep_name":"webpack",
+			"name":"Webpack",
+			"icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/webpack.svg",
+			"homepage":"https://webpack.js.org/",
+			"category":"bundler"
+		},
+		{
+			"dep_name":"vite",
+			"name":"Vite",
+			"icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/vite.svg",
+			"homepage":"https://vitejs.dev/",
+			"category":"bundler"
+		},
+		{
+			"dep_name":"gulp",
+			"name":"Gulp",
+			"icon":"https://avatars.githubusercontent.com/u/6200624?s=48&v=4",
+			"homepage":"https://gulpjs.com/",
+			"category":"bundler"
+		},
+		{
+			"dep_name":"electron",
+			"name":"Electron",
+			"icon":"https://avatars.githubusercontent.com/u/13409222?s=48&v=4",
+			"homepage":"https://www.electronjs.org/",
+			"category":"desktop framework"
+		},
+		{
+			"dep_name":"@tauri-apps/cli",
+			"name":"Tauri",
+			"icon":"https://avatars.githubusercontent.com/u/54536011?s=48&v=4",
+			"homepage":"https://tauri.studio/",
+			"category":"desktop framework"
+		},
+		{
+			"dep_name":"@nestjs/core",
+			"name":"NestJS",
+			"icon":"https://avatars.githubusercontent.com/u/28507035?s=48&v=4",
+			"homepage":"https://nestjs.com/",
+			"category":"web framework"
+		},
+		{
+			"dep_name":"egg",
+			"name":"Egg",
+			"icon":"https://avatars.githubusercontent.com/u/15833670?s=48&v=4",
+			"homepage":"https://www.eggjs.org/",
+			"category":"web framework"
+		},
+		{
+			"dep_name":"express",
+			"name":"Express",
+			"icon":"https://avatars.githubusercontent.com/u/5658226?s=48&v=4",
+			"homepage":"https://expressjs.com/",
+			"category":"web framework"
+		},
+		{
+			"dep_name":"koa",
+			"name":"Koa",
+			"icon":"https://avatars.githubusercontent.com/u/5055057?s=48&v=4",
+			"homepage":"https://koajs.com/",
+			"category":"web framework"
+		},
+		{
+			"dep_name":"laravel-mix",
+			"name":"Laravel",
+			"icon":"https://avatars.githubusercontent.com/u/958072?s=48&v=4",
+			"homepage":"https://laravel.com/",
+			"category":"web framework"
+		},
+		{
+            "dep_name":"bullmq",
+			"_comment":"need to check again. the tech stask is not a redis conn",
+            "name":"Redis",
+            "icon":"https://avatars.githubusercontent.com/u/1529926?s=48&v=4",
+            "home":"https://redis.io/",
+            "category":"database"
+        },
+		{
+            "dep_name":"mysql2",
+            "name":"MySQL",
+            "icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/mysql.png",
+            "home":"https://www.mysql.com/",
+            "category":"database"
+        },
+        {
+            "dep_name":"mssql",
+            "name":"SQL Server",
+            "icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/mssql.jpg",
+            "home":"https://www.microsoft.com/en-sg/sql-server/sql-server-downloads",
+            "category":"database"
+        },
+		{
+            "dep_name":"mongoose",
+            "name":"MongoDB",
+            "icon":"https://avatars.githubusercontent.com/u/45120?s=48&v=4",
+            "homepage":"https://www.mongodb.com/",
+            "category":"database"
+        },
+        {
+            "dep_name":"pg",
+            "name":"PostgreSQL",
+            "icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/postgresql.jpg",
+            "home":"https://www.postgresql.org/",
+            "category":"database"
+        },
+		{
+			"dep_name":"playwright",
+            "name":"Playwright",
+            "icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/playwright.svg",
+            "home":"https://playwright.dev/",
+            "category":"testing"
+		},
+		{
+			"dep_name":"jest",
+            "name":"Jest",
+            "icon":"https://avatars.githubusercontent.com/u/103283236?s=48&v=4",
+            "home":"https://jestjs.io/",
+            "category":"testing"
+		},
+		{
+			"dep_name":"@capacitor/core",
+			"name":"Capacitor",
+			"icon":"https://avatars.githubusercontent.com/u/3171503?s=48&v=4",
+			"home":"https://capacitorjs.com/",
+			"category":"cross platform"
+		},
+		{
+			"dep_name":"react-native",
+			"name":"React Native",
+			"icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/react.svg",
+			"home":"https://reactnative.dev/",
+			"category":"cross platform"
+		},
+		{
+			"dep_name":"expo",
+			"name":"Expo",
+			"icon":"https://avatars.githubusercontent.com/u/12504344?s=48&v=4",
+			"home":"https://docs.expo.dev/",
+			"category":"cross platform"
+		},
+		{
+			"dep_name":"@tarojs/taro",
+			"name":"Taro",
+			"icon":"https://avatars.githubusercontent.com/u/30794937?s=48&v=4",
+			"homepage":"https://taro.zone/",
+			"category":"cross platform"
+		},
+		{
+			"dep_name":"@tarojs/taro",
+			"name":"UniApp",
+			"icon":"https://avatars.githubusercontent.com/u/30794937?s=48&v=4",
+			"homepage":"https://taro.zone/",
+			"category":"cross platform"
+		},
+		{
+			"dep_name":"wepy",
+			"name":"WePY",
+			"icon":"https://avatars.githubusercontent.com/u/18461506?s=48&v=4",
+			"homepage":"https://wepyjs.gitee.io/wepy-docs/",
+			"category":"mini program"
+		},
+		{
+            "dep_name":"openai",
+            "name":"OpenAI",
+            "icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/openai.jpg",
+            "homepage":"https://openai.com/",
+            "category":"ai"
+        },
+		{
+			"dep_name":"chatgpt",
+            "name":"OpenAI",
+            "icon":"https://raw.githubusercontent.com/Get-Tech-Stack/icon/main/Icons/openai.jpg",
+            "homepage":"https://openai.com/",
+            "category":"ai"
+        },
+		{
+            "dep_name":"winston",
+            "name":"Winston",
+			"_comment":"考虑要不要换类型",
+            "icon":"https://avatars.githubusercontent.com/u/9682013?s=48&v=4",
+            "homepage":"https://github.com/winstonjs/winston",
+            "category":"monitoring"
+        },
+		{
+            "dep_name":"wechaty",
+            "name":"Wechaty",
+            "icon":"https://avatars.githubusercontent.com/u/21285357?s=48&v=4",
+            "homepage":"https://github.com/wechaty/wechaty",
+            "category":"wechat"
+        }
+	]
+}
