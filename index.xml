@@ -7,12 +7,12 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <lastBuildDate>Fri, 25 Aug 2023 13:46:11 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>一个由 Http Get 引发的 Go leak 问题</title>
-        <link>https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-go-leak-%E9%97%AE%E9%A2%98/</link>
+        <title>一个由 Http Get 引发的 Goroutine 泄漏问题</title>
+        <link>https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/</link>
         <pubDate>Fri, 25 Aug 2023 13:46:11 +0800</pubDate>
         
-        <guid>https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-go-leak-%E9%97%AE%E9%A2%98/</guid>
-        <description>&lt;img src="https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-go-leak-%E9%97%AE%E9%A2%98/cover.png" alt="Featured image of post 一个由 Http Get 引发的 Go leak 问题" /&gt;&lt;h2 id=&#34;问题&#34;&gt;问题&lt;/h2&gt;
+        <guid>https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/</guid>
+        <description>&lt;img src="https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/cover.png" alt="Featured image of post 一个由 Http Get 引发的 Goroutine 泄漏问题" /&gt;&lt;h2 id=&#34;问题&#34;&gt;问题&lt;/h2&gt;
 &lt;p&gt;不得不说 Golang 的 DX 做的很舒服，比如会提醒你 Data Race 。这样就不用等你发现数据出问题了，再去找代码的问题。👀 最近开始用的一个很有帮助的工具就是 Goleak。来帮助我们找到泄漏的 goroutine。&lt;/p&gt;
 &lt;p&gt;按&lt;a class=&#34;link&#34; href=&#34;https://zhuanlan.zhihu.com/p/361737398&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;教程&lt;/a&gt;给我的代码测试加个了goleak测试。&lt;/p&gt;
@@ -105,10 +105,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;测试结果
-&lt;img src=&#34;https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-go-leak-%E9%97%AE%E9%A2%98/1.png&#34;
+&lt;img src=&#34;https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/1.png&#34;
 	width=&#34;1762&#34;
 	height=&#34;1060&#34;
-	srcset=&#34;https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-go-leak-%E9%97%AE%E9%A2%98/1_hu989863f82c0ac651743c1bf768af2e2f_281998_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-go-leak-%E9%97%AE%E9%A2%98/1_hu989863f82c0ac651743c1bf768af2e2f_281998_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/1_hu989863f82c0ac651743c1bf768af2e2f_281998_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/1_hu989863f82c0ac651743c1bf768af2e2f_281998_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -206,10 +206,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;这样就能通过测试了。🎉
-&lt;img src=&#34;https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-go-leak-%E9%97%AE%E9%A2%98/2.png&#34;
+&lt;img src=&#34;https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/2.png&#34;
 	width=&#34;1210&#34;
 	height=&#34;878&#34;
-	srcset=&#34;https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-go-leak-%E9%97%AE%E9%A2%98/2_hu52a6651d64cefb6bfdef94157f0627f3_142504_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-go-leak-%E9%97%AE%E9%A2%98/2_hu52a6651d64cefb6bfdef94157f0627f3_142504_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/2_hu52a6651d64cefb6bfdef94157f0627f3_142504_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/2_hu52a6651d64cefb6bfdef94157f0627f3_142504_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
