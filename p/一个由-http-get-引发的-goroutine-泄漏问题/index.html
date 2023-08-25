@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='问题 不得不说 Golang 的 DX 做的很舒服，比如会提醒你 Data Race 。这样就不用等你发现数据出问题了，再去找代码的问题。👀 最近开始用的一个很有帮助的工具就是 Goleak。来帮助我们找到泄漏的 goroutine。
-按教程给我的代码测试加个了goleak测试。
-但是一下测试就跑不通。🤯 我代码有一不少并发代码，但是都是用的 sync.WaitGroup 来控制的。没有网上常见的什么 channel 导致的问题，所以我很奇怪为什么会有 goroutine 泄漏的问题。
-通过给子函数加单元测试二分查找一下，我很快定位问题的位置，代码大概是这样的:
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='问题 不得不说 Golang 的 DX 做的很舒服，比如在测试有问题的并发代码中会提醒你 Data Race 。这样就不用等你发现数据出问题了，再去找代码的问题。👀 最近开始用的一个很有帮助的工具就是 Goleak。来帮助我们找到泄漏的 goroutine。可以理解成其它语言的线程👀，泄漏意思就是工作做完之后，还有些这个工作开的 goroutine 没有结束。就像申请的内存在使用完之后没有释放一样。
+按教程给我的代码测试加个了 goleak 测试。
+但是一下测试， goleak 和我说我的代码有 goroutine 泄漏。🤯 我代码有不少并发代码，但是都是用的 sync.WaitGroup 来控制的。没有网上常见的什么 channel 导致的问题，所以我很奇怪为什么会有 goroutine 泄漏的问题。
+通过给子函数加单元测试二分查找一下，我很快定位问题的位置，并不是我写的并发代码产生的 goroutine 泄漏。这个泄漏居然产生一个 Http 请求的代码里面。🤯
+代码通过简化大概如下 👇
 代码:
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 package httptest import ( &amp;#34;net/http&amp;#34; ) func HttpGet(url string) error { resp, err := http.Get(url) if err != nil { return err } defer resp.Body.Close() return nil } 测试:
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 package httptest_test import ( &amp;#34;fmt&amp;#34; &amp;#34;runtime&amp;#34; &amp;#34;testing&amp;#34; &amp;#34;github.'>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 package httptest import ( &amp;#34;net/http&amp;#34; ) func HttpGet(url string) error { resp, err := http.Get(url) if err != nil { return err } defer resp.'>
 <title>一个由 Http Get 引发的 Goroutine 泄漏问题</title>
 
 <link rel='canonical' href='https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/'>
 
 <link rel="stylesheet" href="/scss/style.min.f2f21d9d961219a01621263328d8997e1ae3b4f0371d455628df1fdc27d57bd6.css"><meta property='og:title' content='一个由 Http Get 引发的 Goroutine 泄漏问题'>
-<meta property='og:description' content='问题 不得不说 Golang 的 DX 做的很舒服，比如会提醒你 Data Race 。这样就不用等你发现数据出问题了，再去找代码的问题。👀 最近开始用的一个很有帮助的工具就是 Goleak。来帮助我们找到泄漏的 goroutine。
-按教程给我的代码测试加个了goleak测试。
-但是一下测试就跑不通。🤯 我代码有一不少并发代码，但是都是用的 sync.WaitGroup 来控制的。没有网上常见的什么 channel 导致的问题，所以我很奇怪为什么会有 goroutine 泄漏的问题。
-通过给子函数加单元测试二分查找一下，我很快定位问题的位置，代码大概是这样的:
+<meta property='og:description' content='问题 不得不说 Golang 的 DX 做的很舒服，比如在测试有问题的并发代码中会提醒你 Data Race 。这样就不用等你发现数据出问题了，再去找代码的问题。👀 最近开始用的一个很有帮助的工具就是 Goleak。来帮助我们找到泄漏的 goroutine。可以理解成其它语言的线程👀，泄漏意思就是工作做完之后，还有些这个工作开的 goroutine 没有结束。就像申请的内存在使用完之后没有释放一样。
+按教程给我的代码测试加个了 goleak 测试。
+但是一下测试， goleak 和我说我的代码有 goroutine 泄漏。🤯 我代码有不少并发代码，但是都是用的 sync.WaitGroup 来控制的。没有网上常见的什么 channel 导致的问题，所以我很奇怪为什么会有 goroutine 泄漏的问题。
+通过给子函数加单元测试二分查找一下，我很快定位问题的位置，并不是我写的并发代码产生的 goroutine 泄漏。这个泄漏居然产生一个 Http 请求的代码里面。🤯
+代码通过简化大概如下 👇
 代码:
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 package httptest import ( &amp;#34;net/http&amp;#34; ) func HttpGet(url string) error { resp, err := http.Get(url) if err != nil { return err } defer resp.Body.Close() return nil } 测试:
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 package httptest_test import ( &amp;#34;fmt&amp;#34; &amp;#34;runtime&amp;#34; &amp;#34;testing&amp;#34; &amp;#34;github.'>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 package httptest import ( &amp;#34;net/http&amp;#34; ) func HttpGet(url string) error { resp, err := http.Get(url) if err != nil { return err } defer resp.'>
 <meta property='og:url' content='https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/'>
 <meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2023-08-25T13:46:11&#43;08:00'/><meta property='article:modified_time' content='2023-08-25T13:46:11&#43;08:00'/><meta property='og:image' content='https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/cover.png' />
 <meta name="twitter:title" content="一个由 Http Get 引发的 Goroutine 泄漏问题">
-<meta name="twitter:description" content="问题 不得不说 Golang 的 DX 做的很舒服，比如会提醒你 Data Race 。这样就不用等你发现数据出问题了，再去找代码的问题。👀 最近开始用的一个很有帮助的工具就是 Goleak。来帮助我们找到泄漏的 goroutine。
-按教程给我的代码测试加个了goleak测试。
-但是一下测试就跑不通。🤯 我代码有一不少并发代码，但是都是用的 sync.WaitGroup 来控制的。没有网上常见的什么 channel 导致的问题，所以我很奇怪为什么会有 goroutine 泄漏的问题。
-通过给子函数加单元测试二分查找一下，我很快定位问题的位置，代码大概是这样的:
+<meta name="twitter:description" content="问题 不得不说 Golang 的 DX 做的很舒服，比如在测试有问题的并发代码中会提醒你 Data Race 。这样就不用等你发现数据出问题了，再去找代码的问题。👀 最近开始用的一个很有帮助的工具就是 Goleak。来帮助我们找到泄漏的 goroutine。可以理解成其它语言的线程👀，泄漏意思就是工作做完之后，还有些这个工作开的 goroutine 没有结束。就像申请的内存在使用完之后没有释放一样。
+按教程给我的代码测试加个了 goleak 测试。
+但是一下测试， goleak 和我说我的代码有 goroutine 泄漏。🤯 我代码有不少并发代码，但是都是用的 sync.WaitGroup 来控制的。没有网上常见的什么 channel 导致的问题，所以我很奇怪为什么会有 goroutine 泄漏的问题。
+通过给子函数加单元测试二分查找一下，我很快定位问题的位置，并不是我写的并发代码产生的 goroutine 泄漏。这个泄漏居然产生一个 Http 请求的代码里面。🤯
+代码通过简化大概如下 👇
 代码:
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 package httptest import ( &amp;#34;net/http&amp;#34; ) func HttpGet(url string) error { resp, err := http.Get(url) if err != nil { return err } defer resp.Body.Close() return nil } 测试:
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 package httptest_test import ( &amp;#34;fmt&amp;#34; &amp;#34;runtime&amp;#34; &amp;#34;testing&amp;#34; &amp;#34;github."><meta name="twitter:card" content="summary_large_image">
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 package httptest import ( &amp;#34;net/http&amp;#34; ) func HttpGet(url string) error { resp, err := http.Get(url) if err != nil { return err } defer resp."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/cover.png' />
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
 <script>
@@ -402,11 +402,13 @@ if (!doNotTrack) {
     
     
     <h2 id="问题">问题</h2>
-<p>不得不说 Golang 的 DX 做的很舒服，比如会提醒你 Data Race 。这样就不用等你发现数据出问题了，再去找代码的问题。👀 最近开始用的一个很有帮助的工具就是 Goleak。来帮助我们找到泄漏的 goroutine。</p>
+<p>不得不说 Golang 的 DX 做的很舒服，比如在测试有问题的并发代码中会提醒你 Data Race 。这样就不用等你发现数据出问题了，再去找代码的问题。👀 最近开始用的一个很有帮助的工具就是 Goleak。来帮助我们找到泄漏的 goroutine。可以理解成其它语言的线程👀，泄漏意思就是工作做完之后，还有些这个工作开的 goroutine 没有结束。就像申请的内存在使用完之后没有释放一样。</p>
 <p>按<a class="link" href="https://zhuanlan.zhihu.com/p/361737398"  target="_blank" rel="noopener"
-    >教程</a>给我的代码测试加个了goleak测试。</p>
-<p>但是一下测试就跑不通。🤯 我代码有一不少并发代码，但是都是用的 sync.WaitGroup 来控制的。没有网上常见的什么 channel 导致的问题，所以我很奇怪为什么会有 goroutine 泄漏的问题。</p>
-<p>通过给子函数加单元测试二分查找一下，我很快定位问题的位置，代码大概是这样的:</p>
+    >教程</a>给我的代码测试加个了 goleak 测试。</p>
+<p>但是一下测试， goleak 和我说我的代码有 goroutine 泄漏。🤯 我代码有不少并发代码，但是都是用的 sync.WaitGroup 来控制的。没有<a class="link" href="https://www.cnblogs.com/paulwhw/p/17003763.html"  target="_blank" rel="noopener"
+    >网上常见的什么 channel 导致的问题</a>，所以我很奇怪为什么会有 goroutine 泄漏的问题。</p>
+<p>通过给子函数加单元测试二分查找一下，我很快定位问题的位置，并不是我写的并发代码产生的 goroutine 泄漏。这个泄漏居然产生一个 Http 请求的代码里面。🤯</p>
+<p>代码通过简化大概如下 👇</p>
 <p>代码:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -493,7 +495,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>测试结果
+</div><p>测试结果: 可以看到结果时的 goroutine 数量比开始时多了一个。说明有一个 goroutine 泄漏了。
 <img src="/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/1.png"
 	width="1762"
 	height="1060"
@@ -544,10 +546,11 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">        	/opt/homebrew/Cellar/go/1.21.0/libexec/src/net/fd_posix.go:55 +0x28
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果看到我该 close 的都 close 的🤔，在好几个群里问来问去，我尝试换 URL 之类的还出过几个乌龙。最后谷歌了一下，在 <a class="link" href="https://stackoverflow.com/questions/75026700/goroutine-leaks-when-trying-to-readallresponse-body-where-response-is-retu/75816347#75816347"  target="_blank" rel="noopener"
-    >stack overflow</a> 找到了，应该得这样写。</p>
-<p>第二天另一个 Zeabur 的同学也找到了同样的帖子帮我解决了这个问题。🤣这里不得不感谢 Zeabur 了，经常遇到啥技术问题都发在他们工单群里，没有踢掉我不说还帮我解决。</p>
+</div><p>如果看到<a class="link" href="https://manishrjain.com/must-close-golang-http-response#:~:text=The%20http%20Client%20and%20Transport,may%20not%20reuse%20HTTP%2F1."  target="_blank" rel="noopener"
+    >我该 close 的都 close 的🤔</a>，在好几个群里问来问去，我尝试换 URL 之类的还出过几个乌龙。最后谷歌了一下，在 <a class="link" href="https://stackoverflow.com/questions/75026700/goroutine-leaks-when-trying-to-readallresponse-body-where-response-is-retu/75816347#75816347"  target="_blank" rel="noopener"
+    >stack overflow</a> 找到了问题所在，这个原因是由于<code>http.Get(url)</code>导致的。第二天另一个 Zeabur 的同学也找到了同样的帖子帮我解决了这个问题。🤣这里不得不感谢 Zeabur 了，经常遇到啥技术问题都发在他们工单群里，他们没有踢掉我不说还经常帮我解决问题。</p>
 <h2 id="解决方案">解决方案</h2>
+<p>直接上解决该问题之后的代码:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -583,8 +586,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">{},</span> <span class="nx">err</span>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">client</span><span class="p">.</span><span class="nf">CloseIdleConnections</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">client</span><span class="p">.</span><span class="nf">CloseIdleConnections</span><span class="p">()</span> <span class="c1">// &lt;-- 把空闲的连接关闭掉
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl">	<span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">io</span><span class="p">.</span><span class="nf">ReadAll</span><span class="p">(</span><span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">{},</span> <span class="nx">err</span>
