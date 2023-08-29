@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Github on CorrectRoad&#39;s Blog</title>
+        <title>GitHub on CorrectRoad&#39;s Blog</title>
         <link>https://correctroadh.github.io/tags/github/</link>
-        <description>Recent content in Github on CorrectRoad&#39;s Blog</description>
+        <description>Recent content in GitHub on CorrectRoad&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <lastBuildDate>Fri, 23 Sep 2022 15:15:45 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/tags/github/index.xml" rel="self" type="application/rss+xml" /><item>
@@ -51,11 +51,11 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;😅挺离谱的，既然这里要写的是&lt;code&gt;docker.io&lt;/code&gt;，那你提醒的时候显示的是的&lt;code&gt;hub.docker.com&lt;/code&gt;。就纯误导。&lt;/p&gt;
-&lt;h3 id=&#34;github上的实践&#34;&gt;Github上的实践&lt;/h3&gt;
+&lt;h3 id=&#34;github上的实践&#34;&gt;GitHub上的实践&lt;/h3&gt;
 &lt;p&gt;在等待加群的两天中，我在github的action尝试做到这样的功能，学习、尝试了半个小时后，我成功配出了我的需求。&lt;/p&gt;
 &lt;p&gt;仓库地址: &lt;a class=&#34;link&#34; href=&#34;https://github.com/CorrectRoadH/CICDtest&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://github.com/CorrectRoadH/CICDtest&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Github Action&lt;/code&gt;真的很好上手，同时样例丰富。可以很方便构建出我们的CI。同时Github也有很多优点，比如Gitee Go每个阶段的产物都要通过中转，比如maven的jar是上传到gitee官方的文件服务器，然后在镜像构建时再curl下来。然后docker build出的image要上传到docker仓库，然后运行docker镜像时要再下载下来才能运行。而&lt;code&gt;Github Action&lt;/code&gt;这些不同阶段是可以在一台电脑上运行，中间产物不需要额外中转。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;GitHub Action&lt;/code&gt;真的很好上手，同时样例丰富。可以很方便构建出我们的CI。同时Github也有很多优点，比如Gitee Go每个阶段的产物都要通过中转，比如maven的jar是上传到gitee官方的文件服务器，然后在镜像构建时再curl下来。然后docker build出的image要上传到docker仓库，然后运行docker镜像时要再下载下来才能运行。而&lt;code&gt;GitHub Action&lt;/code&gt;这些不同阶段是可以在一台电脑上运行，中间产物不需要额外中转。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/p/%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5%E7%9A%84ci%E5%AE%9E%E8%B7%B5/3.png&#34;
 	width=&#34;2880&#34;
 	height=&#34;1800&#34;

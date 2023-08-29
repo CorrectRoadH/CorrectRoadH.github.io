@@ -14,7 +14,7 @@
         <guid>https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/</guid>
         <description>&lt;img src="https://correctroadh.github.io/p/techstack%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B-%E5%9B%A0%E9%9C%80%E6%B1%82%E8%AF%9E%E7%94%9F%E7%9A%84%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%AD%A3%E5%88%99map/cover.png" alt="Featured image of post TechStack背后的故事: 因需求诞生的特殊数据结构:正则Map" /&gt;&lt;h2 id=&#34;前情&#34;&gt;前情&lt;/h2&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/Get-Tech-Stack/TechStack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;TechStack&lt;/a&gt; 是一个用于显示一个 Github 项目的技术栈的浏览器插件。在开发它的过程中，我遇到一个挺有意思的技术需求。&lt;/p&gt;
+    &gt;TechStack&lt;/a&gt; 是一个用于显示一个 GitHub 项目的技术栈的浏览器插件。在开发它的过程中，我遇到一个挺有意思的技术需求。&lt;/p&gt;
 &lt;p&gt;比如在 package.json 中，我们可以通过依赖项 react 直接映射到 React 技术栈。但是有些依赖并不是这样。 比如 &lt;code&gt;@radix-ui/react-checkbox&lt;/code&gt; 和 &lt;code&gt;@radix-ui/react-icons&lt;/code&gt; 它们都属于 Radix UI 的一部分，如果让这些依赖直接对应到 Radix 呢?&lt;/p&gt;
 &lt;p&gt;我觉得大部分人都很想容易想到正则。对，可以写一个正则，大概是这样&lt;code&gt;@radix-ui/[\\w-]+&lt;/code&gt;，如果被它匹配到就是 Radix。&lt;/p&gt;
 &lt;p&gt;所以我就想搞一个数据结构，一个 key 可以是 string 也可以是正则的map。🤔
@@ -261,10 +261,10 @@
 &lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
 &lt;p&gt;从一个需求到落地代码，大概用了一个晚上+一个中午。还挺兴奋的，特别是每次跑通测试，或者一个 benchmark 相较之前有所提升的时候。🤣 还是挺有成就感的。&lt;/p&gt;
 &lt;h2 id=&#34;其它&#34;&gt;其它&lt;/h2&gt;
-&lt;p&gt;目前这个 Regexp Map 已经在 Github 上了，可以在这里找到文档和代码 : &lt;a class=&#34;link&#34; href=&#34;https://github.com/CorrectRoadH/regexp_map&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;p&gt;目前这个 Regexp Map 已经在 GitHub 上了，可以在这里找到文档和代码 : &lt;a class=&#34;link&#34; href=&#34;https://github.com/CorrectRoadH/regexp_map&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://github.com/CorrectRoadH/regexp_map&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;然后就是运营时间😗
-TechStack 是一个用于显示一个 Github 项目的技术栈的浏览器插件。可以快速判断一个Github项目的技术栈，一眼判断出是不是假开源项目。目前已正式结束测试，欢迎大家来试试。&lt;/p&gt;
+TechStack 是一个用于显示一个 GitHub 项目的技术栈的浏览器插件。可以快速判断一个Github项目的技术栈，一眼判断出是不是假开源项目。目前已正式结束测试，欢迎大家来试试。&lt;/p&gt;
 &lt;p&gt;Chrome: &lt;a class=&#34;link&#34; href=&#34;https://chrome.google.com/webstore/detail/tech-stack-show-github-re/lbhjnhabgddabnagncmcgomggeadlbhh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://chrome.google.com/webstore/detail/tech-stack-show-github-re/lbhjnhabgddabnagncmcgomggeadlbhh&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Firefox:  &lt;a class=&#34;link&#34; href=&#34;https://addons.mozilla.org/en-US/firefox/addon/tech-stack/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;

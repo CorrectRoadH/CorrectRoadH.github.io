@@ -26,14 +26,14 @@
     &gt;V2ex Polish&lt;/a&gt; 的代码，感觉写的真不错。可惜这个用的 UI 库，我不太会用，不然我直接用这套架构写我自己的插件了。&lt;/p&gt;
 &lt;h2 id=&#34;踩坑&#34;&gt;踩坑&lt;/h2&gt;
 &lt;h3 id=&#34;网络请求的坑&#34;&gt;网络请求的坑&lt;/h3&gt;
-&lt;p&gt;首先就是 Content Script 只执行一次的问题，比如我这个插件是在 Github 仓库页显示这个项目的技术栈，如果用户先进来一次，然后进组织，再从组织进一个仓库，这样新仓库里并没有调用这个 Content Script。我不确定有没有更优雅的解决方式，但是我直接加了一个 background.js，然后在 background.js 里监听 tab 的变化，然后发送事件重新执行 Content Script。&lt;/p&gt;
+&lt;p&gt;首先就是 Content Script 只执行一次的问题，比如我这个插件是在 GitHub 仓库页显示这个项目的技术栈，如果用户先进来一次，然后进组织，再从组织进一个仓库，这样新仓库里并没有调用这个 Content Script。我不确定有没有更优雅的解决方式，但是我直接加了一个 background.js，然后在 background.js 里监听 tab 的变化，然后发送事件重新执行 Content Script。&lt;/p&gt;
 &lt;p&gt;然后就是 Firefox 的 manifest.json 里的权限问题，有个 Permission 中我只能写 &amp;lt;all_urls&amp;gt; 不能写 &lt;code&gt;*://github.com/*&lt;/code&gt;, 否则后者就是不让我发请求，但是我不确定是哪里坑，后续要是找到了就来更新一下。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;UPDATE&lt;/em&gt;
 🤣这里要改的被请求的网站的地址。比如后端地址是&lt;code&gt;xxx.zeabur.app&lt;/code&gt;，那么应该在 Permission 加上这个，而不是&lt;code&gt;github.com&lt;/code&gt;。&lt;/p&gt;
-&lt;h1 id=&#34;i18n-的坑&#34;&gt;I18N 的坑&lt;/h1&gt;
+&lt;h3 id=&#34;i18n-的坑&#34;&gt;I18N 的坑&lt;/h3&gt;
 &lt;p&gt;然后是 I18N 的问题，这个插件不能直接把 locale 的 json 放到 public 了。所以我自己架了一台 Nginx 专门放这个 locale 的 Json，然后我是有 React 的 i18next，还遇到了 useSuspense 的问题。 最后我是按这个&lt;a class=&#34;link&#34; href=&#34;https://medium.com/@byeduardoac/using-react-i18next-within-chrome-extension-manifest-v3-1d6f16a43556&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;教程&lt;/a&gt;里调了一下就成功了。&lt;/p&gt;
-&lt;h1 id=&#34;cookies-的坑&#34;&gt;Cookies 的坑&lt;/h1&gt;
+&lt;h3 id=&#34;cookies-的坑&#34;&gt;Cookies 的坑&lt;/h3&gt;
 &lt;p&gt;最后是Cookie的坑，插件运行在Github.com网站，但是我的后端是在另一个网站，我先是折腾了好久，发现拿到的这个Cookie，根本设置不到浏览器中。然后发现是要在前端请求时加上 &lt;code&gt;credentials: &#39;include&#39;&lt;/code&gt;。像这样:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -78,7 +78,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;上架&#34;&gt;上架&lt;/h2&gt;
-&lt;p&gt;开发的工作的坑基本都能靠肝解决，但是上架这个遇到的坑只能靠等。 我最先上架的是 Chrome ，但是想上架应用商店得先交 5 美元注册一个开发者，交完之后还得审核你的插件很久很久。 无奈只能转战其它浏览器先整起来。 最后因为我的这个插件涉及到了 Host Permission (就是要写入 content script 到 Github)。所以需要更多的审核。最后提示可能需要 30 天才能通过审核。 当然最后其实并没有用到这么久，大概3-4天就通过了。&lt;/p&gt;
+&lt;p&gt;开发的工作的坑基本都能靠肝解决，但是上架这个遇到的坑只能靠等。 我最先上架的是 Chrome ，但是想上架应用商店得先交 5 美元注册一个开发者，交完之后还得审核你的插件很久很久。 无奈只能转战其它浏览器先整起来。 最后因为我的这个插件涉及到了 Host Permission (就是要写入 content script 到 GitHub)。所以需要更多的审核。最后提示可能需要 30 天才能通过审核。 当然最后其实并没有用到这么久，大概3-4天就通过了。&lt;/p&gt;
 &lt;p&gt;然后就是上架 Firefox 了，与 Chrome 不同的是 Firefox 上架是免费的，但是需要审核。但是 Firefox 的审核速度比 Chrome 快多了，大概半天就通过了。不过提交插件的时候是需要提交自己的代码的。🤣我不确定那些商业插件是不是也需要提交代码。或者怎么整，会不会出现代码泄露的问题。也没有试过传个假代码会怎么样。&lt;/p&gt;
 &lt;p&gt;最后就是 Edge 了，虽然 Edge 也是免费上架的，但是整体的体验是非常差劲的。 首先就是要注册一个开发者计划，需要填 State , 我先后填了 福建 、 Fujian 都过不了，最后搜索了一下要填缩写，比如北京就是 BJ。 我填了一下 FJ 才过。这里真的尬住了，感觉这个应该是美国的习惯吧，把州名缩写，但是在中国确实没有人把省名缩写的。&lt;/p&gt;
 &lt;p&gt;然后就是这个整个 Developer experience 体验最差的也是 Edge，像谷歌的 Developer DashBoard, 感觉挺流畅加好看的。用起来引导也自然，基本靠直觉就完了。firefox 虽然风格有点10几年前的风格，但是也挺流畅的。但是微软的那个 Partner Center 真的像一坨屎，风格尽管很现代，但是卡的一批。真不知道前后端是用什么写的。&lt;/p&gt;
