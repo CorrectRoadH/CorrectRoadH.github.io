@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='PS: 本文写于 2023-08-25 ，但是因为最近基本所有的下班时间都趴在 TechStack 上，再加上本人的拖延症一直犯，所以在咕了两个月之后才写好。🤣
+谷歌插件无法过审 我的浏览器插件已经两周没有更新了，倒不是我没有写代码，而是总是被不停的拒绝并且没有任何的理由😭。所以我在不停的尝试代码中的各种地方，但是就是不能过审 最早以为是我的代码中有一个feedback(用了mailto)，点击就触发邮箱应用。是因为这个原因不能过审。 但是在每天晚上被拒绝一次之后我又提交一次之后并且每天晚上骂谷歌十分钟之后的今天我终于发现几封未读的邮件。🤯原来谷歌在这里把拒绝原因分开来发，倒不是我没有想到，主要是行为的不一致性，因为有时候拒绝原因是写在 Developer Dashboard 中的，如下图。 让人容易产生误解。以为就是只在 Developer Dashboard 通知开发者，根本没有想还会通过邮件通知开发者。 解决办法 既然知道问题了就要解决问题。大概就是我提交的代码中不能混淆。但是我的插件是基于 GitHub 上的 boilerplate ，别人怎么就能用这个 boilerplate ，我不行?😅
+首先看一眼代码，确实感觉混淆在一起了把这里 minimize 改掉。 现在来看看效果，感觉还不错。大概有了代码的样子，但是这个应该还是babel转义过了🤔但是确实没有被混淆了。估计能过。
+结果还是不行。认真看邮件，原来不是说我代码混淆过了。而是说我代码有『混淆』的代码。🤯 这里是指有一些代码是base64的，然后通过base64解密后再eval执行。这怎么可能，我怎么会写这种代码呢?
+定位到原因的代码。原来是 Fingerprint 搞的鬼，定位一下issue，问题找到了，Fingerprint 在代码中用了Base64又编码了一些代码。无奈只能退回老版本。
+改了之后终于可以比较正常的通过审核了
+Firefox 的 插件 ID Firefox 的拓展是需要一个插件ID的，但是如果你没有给他，其实也是能用的，它会自动分配一个临时ID。但是一定要记的，自己手动分配一个ID。不然就会像我一样惨😭 我这里遇到的问题是如果调用 Storage 相关的 API 就一定不能用自动分配的临时ID，而我在做 Options 页的时候会用到 Storage，但是无奈新旧版本的 ID 不一样，不能更新，只能无奈放弃旧的插件用户，不过幸好 Firefox 的用户还少。不至于让一批用户无法更新。
+不同浏览器的API兼容问题 这个主要就是做 Storage，Chrome 和 Firefox 关于插件存储的 API 不一致导致的。 这个通过web polyfill很简单就能解决了。'>
+<title>我在开发浏览器插件 TechStack 时遇到的一些坑</title>
+
+<link rel='canonical' href='https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/'>
+
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='我在开发浏览器插件 TechStack 时遇到的一些坑'>
+<meta property='og:description' content='PS: 本文写于 2023-08-25 ，但是因为最近基本所有的下班时间都趴在 TechStack 上，再加上本人的拖延症一直犯，所以在咕了两个月之后才写好。🤣
+谷歌插件无法过审 我的浏览器插件已经两周没有更新了，倒不是我没有写代码，而是总是被不停的拒绝并且没有任何的理由😭。所以我在不停的尝试代码中的各种地方，但是就是不能过审 最早以为是我的代码中有一个feedback(用了mailto)，点击就触发邮箱应用。是因为这个原因不能过审。 但是在每天晚上被拒绝一次之后我又提交一次之后并且每天晚上骂谷歌十分钟之后的今天我终于发现几封未读的邮件。🤯原来谷歌在这里把拒绝原因分开来发，倒不是我没有想到，主要是行为的不一致性，因为有时候拒绝原因是写在 Developer Dashboard 中的，如下图。 让人容易产生误解。以为就是只在 Developer Dashboard 通知开发者，根本没有想还会通过邮件通知开发者。 解决办法 既然知道问题了就要解决问题。大概就是我提交的代码中不能混淆。但是我的插件是基于 GitHub 上的 boilerplate ，别人怎么就能用这个 boilerplate ，我不行?😅
+首先看一眼代码，确实感觉混淆在一起了把这里 minimize 改掉。 现在来看看效果，感觉还不错。大概有了代码的样子，但是这个应该还是babel转义过了🤔但是确实没有被混淆了。估计能过。
+结果还是不行。认真看邮件，原来不是说我代码混淆过了。而是说我代码有『混淆』的代码。🤯 这里是指有一些代码是base64的，然后通过base64解密后再eval执行。这怎么可能，我怎么会写这种代码呢?
+定位到原因的代码。原来是 Fingerprint 搞的鬼，定位一下issue，问题找到了，Fingerprint 在代码中用了Base64又编码了一些代码。无奈只能退回老版本。
+改了之后终于可以比较正常的通过审核了
+Firefox 的 插件 ID Firefox 的拓展是需要一个插件ID的，但是如果你没有给他，其实也是能用的，它会自动分配一个临时ID。但是一定要记的，自己手动分配一个ID。不然就会像我一样惨😭 我这里遇到的问题是如果调用 Storage 相关的 API 就一定不能用自动分配的临时ID，而我在做 Options 页的时候会用到 Storage，但是无奈新旧版本的 ID 不一样，不能更新，只能无奈放弃旧的插件用户，不过幸好 Firefox 的用户还少。不至于让一批用户无法更新。
+不同浏览器的API兼容问题 这个主要就是做 Storage，Chrome 和 Firefox 关于插件存储的 API 不一致导致的。 这个通过web polyfill很简单就能解决了。'>
+<meta property='og:url' content='https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/'>
+<meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2023-10-22T13:45:59&#43;08:00'/><meta property='article:modified_time' content='2023-10-22T13:45:59&#43;08:00'/><meta property='og:image' content='https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/1.png' />
+<meta name="twitter:title" content="我在开发浏览器插件 TechStack 时遇到的一些坑">
+<meta name="twitter:description" content="PS: 本文写于 2023-08-25 ，但是因为最近基本所有的下班时间都趴在 TechStack 上，再加上本人的拖延症一直犯，所以在咕了两个月之后才写好。🤣
+谷歌插件无法过审 我的浏览器插件已经两周没有更新了，倒不是我没有写代码，而是总是被不停的拒绝并且没有任何的理由😭。所以我在不停的尝试代码中的各种地方，但是就是不能过审 最早以为是我的代码中有一个feedback(用了mailto)，点击就触发邮箱应用。是因为这个原因不能过审。 但是在每天晚上被拒绝一次之后我又提交一次之后并且每天晚上骂谷歌十分钟之后的今天我终于发现几封未读的邮件。🤯原来谷歌在这里把拒绝原因分开来发，倒不是我没有想到，主要是行为的不一致性，因为有时候拒绝原因是写在 Developer Dashboard 中的，如下图。 让人容易产生误解。以为就是只在 Developer Dashboard 通知开发者，根本没有想还会通过邮件通知开发者。 解决办法 既然知道问题了就要解决问题。大概就是我提交的代码中不能混淆。但是我的插件是基于 GitHub 上的 boilerplate ，别人怎么就能用这个 boilerplate ，我不行?😅
+首先看一眼代码，确实感觉混淆在一起了把这里 minimize 改掉。 现在来看看效果，感觉还不错。大概有了代码的样子，但是这个应该还是babel转义过了🤔但是确实没有被混淆了。估计能过。
+结果还是不行。认真看邮件，原来不是说我代码混淆过了。而是说我代码有『混淆』的代码。🤯 这里是指有一些代码是base64的，然后通过base64解密后再eval执行。这怎么可能，我怎么会写这种代码呢?
+定位到原因的代码。原来是 Fingerprint 搞的鬼，定位一下issue，问题找到了，Fingerprint 在代码中用了Base64又编码了一些代码。无奈只能退回老版本。
+改了之后终于可以比较正常的通过审核了
+Firefox 的 插件 ID Firefox 的拓展是需要一个插件ID的，但是如果你没有给他，其实也是能用的，它会自动分配一个临时ID。但是一定要记的，自己手动分配一个ID。不然就会像我一样惨😭 我这里遇到的问题是如果调用 Storage 相关的 API 就一定不能用自动分配的临时ID，而我在做 Options 页的时候会用到 Storage，但是无奈新旧版本的 ID 不一样，不能更新，只能无奈放弃旧的插件用户，不过幸好 Firefox 的用户还少。不至于让一批用户无法更新。
+不同浏览器的API兼容问题 这个主要就是做 Storage，Chrome 和 Firefox 关于插件存储的 API 不一致导致的。 这个通过web polyfill很简单就能解决了。"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/1.png' />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-PDJXNW2S9J', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huac971efb212d008eef368e3014548668_655784_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐍</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">CorrectRoad&#39;s Blog</a></h1>
+            <h2 class="site-description">君子生非异也，善假于物也。</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CorrectRoadH'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com/correctroad'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' target="_blank">
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M9 11l-4 4l4 4m-4 -4h11a4 4 0 0 0 0 -8h-1" />
+</svg>
+
+
+
+                
+                <span>Refresh</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#谷歌插件无法过审">谷歌插件无法过审</a>
+          <ol>
+            <li><a href="#解决办法">解决办法</a></li>
+          </ol>
+        </li>
+        <li><a href="#firefox-的-插件-id">Firefox 的 插件 ID</a></li>
+        <li><a href="#不同浏览器的api兼容问题">不同浏览器的API兼容问题</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">
+                <img src="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/1_hucf0335da642de9ecc97a6810ceb8f638_105365_800x0_resize_box_3.png"
+                        srcset="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/1_hucf0335da642de9ecc97a6810ceb8f638_105365_800x0_resize_box_3.png 800w, /p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/1_hucf0335da642de9ecc97a6810ceb8f638_105365_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="593" 
+                        loading="lazy"
+                        alt="Featured image of post 我在开发浏览器插件 TechStack 时遇到的一些坑" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">我在开发浏览器插件 TechStack 时遇到的一些坑</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 22, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>PS: 本文写于  2023-08-25 ，但是因为最近基本所有的下班时间都趴在 <a class="link" href="https://github.com/Get-Tech-Stack/TechStack?ref=blog"  target="_blank" rel="noopener"
+    >TechStack</a> 上，再加上本人的拖延症一直犯，所以在咕了两个月之后才写好。🤣</p>
+<h3 id="谷歌插件无法过审">谷歌插件无法过审</h3>
+<p>我的浏览器插件已经两周没有更新了，倒不是我没有写代码，而是总是被不停的拒绝并且没有任何的理由😭。所以我在不停的尝试代码中的各种地方，但是就是不能过审
+<img src="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/1.png"
+	width="1712"
+	height="1268"
+	srcset="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/1_hucf0335da642de9ecc97a6810ceb8f638_105365_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/1_hucf0335da642de9ecc97a6810ceb8f638_105365_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="1.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="135"
+		data-flex-basis="324px"
+	
+></p>
+<p>最早以为是我的代码中有一个feedback(用了mailto)，点击就触发邮箱应用。是因为这个原因不能过审。
+<img src="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/2.png"
+	width="1126"
+	height="1664"
+	srcset="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/2_hu6a61420a0cb32eb92e3a9a51be498d90_229565_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/2_hu6a61420a0cb32eb92e3a9a51be498d90_229565_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="1.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="67"
+		data-flex-basis="162px"
+	
+></p>
+<p>但是在每天晚上被拒绝一次之后我又提交一次之后并且每天晚上骂谷歌十分钟之后的今天我终于发现几封未读的邮件。🤯原来谷歌在这里把拒绝原因分开来发，倒不是我没有想到，主要是行为的不一致性，因为有时候拒绝原因是写在 Developer Dashboard 中的，如下图。 让人容易产生误解。以为就是只在 Developer Dashboard 通知开发者，根本没有想还会通过邮件通知开发者。
+<img src="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/image.png"
+	width="2374"
+	height="872"
+	srcset="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/image_hu3c1d50e0c3552cddd6240ed8e2eaabc2_401709_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/image_hu3c1d50e0c3552cddd6240ed8e2eaabc2_401709_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Alt text"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="272"
+		data-flex-basis="653px"
+	
+></p>
+<h4 id="解决办法">解决办法</h4>
+<p>既然知道问题了就要解决问题。大概就是我提交的代码中不能混淆。但是我的插件是基于 GitHub 上的 boilerplate ，别人怎么就能用这个 boilerplate ，我不行?😅</p>
+<p>首先看一眼代码，确实感觉混淆在一起了把这里 minimize 改掉。
+<img src="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/5.png"
+	width="1892"
+	height="1418"
+	srcset="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/5_hub45a7ab9c210fa0f50ca5dd9687d0fca_3747805_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/5_hub45a7ab9c210fa0f50ca5dd9687d0fca_3747805_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="对比"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="320px"
+	
+>
+现在来看看效果，感觉还不错。大概有了代码的样子，但是这个应该还是babel转义过了🤔但是确实没有被混淆了。估计能过。</p>
+<p>结果还是不行。认真看邮件，原来不是说我代码混淆过了。而是说我代码有『混淆』的代码。🤯 这里是指有一些代码是base64的，然后通过base64解密后再eval执行。这怎么可能，我怎么会写这种代码呢?</p>
+<p>定位到原因的代码。原来是 Fingerprint 搞的鬼，定位一下<a class="link" href="https://github.com/fingerprintjs/fingerprintjs/issues/734"  target="_blank" rel="noopener"
+    >issue</a>，问题找到了，Fingerprint 在代码中用了Base64又编码了一些代码。无奈只能退回老版本。</p>
+<p>改了之后终于可以比较正常的通过审核了</p>
+<h3 id="firefox-的-插件-id">Firefox 的 插件 ID</h3>
+<p>Firefox 的拓展是需要一个插件ID的，但是如果你没有给他，其实也是能用的，它会自动分配一个临时ID。但是一定要记的，自己手动分配一个ID。不然就会像我一样惨😭
+<img src="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/3.png"
+	width="1160"
+	height="602"
+	srcset="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/3_hubb73e4285d1f90414b979eaa041f80a3_80036_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/3_hubb73e4285d1f90414b979eaa041f80a3_80036_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="一定要手动给一个插件 ID"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="192"
+		data-flex-basis="462px"
+	
+></p>
+<p>我这里遇到的问题是如果调用 Storage 相关的 API 就一定不能用自动分配的临时ID，而我在做 Options 页的时候会用到 Storage，但是无奈新旧版本的 ID 不一样，不能更新，只能无奈放弃旧的插件用户，不过幸好 Firefox 的用户还少。不至于让一批用户无法更新。</p>
+<p><img src="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/4.png"
+	width="1980"
+	height="780"
+	srcset="/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/4_hu5c20890a05e3030d257de3676d73bdd1_150423_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6-techstack-%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/4_hu5c20890a05e3030d257de3676d73bdd1_150423_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="无奈只能新开一个插件"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="253"
+		data-flex-basis="609px"
+	
+></p>
+<h3 id="不同浏览器的api兼容问题">不同浏览器的API兼容问题</h3>
+<p>这个主要就是做 Storage，Chrome 和 Firefox 关于插件存储的 API 不一致导致的。 这个通过web polyfill很简单就能解决了。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="CorrectRoadH/CorrectRoadH.github.io"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2023 CorrectRoad&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
