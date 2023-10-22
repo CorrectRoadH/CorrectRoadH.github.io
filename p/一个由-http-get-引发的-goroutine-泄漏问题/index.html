@@ -12,7 +12,7 @@
 
 <link rel='canonical' href='https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/'>
 
-<link rel="stylesheet" href="/scss/style.min.f2f21d9d961219a01621263328d8997e1ae3b4f0371d455628df1fdc27d57bd6.css"><meta property='og:title' content='一个由 Http Get 引发的 Goroutine 泄漏问题'>
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='一个由 Http Get 引发的 Goroutine 泄漏问题'>
 <meta property='og:description' content='问题背景 不得不说 Golang 的 DX 做的很舒服，比如在测试有问题的并发代码中会提醒你 Data Race 。这样就不用等你发现数据出问题了，再去找代码的问题。👀 最近开始用的一个很有帮助的工具就是 Goleak。来帮助我们找到泄漏的 goroutine。可以理解成其它语言的线程👀，泄漏意思就是工作做完之后，还有些这个工作开的 goroutine 没有结束。就像申请的内存在使用完之后没有释放一样。
 按教程给我的代码测试加个了 goleak 测试。
 但是一下测试， goleak 和我说我的代码有 goroutine 泄漏。🤯 我代码有不少并发代码，但是都是用的 sync.WaitGroup 来控制的。没有网上常见的什么 channel 导致的问题，所以我很奇怪为什么会有 goroutine 泄漏的问题。
@@ -703,7 +703,7 @@ if (!doNotTrack) {
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.19.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 

@@ -11,7 +11,7 @@ go get github.com/CorrectRoadH/echo-ban-ip
 
 <link rel='canonical' href='https://correctroadh.github.io/p/%E5%9C%A8-golang-%E7%9A%84-echo-%E6%A1%86%E6%9E%B6%E4%B8%AD%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E9%98%B2%E6%8A%A4%E5%88%B7%E6%8E%A5%E5%8F%A3%E6%94%BB%E5%87%BB/'>
 
-<link rel="stylesheet" href="/scss/style.min.f2f21d9d961219a01621263328d8997e1ae3b4f0371d455628df1fdc27d57bd6.css"><meta property='og:title' content='在 Golang 的 Echo 框架中如何简单的防护刷接口攻击'>
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='在 Golang 的 Echo 框架中如何简单的防护刷接口攻击'>
 <meta property='og:description' content='前言 最近在做一个 Side Project，计划等差不多完成之后就发到 V2EX 之类宣传一下。但是根据之前的经验，在 V2EX 上会有一些用户会对别人来宣传的网站进行攻击，可能是出于恶作剧吧。太难的先不说，最起码的对着没有鉴权的接口硬刷的简单攻击可以防御一下。
 解决思路 很容易想到简单的解决方案，建个 map 把访问者的 ip 和统计的次数存起来。然后短时间访问超过一定次数就给 Ban 掉。说干就干。 我这个产品的后台是用 Go &#43; Echo 写的，所以就用 Go 来实现个中间件。
 代码放在这里了: https://github.com/CorrectRoadH/echo-ban-ip (这个名字确实反复了好久🤣，本来想像 FilterRequest 之类的，但是想来想去还是 ban IP 最简单直接，所以就叫这个名字了)。
@@ -575,7 +575,7 @@ Chrome: <a class="link" href="https://chrome.google.com/webstore/detail/tech-sta
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.19.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 

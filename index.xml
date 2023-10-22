@@ -6,7 +6,117 @@
         <description>Recent content on CorrectRoad&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Fri, 25 Aug 2023 13:46:11 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 22 Oct 2023 13:45:59 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>我在开发一款浏览器插件遇到的一些坑</title>
+        <link>https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</link>
+        <pubDate>Sun, 22 Oct 2023 13:45:59 +0800</pubDate>
+        
+        <guid>https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</guid>
+        <description>&lt;img src="https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/1.png" alt="Featured image of post 我在开发一款浏览器插件遇到的一些坑" /&gt;&lt;p&gt;PS: 本文写于  2023-08-25 ，但是因为本人的拖延症一直犯，所以在咕了两个月之后才写好。🤣&lt;/p&gt;
+&lt;h3 id=&#34;谷歌插件无法过审&#34;&gt;谷歌插件无法过审&lt;/h3&gt;
+&lt;p&gt;我的浏览器插件已经两周没有更新了，倒不是我没有写代码，而是总是被不停的拒绝并且没有任何的理由😭。所以我在不停的尝试代码中的各种地方，但是就是不能过审
+&lt;img src=&#34;https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/1.png&#34;
+	width=&#34;1712&#34;
+	height=&#34;1268&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/1_hucf0335da642de9ecc97a6810ceb8f638_105365_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/1_hucf0335da642de9ecc97a6810ceb8f638_105365_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;135&#34;
+		data-flex-basis=&#34;324px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;最早以为是我的代码中有一个feedback(用了mailto)，点击就触发邮箱应用。是因为这个原因不能过审。
+&lt;img src=&#34;https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/2.png&#34;
+	width=&#34;1126&#34;
+	height=&#34;1664&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/2_hu6a61420a0cb32eb92e3a9a51be498d90_229565_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/2_hu6a61420a0cb32eb92e3a9a51be498d90_229565_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;67&#34;
+		data-flex-basis=&#34;162px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;但是在每天晚上被拒绝一次之后我又提交一次之后并且每天晚上骂谷歌十分钟之后的今天我终于发现几封未读的邮件。🤯原来谷歌在这里把拒绝原因分开来发，倒不是我没有想到，主要是行为的不一致性，因为有时候拒绝原因是写在 Developer Dashboard 中的，如下图。 让人容易产生误解。以为就是只在 Developer Dashboard 通知开发者，根本没有想还会通过邮件通知开发者。
+&lt;img src=&#34;https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/image.png&#34;
+	width=&#34;2374&#34;
+	height=&#34;872&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/image_hu3c1d50e0c3552cddd6240ed8e2eaabc2_401709_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/image_hu3c1d50e0c3552cddd6240ed8e2eaabc2_401709_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Alt text&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;272&#34;
+		data-flex-basis=&#34;653px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;解决办法&#34;&gt;解决办法&lt;/h4&gt;
+&lt;p&gt;既然知道问题了就要解决问题。大概就是我提交的代码中不能混淆。但是我的插件是基于 GitHub 上的 boilerplate ，别人怎么就能用这个 boilerplate ，我不行?😅&lt;/p&gt;
+&lt;p&gt;首先看一眼代码，确实感觉混淆在一起了把这里 minimize 改掉。
+&lt;img src=&#34;https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/5.png&#34;
+	width=&#34;1892&#34;
+	height=&#34;1418&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/5_hub45a7ab9c210fa0f50ca5dd9687d0fca_3747805_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/5_hub45a7ab9c210fa0f50ca5dd9687d0fca_3747805_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;对比&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;320px&#34;
+	
+&gt;
+现在来看看效果，感觉还不错。大概有了代码的样子，但是这个应该还是babel转义过了🤔但是确实没有被混淆了。估计能过。&lt;/p&gt;
+&lt;p&gt;结果还是不行。认真看邮件，原来不是说我代码混淆过了。而是说我代码有『混淆』的代码。🤯 这里是指有一些代码是base64的，然后通过base64解密后再eval执行。这怎么可能，我怎么会写这种代码呢?&lt;/p&gt;
+&lt;p&gt;定位到原因的代码。原来是 Fingerprint 搞的鬼，定位一下&lt;a class=&#34;link&#34; href=&#34;https://github.com/fingerprintjs/fingerprintjs/issues/734&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;issue&lt;/a&gt;，问题找到了，Fingerprint 在代码中用了Base64又编码了一些代码。无奈只能退回老版本。&lt;/p&gt;
+&lt;p&gt;改了之后终于可以比较正常的通过审核了&lt;/p&gt;
+&lt;h3 id=&#34;firefox-的-插件-id&#34;&gt;Firefox 的 插件 ID&lt;/h3&gt;
+&lt;p&gt;Firefox 的拓展是需要一个插件ID的，但是如果你没有给他，其实也是能用的，它会自动分配一个临时ID。但是一定要记的，自己手动分配一个ID。不然就会像我一样惨😭
+&lt;img src=&#34;https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/3.png&#34;
+	width=&#34;1160&#34;
+	height=&#34;602&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/3_hubb73e4285d1f90414b979eaa041f80a3_80036_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/3_hubb73e4285d1f90414b979eaa041f80a3_80036_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;一定要手动给一个插件 ID&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;192&#34;
+		data-flex-basis=&#34;462px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;我这里遇到的问题是如果调用 Storage 相关的 API 就一定不能用自动分配的临时ID，而我在做 Options 页的时候会用到 Storage，但是无奈新旧版本的 ID 不一样，不能更新，只能无奈放弃旧的插件用户，不过幸好 Firefox 的用户还少。不至于让一批用户无法更新。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/4.png&#34;
+	width=&#34;1980&#34;
+	height=&#34;780&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/4_hu5c20890a05e3030d257de3676d73bdd1_150423_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E6%88%91%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%80%E6%AC%BE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/4_hu5c20890a05e3030d257de3676d73bdd1_150423_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;无奈只能新开一个插件&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;253&#34;
+		data-flex-basis=&#34;609px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;不同浏览器的api兼容问题&#34;&gt;不同浏览器的API兼容问题&lt;/h3&gt;
+&lt;p&gt;这个主要就是做 Storage，Chrome 和 Firefox 关于插件存储的 API 不一致导致的。 这个通过web polyfill很简单就能解决了。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>一个由 Http Get 引发的 Goroutine 泄漏问题</title>
         <link>https://correctroadh.github.io/p/%E4%B8%80%E4%B8%AA%E7%94%B1-http-get-%E5%BC%95%E5%8F%91%E7%9A%84-goroutine-%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98/</link>
         <pubDate>Fri, 25 Aug 2023 13:46:11 +0800</pubDate>
