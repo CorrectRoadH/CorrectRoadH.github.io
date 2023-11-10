@@ -88,8 +88,8 @@ if (!doNotTrack) {
                     
                     
                         
-                        <img src="/img/avatar_huac971efb212d008eef368e3014548668_655784_300x0_resize_box_3.png" width="300"
-                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                        <img src="/img/avatar_huc5e129e77f841f4271910208fa5d8e33_714553_300x0_resize_box_3.png" width="300"
+                            height="301" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
                 </a>
@@ -721,7 +721,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span>
 </span></span><span class="line"><span class="cl">            <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">ref</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">            <span class="na">className</span><span class="o">=</span><span class="s">&#34;table-root&#34;</span>
-</span></span><span class="line"><span class="cl">              <span class="err">//</span> <span class="err">动态修改</span><span class="na">css</span><span class="err">，让位置与光标位置一致</span>
+</span></span><span class="line"><span class="cl">              <span class="err">//</span> <span class="na">动态修改css</span><span class="err">，</span><span class="na">让位置与光标位置一致</span>
 </span></span><span class="line"><span class="cl">             <span class="na">style</span><span class="o">=</span><span class="p">{{</span> <span class="nx">top</span>: <span class="kt">top</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">top</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">                 <span class="nx">left</span>: <span class="kt">left</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">left</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">,</span> <span class="p">}}</span>
 </span></span><span class="line"><span class="cl">            <span class="p">&gt;</span>
@@ -1020,15 +1020,15 @@ if (!doNotTrack) {
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">if (top?.document) {
-</span></span><span class="line"><span class="cl">      const iconRect = top?.document
-</span></span><span class="line"><span class="cl">        .querySelector(`.${triggerIconName}`)
-</span></span><span class="line"><span class="cl">        ?.getBoundingClientRect();
-</span></span><span class="line"><span class="cl">      if (iconRect) {
-</span></span><span class="line"><span class="cl">        right = iconRect.right;
-</span></span><span class="line"><span class="cl">        bottom = iconRect.bottom;
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">    }
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">top</span><span class="err">?</span><span class="o">.</span><span class="n">document</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">const</span> <span class="n">iconRect</span> <span class="o">=</span> <span class="n">top</span><span class="err">?</span><span class="o">.</span><span class="n">document</span>
+</span></span><span class="line"><span class="cl">        <span class="o">.</span><span class="n">querySelector</span><span class="p">(</span><span class="err">`</span><span class="o">.$</span><span class="p">{</span><span class="n">triggerIconName</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="err">?</span><span class="o">.</span><span class="n">getBoundingClientRect</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="n">iconRect</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">right</span> <span class="o">=</span> <span class="n">iconRect</span><span class="o">.</span><span class="n">right</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">bottom</span> <span class="o">=</span> <span class="n">iconRect</span><span class="o">.</span><span class="n">bottom</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这段代码的意义是</p>
@@ -1098,19 +1098,19 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="err">    left:</span> <span class="err">0,</span>
-</span></span><span class="line"><span class="cl"><span class="err">    pos:</span> <span class="err">0,</span>
-</span></span><span class="line"><span class="cl"><span class="err">    rect:</span> <span class="err">{</span>
-</span></span><span class="line"><span class="cl"><span class="err">        bottom:</span> <span class="err">211,</span>
-</span></span><span class="line"><span class="cl"><span class="err">        height:</span> <span class="err">25,</span>
-</span></span><span class="line"><span class="cl"><span class="err">        left:</span> <span class="err">88,</span>
-</span></span><span class="line"><span class="cl"><span class="err">        right:</span> <span class="err">747,</span>
-</span></span><span class="line"><span class="cl"><span class="err">        top:</span> <span class="err">186,</span>
-</span></span><span class="line"><span class="cl"><span class="err">        width:</span> <span class="err">659,</span>
-</span></span><span class="line"><span class="cl"><span class="err">        x:</span> <span class="err">88,</span>
-</span></span><span class="line"><span class="cl"><span class="err">        y:</span> <span class="err">186</span>
-</span></span><span class="line"><span class="cl"><span class="err">    </span><span class="p">}</span><span class="err">,</span>
-</span></span><span class="line"><span class="cl"><span class="err">    top:</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="err">left:</span> <span class="err">0,</span>
+</span></span><span class="line"><span class="cl">    <span class="err">pos:</span> <span class="err">0,</span>
+</span></span><span class="line"><span class="cl">    <span class="err">rect:</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">        <span class="err">bottom:</span> <span class="err">211,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">height:</span> <span class="err">25,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">left:</span> <span class="err">88,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">right:</span> <span class="err">747,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">top:</span> <span class="err">186,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">width:</span> <span class="err">659,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">x:</span> <span class="err">88,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">y:</span> <span class="err">186</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="err">,</span>
+</span></span><span class="line"><span class="cl">    <span class="err">top:</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl"><span class="err">}</span>
 </span></span></code></pre></td></tr></table>
 </div>

@@ -86,8 +86,8 @@ if (!doNotTrack) {
                     
                     
                         
-                        <img src="/img/avatar_huac971efb212d008eef368e3014548668_655784_300x0_resize_box_3.png" width="300"
-                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                        <img src="/img/avatar_huc5e129e77f841f4271910208fa5d8e33_714553_300x0_resize_box_3.png" width="300"
+                            height="301" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
                 </a>
@@ -475,16 +475,16 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">Map</span><span class="p">[</span><span class="nx">T</span><span class="p">])</span><span class="nf">Store</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="err">直接存</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">直接存</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">Map</span><span class="p">[</span><span class="nx">T</span><span class="p">])</span><span class="nf">StoreRegexp</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="err">存到正则表达式数组中</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">存到正则表达式数组中</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 这里这个看到，返回值比一般的map多了一个 match ，是为了方便调试知道这个string是被哪个正则表达式匹配到的
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">Map</span><span class="p">[</span><span class="nx">T</span><span class="p">])</span> <span class="nf">Load</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span>  <span class="p">(</span><span class="nx">actual</span> <span class="nx">T</span><span class="p">,</span> <span class="nx">loaded</span> <span class="kt">bool</span><span class="p">,</span> <span class="nx">match</span> <span class="kt">string</span><span class="p">)</span>  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="err">如果</span><span class="nx">intermap</span><span class="err">中没有就去遍历所有的正则表达式</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">如果intermap中没有就去遍历所有的正则表达式</span><span class="p">.</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -591,7 +591,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">        <span class="c1">// 正则已经在树中存在的情况就只要替换值
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">r</span><span class="p">.</span><span class="nx">internalMap</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">value</span>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="err">把正则插到树中</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">把正则插到树中</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
