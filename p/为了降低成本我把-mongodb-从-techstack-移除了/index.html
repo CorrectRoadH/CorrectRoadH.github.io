@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='TechStack 是什么? TechStack是我去年开发的一款浏览器插件。大约收获了 400&#43; 的 Star 与 900 的日活。这个插件可以在 GitHub 仓库旁边显示当前仓库的技术栈。这个插件的初衷是为了帮助开发者更好的了解一个项目的技术栈，以便更好的学习和使用。
+但是我最近减少对插件的开发与维护，并且在最近进行了一些小重构以降低成本。在这里我想谈谈为什么这不是一款好的软件和我为什么减少维护。
+TechStack 为什么不是一个好软件? TechStack 算是我第一款『完成的 Side Project』。收获了一点点小关注。但是现在事后回过头来看，这个并不是一个『好软件』，我从来没有进行过市场分析、调研。也没有研究过开发者的需求。只是觉得这样一定很酷很有用，所以就开始做了。
+但是事实上，虽然我每天都在使用(被动地)，但是我感觉我没有被帮助到，解决掉我的什么痛点或者痒点。对于这个插件，我最初的设想也很宏伟，不仅仅只是一个插件，还是一个入口、起点。我可以通过收集到的数据进行各种分析与分享。
+比如我还可以再做一个网站来分析技术栈的使用情况，比如被应用到实际开发中的增长趋势。对比不同的技术栈应用情况来帮助用户在选择技术上时更好的决策。
+以及用户可以选一些技术栈，找到一个项目，看看别人的代码是怎么写的。比如选择 Flink 和 Pulsar、 gRPC 和 SWR 这样通过拼接技术栈来找到一个项目。学习应该怎么写。
+但是最后都没有实现，主要不是技术原因，还是我觉得这些并没有解决掉什么痒点和痛点，大家其实并不需要这个。
+TechStack 需要降低成本? 因为 TechStack 已经停止功能开发了，而且也绝不会从中获得任何收益。所以我觉得我需要必须降低运行成本，这里主要指服务端的成本。本来这个 TechStack 的运营成本确实很低，但是随着数据量的增长，已经高到一个让我难以接受的地步。
+这些图是我一个 Zeabur 的账号的费用用量图，可以看到最大的成本支出是 TechStack 的数据库 MongoDB 所占用的。光数据库一个月的支出就将近 200&#43; 人民币。这个成本对于我来说是不可接受的。
+这里谈谈 TechStack 在 MongoDB 中存了什么和为什么这么大的用量。TechStack 的最初的设计上使用两级缓存的机制，一级缓存是存储一个仓库对接的技术栈，有 1 天的过期时间。然后二级缓存是仓库对应的依赖文件，其就存储在 MongoDB 中。这样做的原因是因为早期我对 TechStack 的依赖项对应技术栈更新很频繁。所以我觉得这样做可以减少对 GitHub 的依赖文件的请求次数，缓存过期之后就可以用新的解析器对缓存好的依赖文件进行重新解析。
+TechStack 是如何降低成本的? 首先已经找出最大的问题所在，就是 MongoDB 的存储成本。我现在不需要存储这些依赖文件的内容了，所以我就用rockscache做了二级缓存，现在只缓存解析出来的结果，
+所以现在可以把 MongoDB Compass 也给一起删掉啰! 我一点也不喜欢这个 electron 应用。又卡又慢一点也不好用，除了好看。'>
+<title>为了降低成本，我把 MongoDB 从 TechStack 移除了</title>
+
+<link rel='canonical' href='https://correctroadh.github.io/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/'>
+
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='为了降低成本，我把 MongoDB 从 TechStack 移除了'>
+<meta property='og:description' content='TechStack 是什么? TechStack是我去年开发的一款浏览器插件。大约收获了 400&#43; 的 Star 与 900 的日活。这个插件可以在 GitHub 仓库旁边显示当前仓库的技术栈。这个插件的初衷是为了帮助开发者更好的了解一个项目的技术栈，以便更好的学习和使用。
+但是我最近减少对插件的开发与维护，并且在最近进行了一些小重构以降低成本。在这里我想谈谈为什么这不是一款好的软件和我为什么减少维护。
+TechStack 为什么不是一个好软件? TechStack 算是我第一款『完成的 Side Project』。收获了一点点小关注。但是现在事后回过头来看，这个并不是一个『好软件』，我从来没有进行过市场分析、调研。也没有研究过开发者的需求。只是觉得这样一定很酷很有用，所以就开始做了。
+但是事实上，虽然我每天都在使用(被动地)，但是我感觉我没有被帮助到，解决掉我的什么痛点或者痒点。对于这个插件，我最初的设想也很宏伟，不仅仅只是一个插件，还是一个入口、起点。我可以通过收集到的数据进行各种分析与分享。
+比如我还可以再做一个网站来分析技术栈的使用情况，比如被应用到实际开发中的增长趋势。对比不同的技术栈应用情况来帮助用户在选择技术上时更好的决策。
+以及用户可以选一些技术栈，找到一个项目，看看别人的代码是怎么写的。比如选择 Flink 和 Pulsar、 gRPC 和 SWR 这样通过拼接技术栈来找到一个项目。学习应该怎么写。
+但是最后都没有实现，主要不是技术原因，还是我觉得这些并没有解决掉什么痒点和痛点，大家其实并不需要这个。
+TechStack 需要降低成本? 因为 TechStack 已经停止功能开发了，而且也绝不会从中获得任何收益。所以我觉得我需要必须降低运行成本，这里主要指服务端的成本。本来这个 TechStack 的运营成本确实很低，但是随着数据量的增长，已经高到一个让我难以接受的地步。
+这些图是我一个 Zeabur 的账号的费用用量图，可以看到最大的成本支出是 TechStack 的数据库 MongoDB 所占用的。光数据库一个月的支出就将近 200&#43; 人民币。这个成本对于我来说是不可接受的。
+这里谈谈 TechStack 在 MongoDB 中存了什么和为什么这么大的用量。TechStack 的最初的设计上使用两级缓存的机制，一级缓存是存储一个仓库对接的技术栈，有 1 天的过期时间。然后二级缓存是仓库对应的依赖文件，其就存储在 MongoDB 中。这样做的原因是因为早期我对 TechStack 的依赖项对应技术栈更新很频繁。所以我觉得这样做可以减少对 GitHub 的依赖文件的请求次数，缓存过期之后就可以用新的解析器对缓存好的依赖文件进行重新解析。
+TechStack 是如何降低成本的? 首先已经找出最大的问题所在，就是 MongoDB 的存储成本。我现在不需要存储这些依赖文件的内容了，所以我就用rockscache做了二级缓存，现在只缓存解析出来的结果，
+所以现在可以把 MongoDB Compass 也给一起删掉啰! 我一点也不喜欢这个 electron 应用。又卡又慢一点也不好用，除了好看。'>
+<meta property='og:url' content='https://correctroadh.github.io/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/'>
+<meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-02-02T20:11:21&#43;08:00'/><meta property='article:modified_time' content='2024-02-02T20:11:21&#43;08:00'/><meta property='og:image' content='https://correctroadh.github.io/' />
+<meta name="twitter:title" content="为了降低成本，我把 MongoDB 从 TechStack 移除了">
+<meta name="twitter:description" content="TechStack 是什么? TechStack是我去年开发的一款浏览器插件。大约收获了 400&#43; 的 Star 与 900 的日活。这个插件可以在 GitHub 仓库旁边显示当前仓库的技术栈。这个插件的初衷是为了帮助开发者更好的了解一个项目的技术栈，以便更好的学习和使用。
+但是我最近减少对插件的开发与维护，并且在最近进行了一些小重构以降低成本。在这里我想谈谈为什么这不是一款好的软件和我为什么减少维护。
+TechStack 为什么不是一个好软件? TechStack 算是我第一款『完成的 Side Project』。收获了一点点小关注。但是现在事后回过头来看，这个并不是一个『好软件』，我从来没有进行过市场分析、调研。也没有研究过开发者的需求。只是觉得这样一定很酷很有用，所以就开始做了。
+但是事实上，虽然我每天都在使用(被动地)，但是我感觉我没有被帮助到，解决掉我的什么痛点或者痒点。对于这个插件，我最初的设想也很宏伟，不仅仅只是一个插件，还是一个入口、起点。我可以通过收集到的数据进行各种分析与分享。
+比如我还可以再做一个网站来分析技术栈的使用情况，比如被应用到实际开发中的增长趋势。对比不同的技术栈应用情况来帮助用户在选择技术上时更好的决策。
+以及用户可以选一些技术栈，找到一个项目，看看别人的代码是怎么写的。比如选择 Flink 和 Pulsar、 gRPC 和 SWR 这样通过拼接技术栈来找到一个项目。学习应该怎么写。
+但是最后都没有实现，主要不是技术原因，还是我觉得这些并没有解决掉什么痒点和痛点，大家其实并不需要这个。
+TechStack 需要降低成本? 因为 TechStack 已经停止功能开发了，而且也绝不会从中获得任何收益。所以我觉得我需要必须降低运行成本，这里主要指服务端的成本。本来这个 TechStack 的运营成本确实很低，但是随着数据量的增长，已经高到一个让我难以接受的地步。
+这些图是我一个 Zeabur 的账号的费用用量图，可以看到最大的成本支出是 TechStack 的数据库 MongoDB 所占用的。光数据库一个月的支出就将近 200&#43; 人民币。这个成本对于我来说是不可接受的。
+这里谈谈 TechStack 在 MongoDB 中存了什么和为什么这么大的用量。TechStack 的最初的设计上使用两级缓存的机制，一级缓存是存储一个仓库对接的技术栈，有 1 天的过期时间。然后二级缓存是仓库对应的依赖文件，其就存储在 MongoDB 中。这样做的原因是因为早期我对 TechStack 的依赖项对应技术栈更新很频繁。所以我觉得这样做可以减少对 GitHub 的依赖文件的请求次数，缓存过期之后就可以用新的解析器对缓存好的依赖文件进行重新解析。
+TechStack 是如何降低成本的? 首先已经找出最大的问题所在，就是 MongoDB 的存储成本。我现在不需要存储这些依赖文件的内容了，所以我就用rockscache做了二级缓存，现在只缓存解析出来的结果，
+所以现在可以把 MongoDB Compass 也给一起删掉啰! 我一点也不喜欢这个 electron 应用。又卡又慢一点也不好用，除了好看。"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://correctroadh.github.io/' />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-PDJXNW2S9J', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huc5e129e77f841f4271910208fa5d8e33_714553_300x0_resize_box_3.png" width="300"
+                            height="301" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">📚</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">CorrectRoad&#39;s Blog</a></h1>
+            <h2 class="site-description">君子生非异也，善假于物也。</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CorrectRoadH'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com/correctroad'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' target="_blank">
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M9 11l-4 4l4 4m-4 -4h11a4 4 0 0 0 0 -8h-1" />
+</svg>
+
+
+
+                
+                <span>Refresh</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#techstack-是什么">TechStack 是什么?</a></li>
+    <li><a href="#techstack-为什么不是一个好软件">TechStack 为什么不是一个好软件?</a></li>
+    <li><a href="#techstack-需要降低成本">TechStack 需要降低成本?</a></li>
+    <li><a href="#techstack-是如何降低成本的">TechStack 是如何降低成本的?</a></li>
+    <li><a href="#我从-techstack-学到了什么">我从 TechStack 学到了什么?</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/">为了降低成本，我把 MongoDB 从 TechStack 移除了</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Feb 02, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="techstack-是什么">TechStack 是什么?</h2>
+<p><a class="link" href="https://github.com/Get-Tech-Stack/TechStack"  target="_blank" rel="noopener"
+    >TechStack</a>是我去年开发的一款浏览器插件。大约收获了 400+ 的 Star 与 900 的日活。这个插件可以在 GitHub 仓库旁边显示当前仓库的技术栈。这个插件的初衷是为了帮助开发者更好的了解一个项目的技术栈，以便更好的学习和使用。</p>
+<p>但是我最近减少对插件的开发与维护，并且在最近进行了一些小重构以降低成本。在这里我想谈谈为什么这不是一款好的软件和我为什么减少维护。</p>
+<h2 id="techstack-为什么不是一个好软件">TechStack 为什么不是一个好软件?</h2>
+<p>TechStack 算是我第一款『完成的 Side Project』。收获了一点点小关注。但是现在事后回过头来看，这个并不是一个『好软件』，我从来没有进行过市场分析、调研。也没有研究过开发者的需求。只是觉得这样一定很酷很有用，所以就开始做了。</p>
+<p>但是事实上，虽然我每天都在使用(被动地)，但是我感觉我没有被帮助到，解决掉我的什么痛点或者痒点。对于这个插件，我最初的设想也很宏伟，不仅仅只是一个插件，还是一个入口、起点。我可以通过收集到的数据进行各种分析与分享。</p>
+<p>比如我还可以再做一个网站来分析技术栈的使用情况，比如被应用到实际开发中的增长趋势。对比不同的技术栈应用情况来帮助用户在选择技术上时更好的决策。</p>
+<p>以及用户可以选一些技术栈，找到一个项目，看看别人的代码是怎么写的。比如选择 Flink 和 Pulsar、 gRPC 和 SWR 这样通过拼接技术栈来找到一个项目。学习应该怎么写。</p>
+<p>但是最后都没有实现，主要不是技术原因，还是我觉得这些并没有解决掉什么痒点和痛点，大家其实并不需要这个。</p>
+<h2 id="techstack-需要降低成本">TechStack 需要降低成本?</h2>
+<p>因为 TechStack 已经停止功能开发了，而且也绝不会从中获得任何收益。所以我觉得我需要必须降低运行成本，这里主要指服务端的成本。本来这个 TechStack 的运营成本确实很低，但是随着数据量的增长，已经高到一个让我难以接受的地步。</p>
+<p><img src="/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/techstack-usage.png"
+	width="1604"
+	height="1162"
+	srcset="/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/techstack-usage_hu358638fbf89dda9d91b0e3f6aa9ff8b5_133778_480x0_resize_box_3.png 480w, /p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/techstack-usage_hu358638fbf89dda9d91b0e3f6aa9ff8b5_133778_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="331px"
+	
+></p>
+<p>这些图是我一个 Zeabur 的账号的费用用量图，可以看到最大的成本支出是 TechStack 的数据库 MongoDB 所占用的。光数据库一个月的支出就将近 200+ 人民币。这个成本对于我来说是不可接受的。</p>
+<p>这里谈谈 TechStack 在 MongoDB 中存了什么和为什么这么大的用量。TechStack 的最初的设计上使用两级缓存的机制，一级缓存是存储一个仓库对接的技术栈，有 1 天的过期时间。然后二级缓存是仓库对应的依赖文件，其就存储在 MongoDB 中。这样做的原因是因为早期我对 TechStack 的依赖项对应技术栈更新很频繁。所以我觉得这样做可以减少对 GitHub 的依赖文件的请求次数，缓存过期之后就可以用新的解析器对缓存好的依赖文件进行重新解析。</p>
+<h2 id="techstack-是如何降低成本的">TechStack 是如何降低成本的?</h2>
+<p>首先已经找出最大的问题所在，就是 MongoDB 的存储成本。我现在不需要存储这些依赖文件的内容了，所以我就用<a class="link" href="https://github.com/dtm-labs/rockscache"  target="_blank" rel="noopener"
+    ><code>rockscache</code></a>做了二级缓存，现在只缓存解析出来的结果，</p>
+<p>所以现在可以把 MongoDB Compass 也给一起删掉啰! 我一点也不喜欢这个 electron 应用。又卡又慢一点也不好用，除了好看。</p>
+<p><img src="/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/uninstall-mongodb-compass.png"
+	width="590"
+	height="186"
+	srcset="/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/uninstall-mongodb-compass_hue397ae67c80f5004eab2866d71fa2d62_23514_480x0_resize_box_3.png 480w, /p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/uninstall-mongodb-compass_hue397ae67c80f5004eab2866d71fa2d62_23514_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="317"
+		data-flex-basis="761px"
+	
+></p>
+<p>当然 TechStack 是一个非常大的异构项目，像 Request TechStack 的后端、Gradle Parser 等等是用 Java 来实现的，内存占用也是十分的大。尽管这次我还没有移除它们，但是在未来我也会考虑降本增效(笑)🤣。</p>
+<h2 id="我从-techstack-学到了什么">我从 TechStack 学到了什么?</h2>
+<p>前面提到 TechStack 算是我第一款『完成的 Side Project』。所以我在这里开发中，还是学到特别特别多的东西。包括工程化的开发、监控还有很多很多工具，像是 Prometheus、Grafana、Flink、 Nest.js、Prism 等等。而且很多时间是为了学新技术而去用新技术。所以在很多地方采用了不是最优实践，也图增成本。</p>
+<p>抛开技术不谈，就是学到运营与宣发，确实找到了很多平台。知道哪些平台能有流量，哪些没有。和应该怎么发。还有在这期间尝试去学习产品经理的理论与方法论。</p>
+<p>在下一篇文章我可能谈谈<a class="link" href="https://tofree.zeabur.app/"  target="_blank" rel="noopener"
+    >ToFree</a>，这也是一个免费、开源的项目。这个项目虽然是冷启动，但是收获了不少的关注，也帮助一个开源项目的 Star 翻了数倍。我想谈谈我是怎么想到，付了一个很低的成本，然后收获了一些不小的关注与用户，但是为什么我没有从中得到我想要的。做一些反思与总结。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="CorrectRoadH/CorrectRoadH.github.io"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 CorrectRoad&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

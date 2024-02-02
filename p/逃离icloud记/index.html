@@ -24,7 +24,7 @@
 1 2 3 4 5 6 7 8 9 10 11 12 13 docker run -d \ --name=resilio-sync \ -e PUID=1000 \ -e PGID=1000 \ -e TZ=Europe/London \ -p 8888:8888 \ -p 55555:55555 \ -v /path/to/config:/config \ -v /path/to/downloads:/downloads \ -v /path/to/data:/sync \ --restart unless-stopped \ lscr.'>
 <meta property='og:url' content='https://correctroadh.github.io/p/%E9%80%83%E7%A6%BBicloud%E8%AE%B0/'>
 <meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Apple' /><meta property='article:published_time' content='2022-06-01T19:57:10&#43;08:00'/><meta property='article:modified_time' content='2022-06-01T19:57:10&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Apple' /><meta property='article:published_time' content='2022-06-01T19:57:10&#43;08:00'/><meta property='article:modified_time' content='2022-06-01T19:57:10&#43;08:00'/><meta property='og:image' content='https://correctroadh.github.io/' />
 <meta name="twitter:title" content="『逃离』iCloud记">
 <meta name="twitter:description" content="起因 在5月26号，我发现我的 iCloud 不能正常的上传文件了，我在电脑上记的笔记，在手机上还是旧的版本。打开finder一看，原来是卡在上传。我本来以为是我的 Mac 日常性抽风，所以也没有太在意。
 不过随着一天的等待，我发现问题还是没有被解决。我打开v2ex一看，发现居然也有别人遇到一样的问题!说明应该是云上贵州导致的问题。
@@ -33,7 +33,8 @@
 这次我梳理一下我的需要，我平时需要用 iCloud 同步logseq笔记、电子书。而可选软件有resilio sync和syncthing。后者的话，两者不在同一局域网的连接有点慢。并且后者也没有IOS端。而前者主要是非开源软件，所以最终我还是选择了resilio sync。
 计划在自己的笔记本、PC、iPad、iPhone和一台服务器上都安装resilio sync。进行文件同步。
 遇到的困难 docker里的resilio sync不能正常启动 服务器环境：Centos8 ​在服务器上我通过docker安装resilio sync。使用linuxserver/resilio-sync镜像。按官方教程启动却发现不能正常访问GUI。用docker logs sync看日志，发现是没有权限创建config文件。官方启动命令如下： ​
-1 2 3 4 5 6 7 8 9 10 11 12 13 docker run -d \ --name=resilio-sync \ -e PUID=1000 \ -e PGID=1000 \ -e TZ=Europe/London \ -p 8888:8888 \ -p 55555:55555 \ -v /path/to/config:/config \ -v /path/to/downloads:/downloads \ -v /path/to/data:/sync \ --restart unless-stopped \ lscr.">
+1 2 3 4 5 6 7 8 9 10 11 12 13 docker run -d \ --name=resilio-sync \ -e PUID=1000 \ -e PGID=1000 \ -e TZ=Europe/London \ -p 8888:8888 \ -p 55555:55555 \ -v /path/to/config:/config \ -v /path/to/downloads:/downloads \ -v /path/to/data:/sync \ --restart unless-stopped \ lscr."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://correctroadh.github.io/' />
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
 <script>
 var doNotTrack = false;
@@ -570,7 +571,7 @@ if (!doNotTrack) {
         
             2020 - 
         
-        2023 CorrectRoad&#39;s Blog
+        2024 CorrectRoad&#39;s Blog
     </section>
     
     <section class="powerby">

@@ -6,7 +6,63 @@
         <description>Recent content on CorrectRoad&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sat, 30 Dec 2023 18:03:58 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 02 Feb 2024 20:11:21 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>为了降低成本，我把 MongoDB 从 TechStack 移除了</title>
+        <link>https://correctroadh.github.io/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/</link>
+        <pubDate>Fri, 02 Feb 2024 20:11:21 +0800</pubDate>
+        
+        <guid>https://correctroadh.github.io/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/</guid>
+        <description>&lt;h2 id=&#34;techstack-是什么&#34;&gt;TechStack 是什么?&lt;/h2&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/Get-Tech-Stack/TechStack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;TechStack&lt;/a&gt;是我去年开发的一款浏览器插件。大约收获了 400+ 的 Star 与 900 的日活。这个插件可以在 GitHub 仓库旁边显示当前仓库的技术栈。这个插件的初衷是为了帮助开发者更好的了解一个项目的技术栈，以便更好的学习和使用。&lt;/p&gt;
+&lt;p&gt;但是我最近减少对插件的开发与维护，并且在最近进行了一些小重构以降低成本。在这里我想谈谈为什么这不是一款好的软件和我为什么减少维护。&lt;/p&gt;
+&lt;h2 id=&#34;techstack-为什么不是一个好软件&#34;&gt;TechStack 为什么不是一个好软件?&lt;/h2&gt;
+&lt;p&gt;TechStack 算是我第一款『完成的 Side Project』。收获了一点点小关注。但是现在事后回过头来看，这个并不是一个『好软件』，我从来没有进行过市场分析、调研。也没有研究过开发者的需求。只是觉得这样一定很酷很有用，所以就开始做了。&lt;/p&gt;
+&lt;p&gt;但是事实上，虽然我每天都在使用(被动地)，但是我感觉我没有被帮助到，解决掉我的什么痛点或者痒点。对于这个插件，我最初的设想也很宏伟，不仅仅只是一个插件，还是一个入口、起点。我可以通过收集到的数据进行各种分析与分享。&lt;/p&gt;
+&lt;p&gt;比如我还可以再做一个网站来分析技术栈的使用情况，比如被应用到实际开发中的增长趋势。对比不同的技术栈应用情况来帮助用户在选择技术上时更好的决策。&lt;/p&gt;
+&lt;p&gt;以及用户可以选一些技术栈，找到一个项目，看看别人的代码是怎么写的。比如选择 Flink 和 Pulsar、 gRPC 和 SWR 这样通过拼接技术栈来找到一个项目。学习应该怎么写。&lt;/p&gt;
+&lt;p&gt;但是最后都没有实现，主要不是技术原因，还是我觉得这些并没有解决掉什么痒点和痛点，大家其实并不需要这个。&lt;/p&gt;
+&lt;h2 id=&#34;techstack-需要降低成本&#34;&gt;TechStack 需要降低成本?&lt;/h2&gt;
+&lt;p&gt;因为 TechStack 已经停止功能开发了，而且也绝不会从中获得任何收益。所以我觉得我需要必须降低运行成本，这里主要指服务端的成本。本来这个 TechStack 的运营成本确实很低，但是随着数据量的增长，已经高到一个让我难以接受的地步。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/techstack-usage.png&#34;
+	width=&#34;1604&#34;
+	height=&#34;1162&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/techstack-usage_hu358638fbf89dda9d91b0e3f6aa9ff8b5_133778_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/techstack-usage_hu358638fbf89dda9d91b0e3f6aa9ff8b5_133778_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;这些图是我一个 Zeabur 的账号的费用用量图，可以看到最大的成本支出是 TechStack 的数据库 MongoDB 所占用的。光数据库一个月的支出就将近 200+ 人民币。这个成本对于我来说是不可接受的。&lt;/p&gt;
+&lt;p&gt;这里谈谈 TechStack 在 MongoDB 中存了什么和为什么这么大的用量。TechStack 的最初的设计上使用两级缓存的机制，一级缓存是存储一个仓库对接的技术栈，有 1 天的过期时间。然后二级缓存是仓库对应的依赖文件，其就存储在 MongoDB 中。这样做的原因是因为早期我对 TechStack 的依赖项对应技术栈更新很频繁。所以我觉得这样做可以减少对 GitHub 的依赖文件的请求次数，缓存过期之后就可以用新的解析器对缓存好的依赖文件进行重新解析。&lt;/p&gt;
+&lt;h2 id=&#34;techstack-是如何降低成本的&#34;&gt;TechStack 是如何降低成本的?&lt;/h2&gt;
+&lt;p&gt;首先已经找出最大的问题所在，就是 MongoDB 的存储成本。我现在不需要存储这些依赖文件的内容了，所以我就用&lt;a class=&#34;link&#34; href=&#34;https://github.com/dtm-labs/rockscache&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;&lt;code&gt;rockscache&lt;/code&gt;&lt;/a&gt;做了二级缓存，现在只缓存解析出来的结果，&lt;/p&gt;
+&lt;p&gt;所以现在可以把 MongoDB Compass 也给一起删掉啰! 我一点也不喜欢这个 electron 应用。又卡又慢一点也不好用，除了好看。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/uninstall-mongodb-compass.png&#34;
+	width=&#34;590&#34;
+	height=&#34;186&#34;
+	srcset=&#34;https://correctroadh.github.io/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/uninstall-mongodb-compass_hue397ae67c80f5004eab2866d71fa2d62_23514_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/uninstall-mongodb-compass_hue397ae67c80f5004eab2866d71fa2d62_23514_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;317&#34;
+		data-flex-basis=&#34;761px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;当然 TechStack 是一个非常大的异构项目，像 Request TechStack 的后端、Gradle Parser 等等是用 Java 来实现的，内存占用也是十分的大。尽管这次我还没有移除它们，但是在未来我也会考虑降本增效(笑)🤣。&lt;/p&gt;
+&lt;h2 id=&#34;我从-techstack-学到了什么&#34;&gt;我从 TechStack 学到了什么?&lt;/h2&gt;
+&lt;p&gt;前面提到 TechStack 算是我第一款『完成的 Side Project』。所以我在这里开发中，还是学到特别特别多的东西。包括工程化的开发、监控还有很多很多工具，像是 Prometheus、Grafana、Flink、 Nest.js、Prism 等等。而且很多时间是为了学新技术而去用新技术。所以在很多地方采用了不是最优实践，也图增成本。&lt;/p&gt;
+&lt;p&gt;抛开技术不谈，就是学到运营与宣发，确实找到了很多平台。知道哪些平台能有流量，哪些没有。和应该怎么发。还有在这期间尝试去学习产品经理的理论与方法论。&lt;/p&gt;
+&lt;p&gt;在下一篇文章我可能谈谈&lt;a class=&#34;link&#34; href=&#34;https://tofree.zeabur.app/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ToFree&lt;/a&gt;，这也是一个免费、开源的项目。这个项目虽然是冷启动，但是收获了不少的关注，也帮助一个开源项目的 Star 翻了数倍。我想谈谈我是怎么想到，付了一个很低的成本，然后收获了一些不小的关注与用户，但是为什么我没有从中得到我想要的。做一些反思与总结。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>2023年终总结</title>
         <link>https://correctroadh.github.io/p/2023%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</link>
         <pubDate>Sat, 30 Dec 2023 18:03:58 +0800</pubDate>

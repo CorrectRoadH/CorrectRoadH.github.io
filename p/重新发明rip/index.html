@@ -70,7 +70,7 @@ ip 子网 接口 192.168.0.0 255.255.255.0 f0/1 192.168.1.0 255.255.255.0 f0/2 1
 路由计数 我们可以在路由信息上加上经过了几个路由,每经过一个路由的传播就增加一个,这个我就知道那条路径经过的路由最少了!'>
 <meta property='og:url' content='https://correctroadh.github.io/p/%E9%87%8D%E6%96%B0%E5%8F%91%E6%98%8Erip/'>
 <meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='网络' /><meta property='article:published_time' content='2020-04-22T08:29:23&#43;08:00'/><meta property='article:modified_time' content='2020-04-22T08:29:23&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='网络' /><meta property='article:published_time' content='2020-04-22T08:29:23&#43;08:00'/><meta property='article:modified_time' content='2020-04-22T08:29:23&#43;08:00'/><meta property='og:image' content='https://correctroadh.github.io/' />
 <meta name="twitter:title" content="重新发明RIP">
 <meta name="twitter:description" content="我想通过一步一步的发明出『RIP』.通过这样的方法,相信能对『RIP』的理解会深刻不少.
 数据的传播方式 在这个网络中,所有的机子相连在一个『交换机』上,它们就是在一个局域网中,它们是怎么通信的呢？
@@ -102,7 +102,8 @@ ip 子网 接口 192.168.0.0 255.255.255.0 f0/1 192.168.1.0 255.255.255.0 f0/2 1
 直接删掉真的好吗？如果我把这个路由已经失效的消息告诉别人,而不是让每个路由都要硬等180s会不会更好呢?
 新的删除功能 让每个路由在发送路由表的时候,带上已知的失效路由信息.同时让通知更久一些.在原先的删除机制上发动,一个路由失效180s期满后不直接删除.而是保持期满状态.而是让每个路由失效240s之后,再直接删掉.
 第四个问题 现在同时我收到两个路由告诉我,它们都可以到达路由3,我该怎么选择呢？
-路由计数 我们可以在路由信息上加上经过了几个路由,每经过一个路由的传播就增加一个,这个我就知道那条路径经过的路由最少了!">
+路由计数 我们可以在路由信息上加上经过了几个路由,每经过一个路由的传播就增加一个,这个我就知道那条路径经过的路由最少了!"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://correctroadh.github.io/' />
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
 <script>
 var doNotTrack = false;
@@ -828,7 +829,7 @@ if (!doNotTrack) {
         
             2020 - 
         
-        2023 CorrectRoad&#39;s Blog
+        2024 CorrectRoad&#39;s Blog
     </section>
     
     <section class="powerby">
