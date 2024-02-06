@@ -6,7 +6,48 @@
         <description>Recent content on CorrectRoad&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Fri, 02 Feb 2024 20:11:21 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 06 Feb 2024 16:27:09 +0800</lastBuildDate><atom:link href="https://correctroadh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Launch『ToFree』一周后，我做一个小总结</title>
+        <link>https://correctroadh.github.io/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/</link>
+        <pubDate>Tue, 06 Feb 2024 16:27:09 +0800</pubDate>
+        
+        <guid>https://correctroadh.github.io/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/</guid>
+        <description>&lt;img src="https://correctroadh.github.io/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/cover.png" alt="Featured image of post Launch『ToFree』一周后，我做一个小总结" /&gt;&lt;h2 id=&#34;tofree-是什么&#34;&gt;ToFree 是什么?&lt;/h2&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://tofree.zeabur.app&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ToFree&lt;/a&gt; 是一个自动抓取 WARP+ 节点信息并将其转换成 Clash、Surge、WireGuard 等软件可订阅使用的工具。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://correctroadh.github.io/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/tofree.png&#34;
+	width=&#34;1906&#34;
+	height=&#34;996&#34;
+	srcset=&#34;https://correctroadh.github.io/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/tofree_hu327281e053a4a876e73e169db4d0298a_129776_480x0_resize_box_3.png 480w, https://correctroadh.github.io/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/tofree_hu327281e053a4a876e73e169db4d0298a_129776_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;191&#34;
+		data-flex-basis=&#34;459px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;为什么我要搞-tofree&#34;&gt;为什么我要搞 ToFree?&lt;/h2&gt;
+&lt;p&gt;WARP+ 应该是 2023 年推出的一款代理服务，因为能在中国大陆使用、并且免费的原因。很快就有大量的教程出来教大家如果在 Surge、Clash 上使用 WARP+ 的节点。我也在那时候尝试了一下。那时候我认识虽然免费而且速度勉强可以，但是这不值得我省下一个月几十块的机场钱。所以我再也没有用过了。但是这其实上是我忽略掉了 WARP+ 的一个很重要的价值。&lt;/p&gt;
+&lt;p&gt;我很早之前就看到&lt;a class=&#34;link&#34; href=&#34;https://program-think.blogspot.com/2020/08/Tor-Triple-Proxy.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;编程随想教使用 Tor 匿名的文章&lt;/a&gt;，其中提到使用赛风、自由门等等软件做为 Tor 前置代理。在我短暂的使用 Tor 的经历中我从来没有用过这些软件，因为这些软件虽然免费，但是无不是又卡又慢。对于我来说根本无法使用。所以我一直使用付费的机场作为 Tor 的前置代理。&lt;/p&gt;
+&lt;p&gt;但是在前段时间，我意识到如果在 Tor 前使用这些机场的代理，那么匿名的效果就会很差多。因为你在机场留下了付费的信息。所以我一直忽略了免费的另一面: 匿名。&lt;/p&gt;
+&lt;p&gt;所以我就想尝试通过订阅的方式为不同的代理软件提供免费、匿名的 WARP+ 代理。其竞争对手并不是付费的机场，而是之前那些免费的 Tor 前置代理软件。&lt;/p&gt;
+&lt;h2 id=&#34;经历&#34;&gt;经历&lt;/h2&gt;
+&lt;p&gt;我有了这个想法一起就爬了起来，先在 GitHub 上搜索有没有人已经有了实现。幸运的是我一下就搜索到了。我尝试了一下，其功能还是可以工作的，实在太棒了，说明这个 ToFree 项目不会消耗我的太多精力与时间。&lt;/p&gt;
+&lt;p&gt;然后我做了一些优化，加了一个好看的前端界面，写一些代码解决了一些小 Bug，然后支持了 Surge 的订阅。部署在 Zeabur 上。然后准备在工作是发布到 V2EX 上。然后就收获了意想不到的大量用户。开心的不行。&lt;/p&gt;
+&lt;h2 id=&#34;整体设计&#34;&gt;整体设计&lt;/h2&gt;
+&lt;p&gt;我对 WARP CLASH API 的主要改造是对用户体验上的改造。首先是网站的上手难度，其次是订阅链接的简洁性。&lt;/p&gt;
+&lt;p&gt;原 WARP Clash API，只提供了订阅链接，而且是非常复杂，在 path 后面还有大量的 param。我先是加了一个无参数，尽可能简单的订阅链接。如&lt;code&gt;https://subs.zeabur.app/clash&lt;/code&gt;，这样用户在一台新设备上就可以直接默写出来订阅链接，这个体验其实是非常棒的。特别是在比如别人的设备上，比如帮我对象翻个墙。&lt;/p&gt;
+&lt;p&gt;然后加了一些 url schema 自动导入订阅软件这些就没有什么额外说的。🤔&lt;/p&gt;
+&lt;h2 id=&#34;收获&#34;&gt;收获&lt;/h2&gt;
+&lt;p&gt;我从中收获了一个新朋友和大约 5 个新的 Twitter 粉丝。我和该开源项目的开发者成了朋友确实很开心，但是 5 个新的 Twitter 粉丝。确实没有达到我的预期。我在设计之初，希望收获一些关注，比如Twitter 粉丝，然后通过拿马斯克的广告费来盈利。所以我做了一些改造，比如 ToFree 上顶部放上直达 Follow 按扭的 Twitter Link。但是转化效果依然不理想。后续可以研究一下，是什么原因，比如是没有点开，还是用户没有登陆无法关注，或者觉得关注并没有带来价值。🤔&lt;/p&gt;
+&lt;p&gt;(Update: 后续长尾运营带来的粉丝还是不少的，大概有 20 ~ 30 个)&lt;/p&gt;
+&lt;h2 id=&#34;反思与总结&#34;&gt;反思与总结&lt;/h2&gt;
+&lt;p&gt;最后大概来个总结，首先我在 UI/UX 上做的改造不错，解决 WARP 用起来麻烦的痒点，其次是在 Launch 上做的不错。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>为了降低成本，我把 MongoDB 从 TechStack 移除了</title>
         <link>https://correctroadh.github.io/p/%E4%B8%BA%E4%BA%86%E9%99%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E6%88%91%E6%8A%8A-mongodb-%E4%BB%8E-techstack-%E7%A7%BB%E9%99%A4%E4%BA%86/</link>
         <pubDate>Fri, 02 Feb 2024 20:11:21 +0800</pubDate>

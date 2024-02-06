@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='ToFree 是什么? ToFree 是一个自动抓取 WARP&#43; 节点信息并将其转换成 Clash、Surge、WireGuard 等软件可订阅使用的工具。
+为什么我要搞 ToFree? WARP&#43; 应该是 2023 年推出的一款代理服务，因为能在中国大陆使用、并且免费的原因。很快就有大量的教程出来教大家如果在 Surge、Clash 上使用 WARP&#43; 的节点。我也在那时候尝试了一下。那时候我认识虽然免费而且速度勉强可以，但是这不值得我省下一个月几十块的机场钱。所以我再也没有用过了。但是这其实上是我忽略掉了 WARP&#43; 的一个很重要的价值。
+我很早之前就看到编程随想教使用 Tor 匿名的文章，其中提到使用赛风、自由门等等软件做为 Tor 前置代理。在我短暂的使用 Tor 的经历中我从来没有用过这些软件，因为这些软件虽然免费，但是无不是又卡又慢。对于我来说根本无法使用。所以我一直使用付费的机场作为 Tor 的前置代理。
+但是在前段时间，我意识到如果在 Tor 前使用这些机场的代理，那么匿名的效果就会很差多。因为你在机场留下了付费的信息。所以我一直忽略了免费的另一面: 匿名。
+所以我就想尝试通过订阅的方式为不同的代理软件提供免费、匿名的 WARP&#43; 代理。其竞争对手并不是付费的机场，而是之前那些免费的 Tor 前置代理软件。
+经历 我有了这个想法一起就爬了起来，先在 GitHub 上搜索有没有人已经有了实现。幸运的是我一下就搜索到了。我尝试了一下，其功能还是可以工作的，实在太棒了，说明这个 ToFree 项目不会消耗我的太多精力与时间。
+然后我做了一些优化，加了一个好看的前端界面，写一些代码解决了一些小 Bug，然后支持了 Surge 的订阅。部署在 Zeabur 上。然后准备在工作是发布到 V2EX 上。然后就收获了意想不到的大量用户。开心的不行。
+整体设计 我对 WARP CLASH API 的主要改造是对用户体验上的改造。首先是网站的上手难度，其次是订阅链接的简洁性。
+原 WARP Clash API，只提供了订阅链接，而且是非常复杂，在 path 后面还有大量的 param。我先是加了一个无参数，尽可能简单的订阅链接。如https://subs.zeabur.app/clash，这样用户在一台新设备上就可以直接默写出来订阅链接，这个体验其实是非常棒的。特别是在比如别人的设备上，比如帮我对象翻个墙。
+然后加了一些 url schema 自动导入订阅软件这些就没有什么额外说的。🤔
+收获 我从中收获了一个新朋友和大约 5 个新的 Twitter 粉丝。我和该开源项目的开发者成了朋友确实很开心，但是 5 个新的 Twitter 粉丝。确实没有达到我的预期。我在设计之初，希望收获一些关注，比如Twitter 粉丝，然后通过拿马斯克的广告费来盈利。所以我做了一些改造，比如 ToFree 上顶部放上直达 Follow 按扭的 Twitter Link。但是转化效果依然不理想。后续可以研究一下，是什么原因，比如是没有点开，还是用户没有登陆无法关注，或者觉得关注并没有带来价值。🤔'>
+<title>Launch『ToFree』一周后，我做一个小总结</title>
+
+<link rel='canonical' href='https://correctroadh.github.io/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/'>
+
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='Launch『ToFree』一周后，我做一个小总结'>
+<meta property='og:description' content='ToFree 是什么? ToFree 是一个自动抓取 WARP&#43; 节点信息并将其转换成 Clash、Surge、WireGuard 等软件可订阅使用的工具。
+为什么我要搞 ToFree? WARP&#43; 应该是 2023 年推出的一款代理服务，因为能在中国大陆使用、并且免费的原因。很快就有大量的教程出来教大家如果在 Surge、Clash 上使用 WARP&#43; 的节点。我也在那时候尝试了一下。那时候我认识虽然免费而且速度勉强可以，但是这不值得我省下一个月几十块的机场钱。所以我再也没有用过了。但是这其实上是我忽略掉了 WARP&#43; 的一个很重要的价值。
+我很早之前就看到编程随想教使用 Tor 匿名的文章，其中提到使用赛风、自由门等等软件做为 Tor 前置代理。在我短暂的使用 Tor 的经历中我从来没有用过这些软件，因为这些软件虽然免费，但是无不是又卡又慢。对于我来说根本无法使用。所以我一直使用付费的机场作为 Tor 的前置代理。
+但是在前段时间，我意识到如果在 Tor 前使用这些机场的代理，那么匿名的效果就会很差多。因为你在机场留下了付费的信息。所以我一直忽略了免费的另一面: 匿名。
+所以我就想尝试通过订阅的方式为不同的代理软件提供免费、匿名的 WARP&#43; 代理。其竞争对手并不是付费的机场，而是之前那些免费的 Tor 前置代理软件。
+经历 我有了这个想法一起就爬了起来，先在 GitHub 上搜索有没有人已经有了实现。幸运的是我一下就搜索到了。我尝试了一下，其功能还是可以工作的，实在太棒了，说明这个 ToFree 项目不会消耗我的太多精力与时间。
+然后我做了一些优化，加了一个好看的前端界面，写一些代码解决了一些小 Bug，然后支持了 Surge 的订阅。部署在 Zeabur 上。然后准备在工作是发布到 V2EX 上。然后就收获了意想不到的大量用户。开心的不行。
+整体设计 我对 WARP CLASH API 的主要改造是对用户体验上的改造。首先是网站的上手难度，其次是订阅链接的简洁性。
+原 WARP Clash API，只提供了订阅链接，而且是非常复杂，在 path 后面还有大量的 param。我先是加了一个无参数，尽可能简单的订阅链接。如https://subs.zeabur.app/clash，这样用户在一台新设备上就可以直接默写出来订阅链接，这个体验其实是非常棒的。特别是在比如别人的设备上，比如帮我对象翻个墙。
+然后加了一些 url schema 自动导入订阅软件这些就没有什么额外说的。🤔
+收获 我从中收获了一个新朋友和大约 5 个新的 Twitter 粉丝。我和该开源项目的开发者成了朋友确实很开心，但是 5 个新的 Twitter 粉丝。确实没有达到我的预期。我在设计之初，希望收获一些关注，比如Twitter 粉丝，然后通过拿马斯克的广告费来盈利。所以我做了一些改造，比如 ToFree 上顶部放上直达 Follow 按扭的 Twitter Link。但是转化效果依然不理想。后续可以研究一下，是什么原因，比如是没有点开，还是用户没有登陆无法关注，或者觉得关注并没有带来价值。🤔'>
+<meta property='og:url' content='https://correctroadh.github.io/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/'>
+<meta property='og:site_name' content='CorrectRoad&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-02-06T16:27:09&#43;08:00'/><meta property='article:modified_time' content='2024-02-06T16:27:09&#43;08:00'/><meta property='og:image' content='https://correctroadh.github.io/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/cover.png' />
+<meta name="twitter:title" content="Launch『ToFree』一周后，我做一个小总结">
+<meta name="twitter:description" content="ToFree 是什么? ToFree 是一个自动抓取 WARP&#43; 节点信息并将其转换成 Clash、Surge、WireGuard 等软件可订阅使用的工具。
+为什么我要搞 ToFree? WARP&#43; 应该是 2023 年推出的一款代理服务，因为能在中国大陆使用、并且免费的原因。很快就有大量的教程出来教大家如果在 Surge、Clash 上使用 WARP&#43; 的节点。我也在那时候尝试了一下。那时候我认识虽然免费而且速度勉强可以，但是这不值得我省下一个月几十块的机场钱。所以我再也没有用过了。但是这其实上是我忽略掉了 WARP&#43; 的一个很重要的价值。
+我很早之前就看到编程随想教使用 Tor 匿名的文章，其中提到使用赛风、自由门等等软件做为 Tor 前置代理。在我短暂的使用 Tor 的经历中我从来没有用过这些软件，因为这些软件虽然免费，但是无不是又卡又慢。对于我来说根本无法使用。所以我一直使用付费的机场作为 Tor 的前置代理。
+但是在前段时间，我意识到如果在 Tor 前使用这些机场的代理，那么匿名的效果就会很差多。因为你在机场留下了付费的信息。所以我一直忽略了免费的另一面: 匿名。
+所以我就想尝试通过订阅的方式为不同的代理软件提供免费、匿名的 WARP&#43; 代理。其竞争对手并不是付费的机场，而是之前那些免费的 Tor 前置代理软件。
+经历 我有了这个想法一起就爬了起来，先在 GitHub 上搜索有没有人已经有了实现。幸运的是我一下就搜索到了。我尝试了一下，其功能还是可以工作的，实在太棒了，说明这个 ToFree 项目不会消耗我的太多精力与时间。
+然后我做了一些优化，加了一个好看的前端界面，写一些代码解决了一些小 Bug，然后支持了 Surge 的订阅。部署在 Zeabur 上。然后准备在工作是发布到 V2EX 上。然后就收获了意想不到的大量用户。开心的不行。
+整体设计 我对 WARP CLASH API 的主要改造是对用户体验上的改造。首先是网站的上手难度，其次是订阅链接的简洁性。
+原 WARP Clash API，只提供了订阅链接，而且是非常复杂，在 path 后面还有大量的 param。我先是加了一个无参数，尽可能简单的订阅链接。如https://subs.zeabur.app/clash，这样用户在一台新设备上就可以直接默写出来订阅链接，这个体验其实是非常棒的。特别是在比如别人的设备上，比如帮我对象翻个墙。
+然后加了一些 url schema 自动导入订阅软件这些就没有什么额外说的。🤔
+收获 我从中收获了一个新朋友和大约 5 个新的 Twitter 粉丝。我和该开源项目的开发者成了朋友确实很开心，但是 5 个新的 Twitter 粉丝。确实没有达到我的预期。我在设计之初，希望收获一些关注，比如Twitter 粉丝，然后通过拿马斯克的广告费来盈利。所以我做了一些改造，比如 ToFree 上顶部放上直达 Follow 按扭的 Twitter Link。但是转化效果依然不理想。后续可以研究一下，是什么原因，比如是没有点开，还是用户没有登陆无法关注，或者觉得关注并没有带来价值。🤔"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://correctroadh.github.io/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/cover.png' />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PDJXNW2S9J"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-PDJXNW2S9J', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huc5e129e77f841f4271910208fa5d8e33_714553_300x0_resize_box_3.png" width="300"
+                            height="301" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">📚</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">CorrectRoad&#39;s Blog</a></h1>
+            <h2 class="site-description">君子生非异也，善假于物也。</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CorrectRoadH'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com/correctroad'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' target="_blank">
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M9 11l-4 4l4 4m-4 -4h11a4 4 0 0 0 0 -8h-1" />
+</svg>
+
+
+
+                
+                <span>Refresh</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#tofree-是什么">ToFree 是什么?</a></li>
+    <li><a href="#为什么我要搞-tofree">为什么我要搞 ToFree?</a></li>
+    <li><a href="#经历">经历</a></li>
+    <li><a href="#整体设计">整体设计</a></li>
+    <li><a href="#收获">收获</a></li>
+    <li><a href="#反思与总结">反思与总结</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/">
+                <img src="/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/cover_hu6ae47dd86090a26b3dd33f0343b8f3c8_47719_800x0_resize_box_3.png"
+                        srcset="/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/cover_hu6ae47dd86090a26b3dd33f0343b8f3c8_47719_800x0_resize_box_3.png 800w, /p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/cover_hu6ae47dd86090a26b3dd33f0343b8f3c8_47719_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="336" 
+                        loading="lazy"
+                        alt="Featured image of post Launch『ToFree』一周后，我做一个小总结" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/">Launch『ToFree』一周后，我做一个小总结</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Feb 06, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="tofree-是什么">ToFree 是什么?</h2>
+<p><a class="link" href="https://tofree.zeabur.app"  target="_blank" rel="noopener"
+    >ToFree</a> 是一个自动抓取 WARP+ 节点信息并将其转换成 Clash、Surge、WireGuard 等软件可订阅使用的工具。</p>
+<p><img src="/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/tofree.png"
+	width="1906"
+	height="996"
+	srcset="/p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/tofree_hu327281e053a4a876e73e169db4d0298a_129776_480x0_resize_box_3.png 480w, /p/launchtofree%E4%B8%80%E5%91%A8%E5%90%8E%E6%88%91%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%80%BB%E7%BB%93/tofree_hu327281e053a4a876e73e169db4d0298a_129776_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="191"
+		data-flex-basis="459px"
+	
+></p>
+<h2 id="为什么我要搞-tofree">为什么我要搞 ToFree?</h2>
+<p>WARP+ 应该是 2023 年推出的一款代理服务，因为能在中国大陆使用、并且免费的原因。很快就有大量的教程出来教大家如果在 Surge、Clash 上使用 WARP+ 的节点。我也在那时候尝试了一下。那时候我认识虽然免费而且速度勉强可以，但是这不值得我省下一个月几十块的机场钱。所以我再也没有用过了。但是这其实上是我忽略掉了 WARP+ 的一个很重要的价值。</p>
+<p>我很早之前就看到<a class="link" href="https://program-think.blogspot.com/2020/08/Tor-Triple-Proxy.html"  target="_blank" rel="noopener"
+    >编程随想教使用 Tor 匿名的文章</a>，其中提到使用赛风、自由门等等软件做为 Tor 前置代理。在我短暂的使用 Tor 的经历中我从来没有用过这些软件，因为这些软件虽然免费，但是无不是又卡又慢。对于我来说根本无法使用。所以我一直使用付费的机场作为 Tor 的前置代理。</p>
+<p>但是在前段时间，我意识到如果在 Tor 前使用这些机场的代理，那么匿名的效果就会很差多。因为你在机场留下了付费的信息。所以我一直忽略了免费的另一面: 匿名。</p>
+<p>所以我就想尝试通过订阅的方式为不同的代理软件提供免费、匿名的 WARP+ 代理。其竞争对手并不是付费的机场，而是之前那些免费的 Tor 前置代理软件。</p>
+<h2 id="经历">经历</h2>
+<p>我有了这个想法一起就爬了起来，先在 GitHub 上搜索有没有人已经有了实现。幸运的是我一下就搜索到了。我尝试了一下，其功能还是可以工作的，实在太棒了，说明这个 ToFree 项目不会消耗我的太多精力与时间。</p>
+<p>然后我做了一些优化，加了一个好看的前端界面，写一些代码解决了一些小 Bug，然后支持了 Surge 的订阅。部署在 Zeabur 上。然后准备在工作是发布到 V2EX 上。然后就收获了意想不到的大量用户。开心的不行。</p>
+<h2 id="整体设计">整体设计</h2>
+<p>我对 WARP CLASH API 的主要改造是对用户体验上的改造。首先是网站的上手难度，其次是订阅链接的简洁性。</p>
+<p>原 WARP Clash API，只提供了订阅链接，而且是非常复杂，在 path 后面还有大量的 param。我先是加了一个无参数，尽可能简单的订阅链接。如<code>https://subs.zeabur.app/clash</code>，这样用户在一台新设备上就可以直接默写出来订阅链接，这个体验其实是非常棒的。特别是在比如别人的设备上，比如帮我对象翻个墙。</p>
+<p>然后加了一些 url schema 自动导入订阅软件这些就没有什么额外说的。🤔</p>
+<h2 id="收获">收获</h2>
+<p>我从中收获了一个新朋友和大约 5 个新的 Twitter 粉丝。我和该开源项目的开发者成了朋友确实很开心，但是 5 个新的 Twitter 粉丝。确实没有达到我的预期。我在设计之初，希望收获一些关注，比如Twitter 粉丝，然后通过拿马斯克的广告费来盈利。所以我做了一些改造，比如 ToFree 上顶部放上直达 Follow 按扭的 Twitter Link。但是转化效果依然不理想。后续可以研究一下，是什么原因，比如是没有点开，还是用户没有登陆无法关注，或者觉得关注并没有带来价值。🤔</p>
+<p>(Update: 后续长尾运营带来的粉丝还是不少的，大概有 20 ~ 30 个)</p>
+<h2 id="反思与总结">反思与总结</h2>
+<p>最后大概来个总结，首先我在 UI/UX 上做的改造不错，解决 WARP 用起来麻烦的痒点，其次是在 Launch 上做的不错。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="CorrectRoadH/CorrectRoadH.github.io"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 CorrectRoad&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
