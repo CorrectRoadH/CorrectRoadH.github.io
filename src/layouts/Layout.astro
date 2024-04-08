@@ -96,6 +96,14 @@ if (title) {
 		gtag('js', new Date());
 
 		gtag('config', 'G-8C7KXD07JR');
+
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title="Your Site's Title"
+			href={`${Astro.site}rss.xml`}
+		/>
+
 		</script>
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"is-home": isHomePage, "enable-banner": enableBanner}]}>
