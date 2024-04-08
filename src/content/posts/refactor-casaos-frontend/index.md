@@ -5,7 +5,7 @@ published: 2023-07-22T13:40:55+08:00
 image: ./cover.png
 category: 技术
 draft: false
-tags: [] 
+tags: [Nas, CasaOS] 
 ---
 
 最近成为 IceWhale 的实习生🥳。主要工作是分配到了后端的开发，但是看到 CasaOS-UI 的这个代码质量确实不能忍呀🤪。直接上手重构，还好同事们都比较支持。😚看来 IceWhale 这个家还是不能没有我呀，也希望我在未来能成为像 Twitter 上那些前端网红吧。

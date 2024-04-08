@@ -1,11 +1,11 @@
 ---
 title: "Launch『ToFree』一周后，我做一个小总结"
-description: 2132sad
+description: 做对了什么，做错了什么
 published: 2024-02-06T16:27:09+08:00
 image: cover.png
 category: 技术
 draft: false
-tags: [] 
+tags: [Indie Hacker] 
 ---
 
 ## ToFree 是什么?

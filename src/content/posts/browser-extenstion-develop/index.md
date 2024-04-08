@@ -5,7 +5,7 @@ published: 2023-08-12
 image: ./thumbnail.png
 category: 技术
 draft: false
-tags: [Browser Extension,前端, 产品, TechStack]
+tags: [Indie Hacker, TechStack]
 ---
 
 ## 前情

@@ -5,7 +5,7 @@ published: 2023-10-22
 image: ./1.png
 category: 技术
 draft: false
-tags: [] 
+tags: [Indie Hacker, TechStack] 
 ---
 
 

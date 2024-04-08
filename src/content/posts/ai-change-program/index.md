@@ -2,8 +2,8 @@
 title: "AI是否会带来编程范式上的改变?"
 description: ai
 published: 2023-03-26
-tags: [总结]
-category: 生活
+tags: [思考]
+category: 技术
 draft: false
 ---
 

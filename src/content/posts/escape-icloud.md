@@ -4,7 +4,7 @@ description: 23dsf
 published: 2022-06-01
 category: 技术
 draft: false
-tags: [CICD, GitHub, Gitee] 
+tags: [] 
 ---
 
 ## 起因

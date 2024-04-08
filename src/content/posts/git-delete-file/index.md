@@ -4,7 +4,7 @@ description: git
 published: 2022-09-10
 category: 技术
 draft: false
-tags: [] 
+tags: [Git] 
 ---
 
 前几天在收到Fleet的内测邮件后，我开始尝试Fleet。但是忘记在`.gitignore`里忽略`.fleet`了。在commit多个版本之后，才后知后觉的发现多了一个无必要的文件夹，所以要把git里的所以commit里的这个文件夹都删掉。

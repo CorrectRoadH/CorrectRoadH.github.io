@@ -1,11 +1,11 @@
 ---
 title: "TechStack背后的故事: 因需求诞生的特殊数据结构:正则Map"
-description: 1234ff
+description: 一个特殊的数据结构
 published: 2023-08-18T22:45:00+08:00
 image: cover.png
 category: 技术
 draft: false
-tags: [] 
+tags: [TechStack, Indie Hacker] 
 ---
 
 ## 前情

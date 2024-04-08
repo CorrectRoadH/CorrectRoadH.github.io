@@ -4,7 +4,7 @@ description: 现存项目在gitee与github上的CI实践
 published: 2022-09-23
 category: 技术
 draft: false
-tags: [CICD, GitHub, Gitee] 
+tags: [CICD] 
 ---
 
 ## 背景

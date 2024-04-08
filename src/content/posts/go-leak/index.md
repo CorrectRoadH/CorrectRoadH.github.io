@@ -5,7 +5,7 @@ published: 2023-08-25
 image: ./cover.png
 category: 技术
 draft: false
-tags: [CICD, GitHub, Gitee] 
+tags: [Golang] 
 ---
 
 ## 问题背景
