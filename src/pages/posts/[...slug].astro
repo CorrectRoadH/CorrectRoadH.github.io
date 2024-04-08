@@ -11,6 +11,7 @@ import License from "@components/misc/License.astro";
 import {licenseConfig} from "src/config";
 import Markdown from "@components/misc/Markdown.astro";
 import path from "path";
+import Comment from '@components/Comment.astro';
 
 export async function getStaticPaths() {
     const blogEntries = await getCollection('posts', ({ data }) => {
@@ -109,6 +110,7 @@ const { remarkPluginFrontmatter } = await entry.render();
         </a>
     </div>
 
+    <Comment />
 </MainGridLayout>
 
 <style is:global>
