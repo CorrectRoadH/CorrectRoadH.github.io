@@ -1,6 +1,6 @@
 ---
 title: "CasaOS Frontend 优化与重构经历"
-description: casaos
+description: 我重构 CasaOS-UI 的过程
 published: 2023-07-22T13:40:55+08:00
 image: ./cover.png
 category: 技术

@@ -1,6 +1,6 @@
 ---
 title: "DIY NAS(黑群晖)全过程记录与填坑过程"
-description: diy
+description: 我折腾黑群晖的全过程记录与填坑过程
 published: 2023-01-25
 category: 技术
 draft: false

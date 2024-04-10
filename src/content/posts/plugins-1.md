@@ -1,5 +1,6 @@
 ---
 title: "Logseq Plugins 开发实战系列：1.创建第一个logseq命令"
+description: 创建第一个logseq命令
 published: 2022-02-25
 category: 技术
 draft: false

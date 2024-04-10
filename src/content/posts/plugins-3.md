@@ -1,5 +1,6 @@
 ---
 title: "Logseq Plugins 开发实战系列：3.制作一个toolbar仪表盘"
+description: 制作一个toolbar仪表盘
 published: 2022-02-27T20:21:02+08:00
 category: 技术
 draft: false

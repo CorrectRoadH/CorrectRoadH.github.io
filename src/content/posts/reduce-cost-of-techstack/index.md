@@ -1,6 +1,6 @@
 ---
 title: "为了降低成本，我把 MongoDB 从 TechStack 移除了"
-description: techstack
+description: 为了降低成本，我把 MongoDB 从 TechStack 移除了
 published: 2024-02-02T20:11:21+08:00
 category: 技术
 draft: false
