@@ -1,6 +1,6 @@
 ---
 title: "一个由 Http Get 引发的 Goroutine 泄漏问题"
-description: 321fd
+description: 一个由 Http Get 引发的 Goroutine 泄漏问题
 published: 2023-08-25
 image: ./cover.png
 category: 技术

@@ -1,6 +1,6 @@
 ---
 title: "深入浅出配置I3WM"
-description: I3WM
+description: 本文将会教你如何配置一个漂亮的 I3WM 桌面.
 published: 2020-04-22T08:29:23+08:00
 category: 技术
 draft: false

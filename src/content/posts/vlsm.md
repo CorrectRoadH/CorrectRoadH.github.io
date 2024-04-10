@@ -1,7 +1,7 @@
 ---
 title: "什么是VLSM和为什么"
 published:  2020-03-22
-description: This post demonstrates how to include embedded video in a blog post.
+description: "VLSM是什么,为什么要使用它,它是怎么工作的"
 tags: [网络]
 category: 技术
 draft: false

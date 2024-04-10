@@ -1,6 +1,6 @@
 ---
 title: "我在开发浏览器插件 TechStack 时遇到的一些坑"
-description: 233sfd
+description: 浏览器插件开发中遇到的一些问题
 published: 2023-10-22
 image: ./1.png
 category: 技术

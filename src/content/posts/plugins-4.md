@@ -1,5 +1,6 @@
 ---
 title: "Logseq Plugins 开发实战系列：4.制作一个表格生成器"
+description: 制作一个表格生成器
 published: 2022-02-28T20:21:02+08:00
 category: 技术
 draft: false

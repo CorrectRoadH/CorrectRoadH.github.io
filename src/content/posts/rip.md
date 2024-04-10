@@ -1,6 +1,6 @@
 ---
 title: "重新发明RIP"
-description: RIP
+description: 通过一步一步的必要的功能来实现RIP路由协议
 published: 2020-04-22T08:29:23+08:00
 category: 技术
 draft: false
