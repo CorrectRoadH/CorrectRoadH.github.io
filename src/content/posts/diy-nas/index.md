@@ -1,6 +1,6 @@
 ---
 title: "DIY NAS(黑群晖)全过程记录与填坑过程"
-description: 我折腾黑群晖的全过程记录与填坑过程
+description: 我是如何从入门到DIY黑群晖的过程的记录，包括软硬件的挑选、黑群晖的安装、洗白、照片管理、docker管理、与icloud的双向同步、公网访问等等。
 published: 2023-01-25
 category: 技术
 draft: false

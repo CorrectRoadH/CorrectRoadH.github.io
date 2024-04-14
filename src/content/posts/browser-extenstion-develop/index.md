@@ -1,6 +1,6 @@
 ---
 title: "一款浏览器插件从开发到上架全记"
-description: bro
+description: 我开发 TechStack 并上架谷歌、火狐、Edge 等等浏览器中踩的坑。
 published: 2023-08-12
 image: ./thumbnail.png
 category: 技术

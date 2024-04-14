@@ -1,6 +1,6 @@
 ---
 title: "Launch『ToFree』一周后，我做一个小总结"
-description: Launch 一个开源开源的一周，我做对了什么，做错了什么，又收获了什么。
+description: Launch 一个开源软件的一周，我做对了什么，做错了什么，又收获了什么。
 published: 2024-02-06T16:27:09+08:00
 image: cover.png
 category: 技术

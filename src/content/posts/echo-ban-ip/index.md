@@ -1,6 +1,6 @@
 ---
 title: "在 Golang 的 Echo 框架中如何简单的防护刷接口攻击"
-description:  golang
+description:  在 Golang 的 Echo 框架中如何简单的防护刷接口攻击
 published: 2023-08-12
 category: 技术
 draft: false

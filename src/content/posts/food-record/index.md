@@ -1,6 +1,6 @@
 ---
 title: "猪食日记🐷我的大学饮食记录"
-description: 记录
+description: 记录我的大学生活中的饮食记录，给自己避坑，防止下次吃饭再吃到同一家不好吃的饭。
 published: 2022-09-12
 image: ./1.png
 category: 生活

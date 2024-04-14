@@ -1,6 +1,6 @@
 ---
 title: "一次失败的CI实践"
-description: 现存项目在gitee与github上的CI实践
+description: 我尝试在 Gitee 的 CICD 添加自动化的测试，但是因为 Gitee 的功能限制，最终失败了。
 published: 2022-09-23
 category: 技术
 draft: false
