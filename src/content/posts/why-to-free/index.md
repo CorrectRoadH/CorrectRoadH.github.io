@@ -11,7 +11,7 @@ tags: [Indie Hacker]
 ## ToFree 是什么?
 [ToFree](https://tofree.zeabur.app) 是一个自动抓取 WARP+ 节点信息并将其转换成 Clash、Surge、WireGuard 等软件可订阅使用的工具。
 
-![](tofree.png)
+![ToFree网站的截图](tofree.png)
 
 ## 为什么我要搞 ToFree?
 WARP+ 应该是 2023 年推出的一款代理服务，因为能在中国大陆使用、并且免费的原因。很快就有大量的教程出来教大家如果在 Surge、Clash 上使用 WARP+ 的节点。我也在那时候尝试了一下。那时候我认识虽然免费而且速度勉强可以，但是这不值得我省下一个月几十块的机场钱。所以我再也没有用过了。但是这其实上是我忽略掉了 WARP+ 的一个很重要的价值。

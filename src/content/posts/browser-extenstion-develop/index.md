@@ -83,7 +83,7 @@ Firefox: https://addons.mozilla.org/en-US/firefox/addon/tech-stack/
 
 Chrome: https://chrome.google.com/webstore/detail/tech-stack-show-github-re/lbhjnhabgddabnagncmcgomggeadlbhh
 
-![](1.png)
+![TechStack 获取 Media Fetch PRO 的技术栈的截图](1.png)
 
 
-![](2.png)
+![TechStack 获取 PDF ChatBot Langchain 的技术栈的截图](2.png)

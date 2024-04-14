@@ -204,7 +204,7 @@ export const Table = React.forwardRef<HTMLDivElement>(({}, ref) => {
 
 效果不错!
 
-![](/images/plugins/21.gif)
+![](./images/plugins/21.gif)
 
 ## 美化窗口
 
@@ -258,7 +258,7 @@ export const Table = React.forwardRef<HTMLDivElement>(({}, ref) => {
 }
 ```
 
-![](/images/plugins/22.png)
+![](./images/plugins/22.png)
 
 虽然现在还是很丑，但是已经比之前好很多了。
 
@@ -281,7 +281,7 @@ export const Table = React.forwardRef<HTMLDivElement>(({}, ref) => {
   }, false)
 ```
 
-![通过ESC键关闭窗口](/images/plugins/23.gif)
+![通过ESC键关闭窗口](./images/plugins/23.gif)
 
 图：通过`esc`关闭窗口
 
@@ -322,7 +322,7 @@ export const Table = React.forwardRef<HTMLDivElement>(({}, ref) => {
     },[row, col])
 ```
 
-![通过Enter键代替按按扭](/images/plugins/24.gif)
+![通过Enter键代替按按扭](./images/plugins/24.gif)
 
 现在就可以通过`esc`关闭窗口和`Enter`进行触发按扭了。
 

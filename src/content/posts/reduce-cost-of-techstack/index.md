@@ -27,7 +27,7 @@ TechStack 算是我第一款『完成的 Side Project』。收获了一点点小
 ## TechStack 需要降低成本?
 因为 TechStack 已经停止功能开发了，而且也绝不会从中获得任何收益。所以我觉得我需要必须降低运行成本，这里主要指服务端的成本。本来这个 TechStack 的运营成本确实很低，但是随着数据量的增长，已经高到一个让我难以接受的地步。
 
-![](techstack-usage.png)
+![TechStack 在 Zeabur 上用量 Usage 的截图](techstack-usage.png)
 
 这些图是我一个 Zeabur 的账号的费用用量图，可以看到最大的成本支出是 TechStack 的数据库 MongoDB 所占用的。光数据库一个月的支出就将近 200+ 人民币。这个成本对于我来说是不可接受的。
 
@@ -39,7 +39,7 @@ TechStack 算是我第一款『完成的 Side Project』。收获了一点点小
 
 所以现在可以把 MongoDB Compass 也给一起删掉啰! 我一点也不喜欢这个 electron 应用。又卡又慢一点也不好用，除了好看。
 
-![](uninstall-mongodb-compass.png)
+![用 Brew 卸载 MongoDB Compose 的截图](uninstall-mongodb-compass.png)
 
 当然 TechStack 是一个非常大的异构项目，像 Request TechStack 的后端、Gradle Parser 等等是用 Java 来实现的，内存占用也是十分的大。尽管这次我还没有移除它们，但是在未来我也会考虑降本增效(笑)🤣。
 

@@ -23,7 +23,7 @@ tags: [Logseq]
 
 比如在 `logseq-plugin-link-preview`插件中`{{renderer :linkpreview,https://google.com}}`将会被显示为：
 
-![](/images/plugins/7.gif)
+![](./images/plugins/7.gif)
 
 ## 注册渲染函数
 
@@ -75,7 +75,7 @@ logseq.ready(main).catch(console.error)
 
 `npm build`并载入`logseq`。
 
-![](/images/plugins/8.gif)
+![](./images/plugins/8.gif)
 
 ## 添加样式
 
@@ -138,7 +138,7 @@ logseq.ready(main).catch(console.error)
 
 来看看效果：
 
-![](/images/plugins/9.png)
+![](./images/plugins/9.png)
 
 ## 事件触发
 
@@ -178,7 +178,7 @@ logseq.ready(main).catch(console.error)
 
 效果：
 
-![](/images/plugins/10.gif)
+![](./images/plugins/10.gif)
 
 ## 组件参数持久化
 
@@ -225,7 +225,7 @@ logseq.ready(main).catch(console.error)
 
 **注意**：这里增加了`reset`，这个有什么用，后面会演示
 
-![](/images/plugins/14.gif)
+![](./images/plugins/14.gif)
 
 ### 事件改变block
 
@@ -251,11 +251,11 @@ logseq.ready(main).catch(console.error)
 
 效果：
 
-![](/images/plugins/13.gif)
+![](./images/plugins/13.gif)
 
 到了最后，我们再回来去看看之前设置的`reset`有什么用？如何一个组件的`reset`没有设置。那么点击的效果就会变成这样：
 
-![](/images/plugins/12.gif)
+![](./images/plugins/12.gif)
 
 项目受`logseq-plugin-samples`中的`logseq-pomodoro-timer`启发，部分代码源于此。
 

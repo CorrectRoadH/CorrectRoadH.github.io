@@ -109,17 +109,17 @@ logseq.provideStyle(css`
 
 现在我们运行`pnpm install && pnpm run build`。在`logseq`中载入，就可以在`toolbar`上看到我们的`UIItem`了。
 
-![](/images/plugins/15.png)
+![](./images/plugins/15.png)
 
 当我们点击该蓝色图标时，就是我们的`页面`了。
 
-![](/images/plugins/17.png)
+![](./images/plugins/17.png)
 
 ## 新建页面
 
 我们的目标是制做一个`仪表盘`。上面显示着`logseq`里的相关信息。在界面上参考`logseq-plugin-heatmap`
 
-![](/images/plugins/16.png)
+![](./images/plugins/16.png)
 
 ### 页面组件
 
@@ -194,13 +194,13 @@ export default App;
 
 现在点击`UIItem`时就有一个小窗口出现在`logseq`正中央(因为`items-center justify-center`)。当我们点击`logseq`任意位置，都可以关闭该窗口。
 
-![](/images/plugins/18.gif)
+![](./images/plugins/18.gif)
 
 ### 调整页面位置
 
 如果我们想像`logseq-plugin-heatmap`一样，页面出现在toolbar正下面。我们就需要调整页面的位置。
 
-![](/images/plugins/16.png)
+![](./images/plugins/16.png)
 
 修改`dashboard.css`
 
@@ -294,4 +294,4 @@ export const Dashboard = React.forwardRef<HTMLDivElement>(({}, ref) => {
 
 现在当我们点成`UIItem`，我们就能看到我们一共拥有多少页了。
 
-![](/images/plugins/20.png)
+![](./images/plugins/20.png)

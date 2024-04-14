@@ -97,7 +97,7 @@ logseq.Editor.registerSlashCommand('juzi', async () => {
 
 其中`#+BEGIN_QUOTE something #+END_QUOTE`是`logseq`的一种引用格式，效果如下图。
 
-![](/images/plugins/3.png)
+![](./images/plugins/3.png)
 
 修改`index.ts`
 
@@ -122,13 +122,13 @@ logseq.ready(main).catch(console.error)
 
 然后在`logseq`中的`plugins`中导入这个插件(需要开启开发者模式)。
 
-![](/images/plugins/4.gif)
+![](./images/plugins/4.gif)
 
 **注意**但是`logseq 0.5.9`好像有一个bug，还需要重启logseq，命令才能加载到命令列表中。我重启一下`logseq`。
 
 现在可以成功触发命令了!
 
-![](/images/plugins/5.gif)
+![](./images/plugins/5.gif)
 
 ## 添加上随机获取句子能力
 
@@ -167,4 +167,4 @@ logseq.ready(main).catch(console.error)
 
 成功运行!
 
-![](/images/plugins/6.gif)
+![](./images/plugins/6.gif)

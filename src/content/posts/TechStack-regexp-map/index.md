@@ -182,4 +182,4 @@ Chrome: https://chrome.google.com/webstore/detail/tech-stack-show-github-re/lbhj
 Firefox:  https://addons.mozilla.org/en-US/firefox/addon/tech-stack/
 
 比如这个: FastGPT，虽然看到这个是一个前端项目，不过能看到有调 OpenAI 和用到 Postgres ，所以一眼就可以判断出应该是一个真的开源项目，也可以大概判断出实现思路，比如是用 Postgres 做向量数据库。
-![](1.png)
+![FastGPT GitHub 主页的截图](1.png)

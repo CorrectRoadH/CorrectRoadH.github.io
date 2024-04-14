@@ -56,9 +56,9 @@ func main() {
 ## 运营(广告)时间
 👀我来带上我的 Side Project 来宣传一下: Tech Stack, 一款浏览器插件，可以在访问 GitHub 公共存储库时，该扩展将显示该项目所用的技术栈。像这样:
 
-![](1.png)
+![TechStack 获取 Media Fetch PRO 的技术栈的截图](1.png)
 
-![](2.png)
+![TechStack 获取 PDF ChatBot Langchain 的技术栈的截图](2.png)
 
 目前已经在 firefox 和 Chrome 上架了， 和Edge(可以直接用Chrome的)还在审核中。欢迎大家来试试一下。
 

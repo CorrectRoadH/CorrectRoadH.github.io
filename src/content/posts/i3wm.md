@@ -28,7 +28,7 @@ tags: []
 
 这是一张成品图
 
-![finish](/images/I3WM/finish.png)
+![finish](./images/I3WM/finish.png)
 
 它来自github用户『levinit』所分享的配置,[项目链接](https://github.com/levinit/i3wm-config).十分感谢他分享自己的配置.
 
@@ -42,7 +42,7 @@ tags: []
 
 现在这是我们现在最初的样子
 
-![Initial](/images/I3WM/initial.png)
+![Initial](./images/I3WM/initial.png)
 
 我们可以看见,与上面所提到的成本品的区别,我将分别介绍如何实现它们.
 
@@ -220,7 +220,7 @@ bindsym $mod+F2 exec firefox
 
 有的!这种软件在 Linux 当中叫做『软件启动器』.
 
-![Synapse](/images/I3WM/Synapse.png)
+![Synapse](./images/I3WM/Synapse.png)
 
 比如图中我所使用的叫做`Synapse`
 
@@ -264,15 +264,15 @@ export QT_IM_MODULE="fcitx"
 
 [Dotfiles_i3](https://github.com/Algorithm79/Dotfiles_i3)
 
-![Dotfiles_i3](/images/I3WM/Dotfiles_i3.png)
+![Dotfiles_i3](./images/I3WM/Dotfiles_i3.png)
 
 [Rin : shelter](https://github.com/CSaratakij/i3-rice-rin-shelter)
 
-![Rin-shelter](/images/I3WM/Rin-shelter.png)
+![Rin-shelter](./images/I3WM/Rin-shelter.png)
 
 [TxGVNN](https://github.com/TxGVNN/i3-config)
 
-![TxGVNN ](/images/I3WM/TxGVNN.png)
+![TxGVNN ](./images/I3WM/TxGVNN.png)
 
 ## 后记
 本文想模仿*The Little Schemer 递归与函数式的奥妙*中通过一问一答的学习形式。尽管形式上确实模仿了，不过确实本文效果看起来并不像原书那么友好，可能是『学我者生，似我者死』吧。而且还可能让读者觉得态度太臭。下次不会再如此拙劣模仿的这种风格。
@@ -284,6 +284,6 @@ export QT_IM_MODULE="fcitx"
 
 作者：CorrectRoad(HXHL)
 
-链接：https://correctroadh.github.io/p/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E9%85%8D%E7%BD%AEi3wm
+链接：https://correctroadh.github.io/posts/i3wm/
 
 作者：CorrectRoad's Blog

@@ -51,7 +51,7 @@ VLSM是通过向子网掩码借位实现的,所以只要使用了VLSM,那么这�
 
 IP地址是由网络号与主机号组成的,我们可以通过子网掩码与IP地址进行运算,那我们就可以把一个IP地址分成网络号与主机号.
 
-![alt](/images/VLSM/子网掩码示意图.png)
+![alt](./images/VLSM/子网掩码示意图.png)
 
 如图所示,我们通过把0改成1,那么IP地址所在的IP位就从主机号,变成了网络号的一部分.
 
@@ -132,6 +132,6 @@ Vlsm当然可以A类B类任意网络上划分,不过一般来说C类用的更多
 
 作者：CorrectRoad(HXHL)
 
-链接：https://correctroadh.github.io/p/%E4%BB%80%E4%B9%88%E6%98%AFvlsm%E5%92%8C%E4%B8%BA%E4%BB%80%E4%B9%88/
+链接：https://correctroadh.github.io/posts/vlsm/
 
 来源：CorrectRoad's Blog
