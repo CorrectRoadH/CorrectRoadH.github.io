@@ -38,7 +38,7 @@ export const profileConfig: ProfileConfig = {
     {
       name: 'Twitter',
       icon: 'fa6-brands:twitter',
-      url: 'https://twitter.com/',
+      url: 'https://twitter.com/CorrectRoad',
     },
     {
       name: 'GitHub',
