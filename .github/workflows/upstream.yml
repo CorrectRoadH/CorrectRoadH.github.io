@@ -6,6 +6,10 @@ on:
     - cron: '0 0 * * *'
   workflow_dispatch: # 允许手动触发
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -59,9 +63,13 @@ jobs:
           # 将新分支推送到你的仓库
           git push origin "$BRANCH_NAME"
           
-          # 创建 PR
-          gh pr create \
+          # 创建 PR，使用更详细的错误处理
+          if ! gh pr create \
             --base blog \
             --head "$BRANCH_NAME" \
             --title "chore: Sync with upstream (saicaca/fuwari)" \
-            --body "This PR syncs the latest changes from the upstream repository [saicaca/fuwari](https://github.com/saicaca/fuwari). Please review and merge."
+            --body "This PR syncs the latest changes from the upstream repository [saicaca/fuwari](https://github.com/saicaca/fuwari). Please review and merge."; then
+            echo "Failed to create pull request. This might be due to insufficient permissions."
+            echo "Please check the repository settings and ensure the workflow has proper permissions."
+            exit 1
+          fi
