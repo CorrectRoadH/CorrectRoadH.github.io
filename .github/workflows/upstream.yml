@@ -12,6 +12,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      actions: read
 
     # 确保这个 action 只在你的仓库运行，而不是在上游仓库
     if: github.repository != 'saicaca/fuwari'
@@ -48,8 +49,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # 添加调试信息
+          echo "GitHub repository: ${{ github.repository }}"
+          echo "GitHub token present: $([[ -n '${{ secrets.GITHUB_TOKEN }}' ]] && echo 'yes' || echo 'no')"
+          
+          # 检查 gh CLI 版本和认证状态
+          gh --version
+          gh auth status
+          
           # 检查是否已存在一个用于同步的开放 PR，避免重复创建
+          echo "Checking for existing PRs..."
           EXISTING_PR=$(gh pr list --head 'upstream-sync-*' --state open --limit 1 --json number)
+          echo "Existing PR check result: $EXISTING_PR"
+          
           if [ "$EXISTING_PR" != "[]" ]; then
             echo "An open pull request for upstream sync already exists. Skipping."
             exit 0
@@ -57,9 +69,11 @@ jobs:
           
           # 基于 upstream/main 创建一个带时间戳的新分支，确保唯一性
           BRANCH_NAME="upstream-sync-$(date +%Y%m%d%H%M%S)"
+          echo "Creating branch: $BRANCH_NAME"
           git checkout -b "$BRANCH_NAME" upstream/main
           
           # 将新分支推送到你的仓库
+          echo "Pushing branch to origin..."
           git push origin "$BRANCH_NAME"
           
           # 等待一下确保分支已经创建
@@ -71,18 +85,26 @@ jobs:
           echo "Base: blog"
           
           # 尝试创建 PR 并捕获详细错误
-          PR_OUTPUT=$(gh pr create \
+          echo "Running gh pr create command..."
+          if gh pr create \
             --base blog \
             --head "$BRANCH_NAME" \
             --title "chore: Sync with upstream (saicaca/fuwari)" \
-            --body "This PR syncs the latest changes from the upstream repository [saicaca/fuwari](https://github.com/saicaca/fuwari). Please review and merge." 2>&1)
-          
-          if [ $? -eq 0 ]; then
-            echo "Pull request created successfully: $PR_OUTPUT"
+            --body "This PR syncs the latest changes from the upstream repository [saicaca/fuwari](https://github.com/saicaca/fuwari). Please review and merge."; then
+            echo "Pull request created successfully!"
           else
-            echo "Failed to create pull request. Error: $PR_OUTPUT"
-            echo "This might be due to insufficient permissions."
-            echo "Please check the repository settings and ensure the workflow has proper permissions."
-            echo "You can manually create the PR at: https://github.com/CorrectRoadH/Blog/pull/new/$BRANCH_NAME"
-            exit 1
+            echo "Failed to create pull request with gh CLI."
+            echo "Attempting alternative method using GitHub API..."
+            
+            # 使用 curl 直接调用 GitHub API 作为备选方案
+            curl -X POST \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/${{ github.repository }}/pulls" \
+              -d '{
+                "title": "chore: Sync with upstream (saicaca/fuwari)",
+                "body": "This PR syncs the latest changes from the upstream repository [saicaca/fuwari](https://github.com/saicaca/fuwari). Please review and merge.",
+                "head": "'$BRANCH_NAME'",
+                "base": "blog"
+              }'
           fi
