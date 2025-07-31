@@ -7,7 +7,7 @@ interface Props {
 	links: NavBarLink[];
 }
 
-const links = Astro.props.links;
+const links = Astro.props.links
 ---
 <div id="nav-menu-panel" class:list={["float-panel float-panel-closed absolute transition-all fixed right-4 px-2 py-2"]}>
     {links.map((link) => (

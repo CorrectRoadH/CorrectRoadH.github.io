@@ -1,0 +1,110 @@
+name: Sync with Upstream
+
+on:
+  schedule:
+    # 每天 00:00 UTC 运行
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: read
+
+    # 确保这个 action 只在你的仓库运行，而不是在上游仓库
+    if: github.repository != 'saicaca/fuwari'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # 你的主要分支
+          ref: 'blog'
+          # 获取所有历史记录以便比较
+          fetch-depth: 0
+
+      - name: Set up upstream remote
+        run: |
+          git remote add upstream https://github.com/saicaca/fuwari.git
+          git fetch upstream main
+
+      - name: Check if upstream is ahead
+        id: check_diff
+        run: |
+          # 检查 upstream/main 有多少 commit 是本地 blog 分支没有的
+          AHEAD_COUNT=$(git rev-list --count blog..upstream/main)
+          if [ "$AHEAD_COUNT" -gt 0 ]; then
+            echo "Upstream is ahead by $AHEAD_COUNT commits."
+            echo "is_ahead=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Repository is up-to-date with upstream."
+            echo "is_ahead=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Pull Request
+        if: steps.check_diff.outputs.is_ahead == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 添加调试信息
+          echo "GitHub repository: ${{ github.repository }}"
+          echo "GitHub token present: $([[ -n '${{ secrets.GITHUB_TOKEN }}' ]] && echo 'yes' || echo 'no')"
+          
+          # 检查 gh CLI 版本和认证状态
+          gh --version
+          gh auth status
+          
+          # 检查是否已存在一个用于同步的开放 PR，避免重复创建
+          echo "Checking for existing PRs..."
+          EXISTING_PR=$(gh pr list --head 'upstream-sync-*' --state open --limit 1 --json number)
+          echo "Existing PR check result: $EXISTING_PR"
+          
+          if [ "$EXISTING_PR" != "[]" ]; then
+            echo "An open pull request for upstream sync already exists. Skipping."
+            exit 0
+          fi
+          
+          # 基于 upstream/main 创建一个带时间戳的新分支，确保唯一性
+          BRANCH_NAME="upstream-sync-$(date +%Y%m%d%H%M%S)"
+          echo "Creating branch: $BRANCH_NAME"
+          git checkout -b "$BRANCH_NAME" upstream/main
+          
+          # 将新分支推送到你的仓库
+          echo "Pushing branch to origin..."
+          git push origin "$BRANCH_NAME"
+          
+          # 等待一下确保分支已经创建
+          sleep 5
+          
+          # 创建 PR，使用更详细的错误处理和调试信息
+          echo "Attempting to create pull request..."
+          echo "Branch: $BRANCH_NAME"
+          echo "Base: blog"
+          
+          # 尝试创建 PR 并捕获详细错误
+          echo "Running gh pr create command..."
+          if gh pr create \
+            --base blog \
+            --head "$BRANCH_NAME" \
+            --title "chore: Sync with upstream (saicaca/fuwari)" \
+            --body "This PR syncs the latest changes from the upstream repository [saicaca/fuwari](https://github.com/saicaca/fuwari). Please review and merge."; then
+            echo "Pull request created successfully!"
+          else
+            echo "Failed to create pull request with gh CLI."
+            echo "Attempting alternative method using GitHub API..."
+            
+            # 使用 curl 直接调用 GitHub API 作为备选方案
+            curl -X POST \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/${{ github.repository }}/pulls" \
+              -d '{
+                "title": "chore: Sync with upstream (saicaca/fuwari)",
+                "body": "This PR syncs the latest changes from the upstream repository [saicaca/fuwari](https://github.com/saicaca/fuwari). Please review and merge.",
+                "head": "'$BRANCH_NAME'",
+                "base": "blog"
+              }'
+          fi

@@ -7,11 +7,11 @@ import { getTagUrl } from "../../utils/url-utils";
 import ButtonTag from "../control/ButtonTag.astro";
 import WidgetLayout from "./WidgetLayout.astro";
 
-const tags = await getTagList();
+const tags = await getTagList()
 
-const COLLAPSED_HEIGHT = "7.5rem";
+const COLLAPSED_HEIGHT = '7.5rem'
 
-const isCollapsed = tags.length >= 20;
+const isCollapsed = tags.length >= 20
 
 interface Props {
 	class?: string;
