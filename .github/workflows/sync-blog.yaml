@@ -49,5 +49,5 @@ jobs:
             # 添加目标仓库为远程仓库（使用 SSH）
             git remote add destination git@github.com:CorrectRoadH/CorrectRoadH.github.io.git
             
-            # 推送到目标仓库的blog分支（如果不存在则创建）
-            git push destination blog:blog --force --set-upstream
+            # 直接强制推送到目标仓库的blog分支
+            git push destination blog:blog --force
