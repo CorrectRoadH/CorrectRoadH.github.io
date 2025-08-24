@@ -24,7 +24,7 @@ jobs:
           # 你的主要分支
           ref: 'blog'
           # 获取所有历史记录以便比较
-          fetch-depth: 0
+          # fetch-depth: 0
 
       - name: Set up upstream remote
         run: |
@@ -44,8 +44,65 @@ jobs:
             echo "is_ahead=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Create Pull Request
+      - name: Merge upstream changes with conflict resolution
+        id: merge_upstream
         if: steps.check_diff.outputs.is_ahead == 'true'
+        run: |
+          # 配置 git 用户信息
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 尝试合并 upstream/main 到当前分支
+          echo "Attempting to merge upstream/main into blog branch..."
+          
+          # 备份本地的重要文件
+          cp pnpm-lock.yaml pnpm-lock.yaml.backup 2>/dev/null || true
+          cp README.md README.md.backup 2>/dev/null || true
+          cp package.json package.json.backup 2>/dev/null || true
+          
+          # 尝试合并
+          if git merge upstream/main --no-edit; then
+            echo "Merge completed successfully without conflicts."
+            echo "merge_success=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Merge conflicts detected. Resolving conflicts by keeping local versions..."
+            
+            # 检查哪些文件有冲突
+            CONFLICTED_FILES=$(git diff --name-only --diff-filter=U)
+            echo "Conflicted files: $CONFLICTED_FILES"
+            
+            # 对于特定文件，总是使用本地版本
+            for file in pnpm-lock.yaml README.md package.json; do
+              if echo "$CONFLICTED_FILES" | grep -q "$file"; then
+                echo "Resolving conflict in $file by keeping local version..."
+                git checkout --ours "$file"
+                git add "$file"
+              fi
+            done
+            
+            # 对于其他冲突文件，也使用本地版本
+            for file in $CONFLICTED_FILES; do
+              if [[ "$file" != "pnpm-lock.yaml" && "$file" != "README.md" && "$file" != "package.json" ]]; then
+                echo "Resolving conflict in $file by keeping local version..."
+                git checkout --ours "$file"
+                git add "$file"
+              fi
+            done
+            
+            # 完成合并
+            git commit -m "chore: Merge upstream changes, resolve conflicts by keeping local versions"
+            echo "merge_success=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Push changes
+        if: steps.check_diff.outputs.is_ahead == 'true' && steps.merge_upstream.outputs.merge_success == 'true'
+        run: |
+          echo "Pushing merged changes to blog branch..."
+          git push origin blog
+          echo "Successfully synced with upstream!"
+
+      - name: Create Pull Request (fallback)
+        if: steps.check_diff.outputs.is_ahead == 'true' && steps.merge_upstream.outputs.merge_success != 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
