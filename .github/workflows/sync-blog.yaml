@@ -49,11 +49,14 @@ jobs:
             # 添加目标仓库为远程仓库（使用 SSH）
             git remote add destination git@github.com:CorrectRoadH/CorrectRoadH.github.io.git
             
-            # 先删除目标分支（如果存在）
+            # 推送到一个新的分支名，避免历史冲突
+            git push destination blog:blog-sync --force
+            
+            # 删除旧的blog分支（如果存在）
             git push destination --delete blog || true
             
-            # 等待一下确保删除完成
-            sleep 2
+            # 将新分支重命名为blog
+            git push destination blog-sync:blog --force
             
-            # 强制推送到目标仓库的blog分支
-            git push destination blog:blog --force
+            # 删除临时分支
+            git push destination --delete blog-sync || true
