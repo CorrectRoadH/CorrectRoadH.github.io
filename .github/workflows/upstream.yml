@@ -75,8 +75,15 @@ jobs:
             for file in pnpm-lock.yaml README.md package.json; do
               if echo "$CONFLICTED_FILES" | grep -q "$file"; then
                 echo "Resolving conflict in $file by keeping local version..."
-                git checkout --ours "$file"
-                git add "$file"
+                if git ls-files --error-unmatch "$file" >/dev/null 2>&1; then
+                  # 文件存在于本地，使用本地版本
+                  git checkout --ours "$file"
+                  git add "$file"
+                else
+                  # 文件在本地被删除，删除它
+                  echo "File $file was deleted locally, removing it..."
+                  git rm "$file"
+                fi
               fi
             done
             
@@ -84,8 +91,15 @@ jobs:
             for file in $CONFLICTED_FILES; do
               if [[ "$file" != "pnpm-lock.yaml" && "$file" != "README.md" && "$file" != "package.json" ]]; then
                 echo "Resolving conflict in $file by keeping local version..."
-                git checkout --ours "$file"
-                git add "$file"
+                if git ls-files --error-unmatch "$file" >/dev/null 2>&1; then
+                  # 文件存在于本地，使用本地版本
+                  git checkout --ours "$file"
+                  git add "$file"
+                else
+                  # 文件在本地被删除，删除它
+                  echo "File $file was deleted locally, removing it..."
+                  git rm "$file"
+                fi
               fi
             done
             
