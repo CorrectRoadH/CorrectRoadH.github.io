@@ -22,101 +22,15 @@ jobs:
         with:
           # 你的主要分支
           ref: 'blog'
-          fetch-depth: 0
 
-      - name: Setup Git
+      - name: Push to destination repo
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Add target repository as remote
-        env:
-          TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
-        run: |
-          git remote add target https://x-access-token:$TARGET_REPO_TOKEN@github.com/CorrectRoadH/CorrectRoadH.github.io.git
-          git fetch target
-
-      - name: Check if target repository needs update
-        id: check_diff
-        env:
-          TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
-        run: |
-          # 重新配置远程仓库以确保使用正确的认证
-          git remote remove target
-          git remote add target https://x-access-token:$TARGET_REPO_TOKEN@github.com/CorrectRoadH/CorrectRoadH.github.io.git
-          
-          # 检查当前分支与目标仓库 blog 分支的差异
-          if git ls-remote --heads target blog | grep -q blog; then
-            # blog 分支存在，检查差异
-            git fetch target blog
-            AHEAD_COUNT=$(git rev-list --count target/blog..HEAD)
-            BEHIND_COUNT=$(git rev-list --count HEAD..target/blog)
+            # 配置 git
+            git config --global user.name "GitHub Actions"
+            git config --global user.email "actions@github.com"
             
-            if [ "$AHEAD_COUNT" -gt 0 ]; then
-              echo "Local repository is ahead by $AHEAD_COUNT commits."
-              echo "needs_update=true" >> "$GITHUB_OUTPUT"
-            else
-              echo "Target repository is up-to-date."
-              echo "needs_update=false" >> "$GITHUB_OUTPUT"
-            fi
-          else
-            echo "Target blog branch does not exist, will create it."
-            echo "needs_update=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Push to target repository
-        if: steps.check_diff.outputs.needs_update == 'true'
-        env:
-          TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
-        run: |
-          echo "Pushing changes to target repository..."
-          
-          # 重新配置远程仓库以确保使用正确的认证
-          git remote remove target
-          git remote add target https://x-access-token:$TARGET_REPO_TOKEN@github.com/CorrectRoadH/CorrectRoadH.github.io.git
-          
-          # 如果目标分支不存在，创建它
-          if ! git ls-remote --heads target blog | grep -q blog; then
-            echo "Creating blog branch in target repository..."
-            git push target HEAD:blog
-          else
-            # 强制推送更新（因为这是同步操作）
-            echo "Force pushing to target blog branch..."
-            git push target HEAD:blog --force
-          fi
-          
-          echo "Successfully synced to target repository!"
-
-      - name: Create Pull Request (if needed)
-        if: steps.check_diff.outputs.needs_update == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
-        run: |
-          # 配置 GitHub CLI 使用正确的令牌
-          echo "${{ secrets.TARGET_REPO_TOKEN }}" | gh auth login --with-token
-          
-          # 检查目标仓库是否已有相关的开放 PR
-          EXISTING_PR=$(gh pr list --repo CorrectRoadH/CorrectRoadH.github.io --head 'sync-from-blog-*' --state open --limit 1 --json number)
-          
-          if [ "$EXISTING_PR" = "[]" ]; then
-            echo "Creating pull request for manual review..."
+            # 添加目标仓库为远程仓库
+            git remote add destination https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/CorrectRoadH/CorrectRoadH.github.io.git
             
-            # 创建带时间戳的分支名
-            BRANCH_NAME="sync-from-blog-$(date +%Y%m%d%H%M%S)"
-            
-            # 在目标仓库创建新分支
-            git push target HEAD:refs/heads/$BRANCH_NAME
-            
-            # 等待分支创建完成
-            sleep 3
-            
-            # 创建 PR
-            gh pr create \
-              --repo CorrectRoadH/CorrectRoadH.github.io \
-              --base blog \
-              --head "$BRANCH_NAME" \
-              --title "chore: Sync from Blog repository" \
-              --body "This PR syncs the latest changes from the Blog repository. Please review and merge."
-          else
-            echo "An open pull request for sync already exists. Skipping PR creation."
-          fi
+            # 推送到目标仓库
+            git push destination main --force
