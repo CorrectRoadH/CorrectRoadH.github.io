@@ -30,16 +30,21 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Add target repository as remote
+        env:
+          TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
         run: |
-          git remote add target https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/CorrectRoadH/CorrectRoadH.github.io.git
+          git remote add target https://x-access-token:$TARGET_REPO_TOKEN@github.com/CorrectRoadH/CorrectRoadH.github.io.git
           git fetch target
-          # 验证远程仓库连接
-          echo "Testing connection to target repository..."
-          git ls-remote target --heads
 
       - name: Check if target repository needs update
         id: check_diff
+        env:
+          TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
         run: |
+          # 重新配置远程仓库以确保使用正确的认证
+          git remote remove target
+          git remote add target https://x-access-token:$TARGET_REPO_TOKEN@github.com/CorrectRoadH/CorrectRoadH.github.io.git
+          
           # 检查当前分支与目标仓库 blog 分支的差异
           if git ls-remote --heads target blog | grep -q blog; then
             # blog 分支存在，检查差异
