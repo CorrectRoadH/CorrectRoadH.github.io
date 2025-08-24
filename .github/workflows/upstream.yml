@@ -65,47 +65,49 @@ jobs:
             echo "Merge completed successfully without conflicts."
             echo "merge_success=true" >> "$GITHUB_OUTPUT"
           else
-            echo "Merge conflicts detected. Resolving conflicts by keeping local versions..."
+            echo "Merge conflicts detected. Checking conflict types..."
             
             # 检查哪些文件有冲突
             CONFLICTED_FILES=$(git diff --name-only --diff-filter=U)
             echo "Conflicted files: $CONFLICTED_FILES"
             
-            # 对于特定文件，总是使用本地版本
-            for file in pnpm-lock.yaml README.md package.json; do
-              if echo "$CONFLICTED_FILES" | grep -q "$file"; then
-                echo "Resolving conflict in $file by keeping local version..."
-                if git ls-files --error-unmatch "$file" >/dev/null 2>&1; then
-                  # 文件存在于本地，使用本地版本
-                  git checkout --ours "$file"
-                  git add "$file"
-                else
-                  # 文件在本地被删除，删除它
-                  echo "File $file was deleted locally, removing it..."
-                  git rm "$file"
-                fi
-              fi
-            done
-            
-            # 对于其他冲突文件，也使用本地版本
+            # 检查是否只有 pnpm-lock.yaml 和 README.md 冲突
+            ONLY_SAFE_CONFLICTS=true
             for file in $CONFLICTED_FILES; do
-              if [[ "$file" != "pnpm-lock.yaml" && "$file" != "README.md" && "$file" != "package.json" ]]; then
-                echo "Resolving conflict in $file by keeping local version..."
-                if git ls-files --error-unmatch "$file" >/dev/null 2>&1; then
-                  # 文件存在于本地，使用本地版本
-                  git checkout --ours "$file"
-                  git add "$file"
-                else
-                  # 文件在本地被删除，删除它
-                  echo "File $file was deleted locally, removing it..."
-                  git rm "$file"
-                fi
+              if [[ "$file" != "pnpm-lock.yaml" && "$file" != "README.md" ]]; then
+                echo "Found non-safe conflict in: $file"
+                ONLY_SAFE_CONFLICTS=false
+                break
               fi
             done
             
-            # 完成合并
-            git commit -m "chore: Merge upstream changes, resolve conflicts by keeping local versions"
-            echo "merge_success=true" >> "$GITHUB_OUTPUT"
+            if [ "$ONLY_SAFE_CONFLICTS" = true ]; then
+              echo "Only safe conflicts detected. Resolving automatically..."
+              
+              # 只解决 pnpm-lock.yaml 和 README.md 的冲突
+              for file in pnpm-lock.yaml README.md; do
+                if echo "$CONFLICTED_FILES" | grep -q "$file"; then
+                  echo "Resolving conflict in $file by keeping local version..."
+                  if git ls-files --error-unmatch "$file" >/dev/null 2>&1; then
+                    # 文件存在于本地，使用本地版本
+                    git checkout --ours "$file"
+                    git add "$file"
+                  else
+                    # 文件在本地被删除，删除它
+                    echo "File $file was deleted locally, removing it..."
+                    git rm "$file"
+                  fi
+                fi
+              done
+              
+              # 完成合并
+              git commit -m "chore: Merge upstream changes, resolve safe conflicts by keeping local versions"
+              echo "merge_success=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "Non-safe conflicts detected. Aborting merge to create PR for manual resolution."
+              git merge --abort
+              echo "merge_success=false" >> "$GITHUB_OUTPUT"
+            fi
           fi
           
           # 清理备份文件
