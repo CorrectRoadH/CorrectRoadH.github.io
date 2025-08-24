@@ -24,7 +24,7 @@ jobs:
           # 你的主要分支
           ref: 'blog'
           # 获取所有历史记录以便比较
-          # fetch-depth: 0
+          fetch-depth: 0
 
       - name: Set up upstream remote
         run: |
@@ -60,8 +60,8 @@ jobs:
           cp README.md README.md.backup 2>/dev/null || true
           cp package.json package.json.backup 2>/dev/null || true
           
-          # 尝试合并
-          if git merge upstream/main --no-edit; then
+          # 尝试合并，允许不相关的历史记录
+          if git merge upstream/main --no-edit --allow-unrelated-histories; then
             echo "Merge completed successfully without conflicts."
             echo "merge_success=true" >> "$GITHUB_OUTPUT"
           else
@@ -93,6 +93,9 @@ jobs:
             git commit -m "chore: Merge upstream changes, resolve conflicts by keeping local versions"
             echo "merge_success=true" >> "$GITHUB_OUTPUT"
           fi
+          
+          # 清理备份文件
+          rm -f pnpm-lock.yaml.backup README.md.backup package.json.backup
 
       - name: Push changes
         if: steps.check_diff.outputs.is_ahead == 'true' && steps.merge_upstream.outputs.merge_success == 'true'
