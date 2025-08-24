@@ -23,14 +23,31 @@ jobs:
           # 你的主要分支
           ref: 'blog'
 
+      - name: Setup SSH
+        run: |
+            # 创建 SSH 目录
+            mkdir -p ~/.ssh
+            chmod 700 ~/.ssh
+            
+            # 解码并保存私钥
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            
+            # 添加 GitHub 到已知主机
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+            
+            # 启动 SSH 代理并添加密钥
+            eval "$(ssh-agent -s)"
+            ssh-add ~/.ssh/id_rsa
+
       - name: Push to destination repo
         run: |
             # 配置 git
             git config --global user.name "GitHub Actions"
             git config --global user.email "actions@github.com"
             
-            # 添加目标仓库为远程仓库
-            git remote add destination https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/CorrectRoadH/CorrectRoadH.github.io.git
+            # 添加目标仓库为远程仓库（使用 SSH）
+            git remote add destination git@github.com:CorrectRoadH/CorrectRoadH.github.io.git
             
             # 推送到目标仓库的blog分支（如果不存在则创建）
             git push destination blog:blog --force --set-upstream
