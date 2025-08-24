@@ -154,7 +154,7 @@ jobs:
             
             # 使用 HTTPS 重新添加远程仓库
             git remote remove destination || true
-            git remote add destination https://x-access-token:${{ secrets.TARGET_REPO_TOKENgst }}@github.com/CorrectRoadH/CorrectRoadH.github.io.git
+            git remote add destination https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/CorrectRoadH/CorrectRoadH.github.io.git
             
             # 尝试 HTTPS 推送
             if git push destination blog:blog --force; then
