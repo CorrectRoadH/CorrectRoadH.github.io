@@ -1,0 +1,77 @@
+name: Sync Blog Simple
+
+on:
+  push:
+    branches: [ blog ]
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: read
+
+    # 确保这个 action 只在你的仓库运行
+    if: github.repository == 'CorrectRoadH/Blog'
+
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+        with:
+          ref: 'blog'
+          fetch-depth: 0
+
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          repository: CorrectRoadH/CorrectRoadH.github.io
+          ref: 'blog'
+          token: ${{ secrets.TARGET_REPO_TOKEN }}
+          path: target-repo
+
+      - name: Setup Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Check if sync is needed
+        id: check_sync
+        run: |
+          cd target-repo
+          # 检查目标仓库是否有更新
+          git fetch origin blog
+          LOCAL_COMMIT=$(git rev-parse HEAD)
+          REMOTE_COMMIT=$(git rev-parse origin/blog)
+          
+          if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
+            echo "Target repository has updates, sync needed"
+            echo "needs_sync=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Target repository is up-to-date"
+            echo "needs_sync=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Sync files to target repository
+        if: steps.check_sync.outputs.needs_sync == 'true'
+        run: |
+          # 复制所有文件到目标仓库（除了 .git 目录）
+          rsync -av --exclude='.git' --exclude='target-repo' ./ target-repo/
+          
+          cd target-repo
+          
+          # 添加所有更改
+          git add .
+          
+          # 检查是否有更改
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            # 提交更改
+            git commit -m "chore: Sync from Blog repository $(date)"
+            
+            # 推送到目标仓库
+            git push origin blog
+            echo "Successfully synced to target repository!"
+          fi
