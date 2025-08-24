@@ -1,0 +1,186 @@
+name: Sync with Upstream
+
+on:
+  schedule:
+    # 每天 00:00 UTC 运行
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: read
+
+    # 确保这个 action 只在你的仓库运行，而不是在上游仓库
+    if: github.repository != 'saicaca/fuwari'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # 你的主要分支
+          ref: 'blog'
+          # 获取所有历史记录以便比较
+          fetch-depth: 0
+
+      - name: Set up upstream remote
+        run: |
+          git remote add upstream https://github.com/saicaca/fuwari.git
+          git fetch upstream main
+
+      - name: Check if upstream is ahead
+        id: check_diff
+        run: |
+          # 检查 upstream/main 有多少 commit 是本地 blog 分支没有的
+          AHEAD_COUNT=$(git rev-list --count blog..upstream/main)
+          if [ "$AHEAD_COUNT" -gt 0 ]; then
+            echo "Upstream is ahead by $AHEAD_COUNT commits."
+            echo "is_ahead=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Repository is up-to-date with upstream."
+            echo "is_ahead=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Merge upstream changes with conflict resolution
+        id: merge_upstream
+        if: steps.check_diff.outputs.is_ahead == 'true'
+        run: |
+          # 配置 git 用户信息
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 尝试合并 upstream/main 到当前分支
+          echo "Attempting to merge upstream/main into blog branch..."
+          
+          # 备份本地的重要文件
+          cp pnpm-lock.yaml pnpm-lock.yaml.backup 2>/dev/null || true
+          cp README.md README.md.backup 2>/dev/null || true
+          cp package.json package.json.backup 2>/dev/null || true
+          
+          # 尝试合并，允许不相关的历史记录
+          if git merge upstream/main --no-edit --allow-unrelated-histories; then
+            echo "Merge completed successfully without conflicts."
+            echo "merge_success=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Merge conflicts detected. Checking conflict types..."
+            
+            # 检查哪些文件有冲突
+            CONFLICTED_FILES=$(git diff --name-only --diff-filter=U)
+            echo "Conflicted files: $CONFLICTED_FILES"
+            
+            # 检查是否只有 pnpm-lock.yaml 和 README.md 冲突
+            ONLY_SAFE_CONFLICTS=true
+            for file in $CONFLICTED_FILES; do
+              if [[ "$file" != "pnpm-lock.yaml" && "$file" != "README.md" ]]; then
+                echo "Found non-safe conflict in: $file"
+                ONLY_SAFE_CONFLICTS=false
+                break
+              fi
+            done
+            
+            if [ "$ONLY_SAFE_CONFLICTS" = true ]; then
+              echo "Only safe conflicts detected. Resolving automatically..."
+              
+              # 只解决 pnpm-lock.yaml 和 README.md 的冲突
+              for file in pnpm-lock.yaml README.md; do
+                if echo "$CONFLICTED_FILES" | grep -q "$file"; then
+                  echo "Resolving conflict in $file by keeping local version..."
+                  if git ls-files --error-unmatch "$file" >/dev/null 2>&1; then
+                    # 文件存在于本地，使用本地版本
+                    git checkout --ours "$file"
+                    git add "$file"
+                  else
+                    # 文件在本地被删除，删除它
+                    echo "File $file was deleted locally, removing it..."
+                    git rm "$file"
+                  fi
+                fi
+              done
+              
+              # 完成合并
+              git commit -m "chore: Merge upstream changes, resolve safe conflicts by keeping local versions"
+              echo "merge_success=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "Non-safe conflicts detected. Aborting merge to create PR for manual resolution."
+              git merge --abort
+              echo "merge_success=false" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+          
+          # 清理备份文件
+          rm -f pnpm-lock.yaml.backup README.md.backup package.json.backup
+
+      - name: Push changes
+        if: steps.check_diff.outputs.is_ahead == 'true' && steps.merge_upstream.outputs.merge_success == 'true'
+        run: |
+          echo "Pushing merged changes to blog branch..."
+          git push origin blog
+          echo "Successfully synced with upstream!"
+
+      - name: Create Pull Request (fallback)
+        if: steps.check_diff.outputs.is_ahead == 'true' && steps.merge_upstream.outputs.merge_success != 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 添加调试信息
+          echo "GitHub repository: ${{ github.repository }}"
+          echo "GitHub token present: $([[ -n '${{ secrets.GITHUB_TOKEN }}' ]] && echo 'yes' || echo 'no')"
+          
+          # 检查 gh CLI 版本和认证状态
+          gh --version
+          gh auth status
+          
+          # 检查是否已存在一个用于同步的开放 PR，避免重复创建
+          echo "Checking for existing PRs..."
+          EXISTING_PR=$(gh pr list --head 'upstream-sync-*' --state open --limit 1 --json number)
+          echo "Existing PR check result: $EXISTING_PR"
+          
+          if [ "$EXISTING_PR" != "[]" ]; then
+            echo "An open pull request for upstream sync already exists. Skipping."
+            exit 0
+          fi
+          
+          # 基于 upstream/main 创建一个带时间戳的新分支，确保唯一性
+          BRANCH_NAME="upstream-sync-$(date +%Y%m%d%H%M%S)"
+          echo "Creating branch: $BRANCH_NAME"
+          git checkout -b "$BRANCH_NAME" upstream/main
+          
+          # 将新分支推送到你的仓库
+          echo "Pushing branch to origin..."
+          git push origin "$BRANCH_NAME"
+          
+          # 等待一下确保分支已经创建
+          sleep 5
+          
+          # 创建 PR，使用更详细的错误处理和调试信息
+          echo "Attempting to create pull request..."
+          echo "Branch: $BRANCH_NAME"
+          echo "Base: blog"
+          
+          # 尝试创建 PR 并捕获详细错误
+          echo "Running gh pr create command..."
+          if gh pr create \
+            --base blog \
+            --head "$BRANCH_NAME" \
+            --title "chore: Sync with upstream (saicaca/fuwari)" \
+            --body "This PR syncs the latest changes from the upstream repository [saicaca/fuwari](https://github.com/saicaca/fuwari). Please review and merge."; then
+            echo "Pull request created successfully!"
+          else
+            echo "Failed to create pull request with gh CLI."
+            echo "Attempting alternative method using GitHub API..."
+            
+            # 使用 curl 直接调用 GitHub API 作为备选方案
+            curl -X POST \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/${{ github.repository }}/pulls" \
+              -d '{
+                "title": "chore: Sync with upstream (saicaca/fuwari)",
+                "body": "This PR syncs the latest changes from the upstream repository [saicaca/fuwari](https://github.com/saicaca/fuwari). Please review and merge.",
+                "head": "'$BRANCH_NAME'",
+                "base": "blog"
+              }'
+          fi

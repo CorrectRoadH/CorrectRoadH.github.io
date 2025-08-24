@@ -5,12 +5,12 @@ import { getCategoryList } from "../../utils/content-utils";
 import ButtonLink from "../control/ButtonLink.astro";
 import WidgetLayout from "./WidgetLayout.astro";
 
-const categories = await getCategoryList();
+const categories = await getCategoryList()
 
-const COLLAPSED_HEIGHT = "7.5rem";
-const COLLAPSE_THRESHOLD = 5;
+const COLLAPSED_HEIGHT = '7.5rem'
+const COLLAPSE_THRESHOLD = 5
 
-const isCollapsed = categories.length >= COLLAPSE_THRESHOLD;
+const isCollapsed = categories.length >= COLLAPSE_THRESHOLD
 
 interface Props {
 	class?: string;
