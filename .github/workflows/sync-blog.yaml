@@ -22,6 +22,7 @@ jobs:
         with:
           # 你的主要分支
           ref: 'blog'
+          fetch-depth: 0  # 获取完整历史
 
       - name: Setup SSH
         run: |
@@ -40,23 +41,125 @@ jobs:
             eval "$(ssh-agent -s)"
             ssh-add ~/.ssh/id_rsa
 
-      - name: Push to destination repo
+      - name: Configure Git
         run: |
             # 配置 git
             git config --global user.name "GitHub Actions"
             git config --global user.email "actions@github.com"
-            
+            git config --global http.postBuffer 524288000
+            git config --global core.compression 9
+
+      - name: Test SSH connection
+        run: |
+            ssh -T git@github.com || true
+
+      - name: Push to destination repo
+        run: |
             # 添加目标仓库为远程仓库（使用 SSH）
             git remote add destination git@github.com:CorrectRoadH/CorrectRoadH.github.io.git
             
-            # 推送到一个新的分支名，避免历史冲突
-            git push destination blog:blog-sync --force
+            # 获取目标仓库的最新状态
+            git fetch destination || true
             
-            # 删除旧的blog分支（如果存在）
-            git push destination --delete blog || true
+            # 定义重试函数
+            retry_push() {
+                local max_attempts=3
+                local attempt=1
+                
+                while [ $attempt -le $max_attempts ]; do
+                    echo "尝试推送 (第 $attempt 次)..."
+                    
+                    if git push destination blog:blog --force; then
+                        echo "推送成功！"
+                        return 0
+                    else
+                        echo "推送失败 (第 $attempt 次)"
+                        if [ $attempt -eq $max_attempts ]; then
+                            echo "所有重试都失败了，尝试分步推送..."
+                            return 1
+                        fi
+                        sleep 10
+                        attempt=$((attempt + 1))
+                    fi
+                done
+            }
             
-            # 将新分支重命名为blog
-            git push destination blog-sync:blog --force
+            # 尝试直接推送，如果失败则使用分步推送
+            if retry_push; then
+                echo "直接推送成功"
+            else
+                echo "开始分步推送..."
+                
+                # 分步推送方法
+                step_push() {
+                    local max_attempts=3
+                    local attempt=1
+                    
+                    while [ $attempt -le $max_attempts ]; do
+                        echo "分步推送尝试 (第 $attempt 次)..."
+                        
+                        # 创建临时分支
+                        if git push destination blog:temp-branch --force; then
+                            echo "临时分支创建成功"
+                            
+                            # 删除目标分支（如果存在）
+                            git push destination --delete blog || true
+                            
+                            # 重命名临时分支为目标分支
+                            if git push destination temp-branch:blog --force; then
+                                echo "分支重命名成功"
+                                
+                                # 清理临时分支
+                                git push destination --delete temp-branch || true
+                                echo "分步推送完成"
+                                return 0
+                            else
+                                echo "分支重命名失败"
+                            fi
+                        else
+                            echo "临时分支创建失败"
+                        fi
+                        
+                        if [ $attempt -eq $max_attempts ]; then
+                            echo "分步推送失败"
+                            return 1
+                        fi
+                        
+                        sleep 15
+                        attempt=$((attempt + 1))
+                    done
+                }
+                
+                if step_push; then
+                    echo "分步推送成功"
+                else
+                    echo "所有推送方法都失败了"
+                    exit 1
+                fi
+            fi
+
+      - name: Verify push
+        run: |
+            # 验证推送是否成功
+            git ls-remote destination blog || echo "推送验证失败，但可能仍然成功"
+
+      - name: Fallback HTTPS push (if SSH fails)
+        if: failure()
+        run: |
+            echo "SSH 推送失败，尝试 HTTPS 推送..."
             
-            # 删除临时分支
-            git push destination --delete blog-sync || true
+            # 配置 GitHub token
+            git config --global user.name "GitHub Actions"
+            git config --global user.email "actions@github.com"
+            
+            # 使用 HTTPS 重新添加远程仓库
+            git remote remove destination || true
+            git remote add destination https://x-access-token:${{ secrets.TARGET_REPO_TOKENgst }}@github.com/CorrectRoadH/CorrectRoadH.github.io.git
+            
+            # 尝试 HTTPS 推送
+            if git push destination blog:blog --force; then
+                echo "HTTPS 推送成功"
+            else
+                echo "HTTPS 推送也失败了"
+                exit 1
+            fi
