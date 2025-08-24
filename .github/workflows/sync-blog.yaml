@@ -3,8 +3,6 @@ name: Sync Blog
 on:
   push:
     branches: [ blog ]
-  pull_request:
-    branches: [ blog ]
   workflow_dispatch: # 允许手动触发
 
 jobs:
@@ -35,6 +33,9 @@ jobs:
         run: |
           git remote add target https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/CorrectRoadH/CorrectRoadH.github.io.git
           git fetch target
+          # 验证远程仓库连接
+          echo "Testing connection to target repository..."
+          git ls-remote target --heads
 
       - name: Check if target repository needs update
         id: check_diff
@@ -60,8 +61,14 @@ jobs:
 
       - name: Push to target repository
         if: steps.check_diff.outputs.needs_update == 'true'
+        env:
+          TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
         run: |
           echo "Pushing changes to target repository..."
+          
+          # 重新配置远程仓库以确保使用正确的认证
+          git remote remove target
+          git remote add target https://x-access-token:$TARGET_REPO_TOKEN@github.com/CorrectRoadH/CorrectRoadH.github.io.git
           
           # 如果目标分支不存在，创建它
           if ! git ls-remote --heads target blog | grep -q blog; then
@@ -80,6 +87,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
         run: |
+          # 配置 GitHub CLI 使用正确的令牌
+          echo "${{ secrets.TARGET_REPO_TOKEN }}" | gh auth login --with-token
+          
           # 检查目标仓库是否已有相关的开放 PR
           EXISTING_PR=$(gh pr list --repo CorrectRoadH/CorrectRoadH.github.io --head 'sync-from-blog-*' --state open --limit 1 --json number)
           
