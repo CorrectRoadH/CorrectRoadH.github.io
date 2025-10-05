@@ -11,12 +11,12 @@ tags: [Git]
 ![1](1.png)
 
 如果要删除一个文件用这个
-```git
+```bash
 git filter-branch -f --index-filter 'git rm --cached --ignore-unmatch -- 文件名' --prune-empty HEAD
 ```
 
 如果要删除一个文件夹用这个
-```git
+```bash
 git filter-branch -f --index-filter 'git rm -r --cached --ignore-unmatch -- 文件夹名' --prune-empty HEAD
 ```
 

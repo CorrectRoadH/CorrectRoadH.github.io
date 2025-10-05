@@ -78,7 +78,7 @@ I3WM 异或者是 Linux 均没有提供壁纸功能,所以我需要使用一款�
 
 由 Mike Gancarz 所提出的 UNIX 哲学中的第五条
 
-```English
+```text
 5.Store data in flat text files.
 五.数据应该保存为纯文本文件。
 ```
@@ -127,7 +127,7 @@ I3WM 在启动时就会读取它的配置文件,我们当然希望我们的壁�
 
 我们又要说到 UNIX 哲学了. Doug Mcllroy 这个人,和上面那个不是一个人呀,他提出了三条,其中第一条就是:
 
-```English
+```text
  1.Write programs that do one thing and do it well
  一.写一个程序做一件事和把它做好.
 ```

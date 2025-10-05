@@ -34,13 +34,14 @@ tags: []
 要使用阿里云的serverless。要使用`@serverless-devs/s`。而不是腾讯原来的`serverless Tencent CLI`
 两者对比。尽管部署工具是一样的，但是其实两边的代码结构还是不太一样。
 
-```腾讯云
+```text
 /
 /项目代码
 /serverl.yaml
 ```
 
-```阿里云
+```text
+// 阿里云
 /
 /code
 /code/项目代码

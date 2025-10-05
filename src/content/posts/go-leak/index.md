@@ -20,7 +20,7 @@ tags: [Golang]
 代码通过简化大概如下 👇
 
 代码:
-```golang
+```go
 package httptest
 
 import (
@@ -38,7 +38,7 @@ func HttpGet(url string) error {
 ```
 
 测试:
-```golang
+```go
 package httptest_test
 
 import (
@@ -88,7 +88,7 @@ func TestFail(t *testing.T) {
 
 ## 解决方案
 直接上解决该问题之后的代码:
-```golang
+```go
 func HttpGet(url string) ([]byte, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -107,8 +107,7 @@ func HttpGet(url string) ([]byte, error) {
 		return []byte{}, err
 	}
 
-	return result, nil
-}
+	return result, nil}
 ```
 
 这样就能通过测试了。🎉
