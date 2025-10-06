@@ -4,7 +4,7 @@ description: 在 ZimaOS 中, 我们是如何通过事件驱动来降低程序复
 published: 2024-09-05
 category: 技术
 draft: true
-tags: [ZimaOS] 
+tags: [IceWhale] 
 ---
 
 # 新功能

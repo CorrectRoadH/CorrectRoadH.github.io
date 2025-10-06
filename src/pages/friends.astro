@@ -1,0 +1,41 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import Markdown from "@components/misc/Markdown.astro";
+import FriendCard from "@components/FriendCard.astro";
+import I18nKey from "../i18n/i18nKey";
+import { i18n } from "../i18n/translation";
+import MainGridLayout from "../layouts/MainGridLayout.astro";
+
+const friendsPost = await getEntry("spec", "friends");
+
+if (!friendsPost) {
+	throw new Error("Friends page content not found");
+}
+
+const { Content } = await render(friendsPost);
+
+// Get all friends and sort by order
+const friends = await getCollection("friends");
+const sortedFriends = friends.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+---
+<MainGridLayout title={i18n(I18nKey.friends)} description={i18n(I18nKey.friends)}>
+    <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32 mb-8">
+        <div class="card-base z-10 px-9 py-6 relative w-full ">
+            <Markdown class="mt-2">
+                <Content />
+            </Markdown>
+        </div>
+    </div>
+
+    {sortedFriends.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {sortedFriends.map((friend) => (
+                <FriendCard entry={friend} />
+            ))}
+        </div>
+    ) : (
+        <div class="card-base px-9 py-12 text-center text-75 rounded-[var(--radius-large)]">
+            暂无友链,期待与你交换!
+        </div>
+    )}
+</MainGridLayout>

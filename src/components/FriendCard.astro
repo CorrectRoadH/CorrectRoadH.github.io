@@ -1,0 +1,49 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	class?: string;
+	entry: CollectionEntry<"friends">;
+}
+
+const { entry } = Astro.props;
+const className = Astro.props.class;
+const { title, url, description, avatar } = entry.data;
+
+const hasAvatar = avatar !== undefined && avatar !== null && avatar !== "";
+---
+<a
+	href={url}
+	target="_blank"
+	rel="noopener noreferrer"
+	class:list={[
+		"card-base flex items-center gap-4 p-6 rounded-[var(--radius-large)] transition group",
+		"hover:scale-[1.02] active:scale-[0.98]",
+		className
+	]}
+>
+	{hasAvatar ? (
+		<img
+			src={avatar}
+			alt={title}
+			class="w-16 h-16 rounded-full object-cover flex-shrink-0"
+		/>
+	) : (
+		<div class="w-16 h-16 rounded-full bg-[var(--primary)]/10 flex items-center justify-center flex-shrink-0">
+			<Icon name="material-symbols:person-outline" class="text-3xl text-[var(--primary)]" />
+		</div>
+	)}
+
+	<div class="flex-1 min-w-0">
+		<div class="font-bold text-lg mb-1 flex items-center gap-2 group-hover:text-[var(--primary)] transition">
+			{title}
+			<Icon name="fa6-solid:arrow-up-right-from-square" class="text-sm opacity-50" />
+		</div>
+		{description && (
+			<div class="text-sm text-75 line-clamp-2">
+				{description}
+			</div>
+		)}
+	</div>
+</a>
