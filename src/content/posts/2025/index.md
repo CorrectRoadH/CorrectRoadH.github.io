@@ -25,7 +25,7 @@ draft: false
 ### AI IT Infra
 今年最大的事就是 AI 与 Agent 的大进步了。最近重整自己的 IT 基建的时候感觉范式真的被改变了。
 
-用 nixos + k8s 重做了 IT 基建。写了很多 Agent Skills， 让 Claude Code 来运维我家里那几台服务器、Nas还有很多台 VPS。本来运维这些设备很麻烦了、也很消耗精力，一但出问题就变成不断消耗我时间的技术债。 现在在 AI 的帮助下，已经能管理的非常好了。 特别是能做到 Configure as Code，AI 能有完整的上下文了。
+这几天我用 NixOS + k8s 重做了我家现有的 IT 基建。写了很多 Agent Skills， 让 Claude Code 来运维我家里那几台服务器、Nas还有很多台 VPS。本来运维这些设备很麻烦了、也很消耗精力，一但出问题就变成不断消耗我时间的技术债。 现在在 AI 的帮助下，已经能管理的非常好了。 特别是能做到 Configure as Code，AI 能有完整的上下文了。
 
 我在这套 IT 基建上构建很多有意思的工作流，从信息的获取(稍后读、记录想法)、任务管理、日志、身体数据的量化。通过 n8n + Logseq 打通这一切。也得益于 Logseq 今年的 DB 更新。作为超级小白鼠也是给秦天生（tiensonqin）report 了好多 bug。等我有空了应该会把 workflow 做成一个 template 开源一下。
 
