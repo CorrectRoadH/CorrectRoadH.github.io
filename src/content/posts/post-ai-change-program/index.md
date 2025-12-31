@@ -4,7 +4,7 @@ description: 未来AI是否会带来编程范式上的改变?
 published: 2023-03-26
 tags: [思考]
 category: 技术
-draft: false
+draft: true
 ---
 
 23年发了一篇: AI是否会带来编程范式上的改变。简单预测了一些方向。现在回头再看，虽然还没有做到，但是感觉依然没有太多区别。

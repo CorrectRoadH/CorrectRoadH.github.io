@@ -3,7 +3,7 @@ title: "用 AI 整理了最近六年的日记"
 description: File over app
 published: 2024-09-22
 category: 思考
-tags: [碎念念] 
+tags: [碎念念, AI] 
 ---
 
 ![](diary.png)
