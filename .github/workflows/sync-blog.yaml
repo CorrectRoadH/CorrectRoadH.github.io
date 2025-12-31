@@ -1,9 +1,15 @@
 name: Sync Blog
 
 on:
-  push:
+  workflow_run:
+    workflows: [ "Build and Check" ]
     branches: [ blog ]
+    types: [ completed ]
   workflow_dispatch: # 允许手动触发
+
+concurrency:
+  group: sync-blog-${{ github.event.workflow_run.head_branch || github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
   sync:
@@ -14,15 +20,18 @@ jobs:
       actions: read
 
     # 确保这个 action 只在你的仓库运行，而不是在上游仓库
-    if: github.repository == 'CorrectRoadH/Blog'
+    if: github.repository == 'CorrectRoadH/Blog' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           # 你的主要分支
-          ref: 'blog'
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || 'blog' }}
           fetch-depth: 0  # 获取完整历史
+      - name: Ensure blog ref
+        run: |
+          git checkout -B blog
 
       - name: Setup SSH
         run: |
@@ -69,13 +78,13 @@ jobs:
                 while [ $attempt -le $max_attempts ]; do
                     echo "尝试推送 (第 $attempt 次)..."
                     
-                    if git push destination blog:blog --force; then
+                    if git push destination HEAD:blog --force; then
                         echo "推送成功！"
                         return 0
                     else
                         echo "推送失败 (第 $attempt 次)"
                         if [ $attempt -eq $max_attempts ]; then
-                            echo "所有重试都失败了，尝试分步推送..."
+                            echo "所有重试都失败了，尝试备用推送..."
                             return 1
                         fi
                         sleep 10
@@ -88,33 +97,30 @@ jobs:
             if retry_push; then
                 echo "直接推送成功"
             else
-                echo "开始分步推送..."
+                echo "开始备用推送..."
                 
-                # 分步推送方法
+                # 备用推送方法
                 step_push() {
                     local max_attempts=3
                     local attempt=1
                     
                     while [ $attempt -le $max_attempts ]; do
-                        echo "分步推送尝试 (第 $attempt 次)..."
+                        echo "备用推送尝试 (第 $attempt 次)..."
                         
                         # 创建临时分支
-                        if git push destination blog:temp-branch --force; then
+                        if git push destination HEAD:temp-branch --force; then
                             echo "临时分支创建成功"
                             
-                            # 删除目标分支（如果存在）
-                            git push destination --delete blog || true
-                            
-                            # 重命名临时分支为目标分支
+                            # 使用临时分支更新目标分支（避免删除导致停机）
                             if git push destination temp-branch:blog --force; then
-                                echo "分支重命名成功"
+                                echo "分支更新成功"
                                 
                                 # 清理临时分支
                                 git push destination --delete temp-branch || true
-                                echo "分步推送完成"
+                                echo "备用推送完成"
                                 return 0
                             else
-                                echo "分支重命名失败"
+                                echo "分支更新失败"
                             fi
                         else
                             echo "临时分支创建失败"
@@ -131,7 +137,7 @@ jobs:
                 }
                 
                 if step_push; then
-                    echo "分步推送成功"
+                    echo "备用推送成功"
                 else
                     echo "所有推送方法都失败了"
                     exit 1
@@ -157,7 +163,7 @@ jobs:
             git remote add destination https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/CorrectRoadH/CorrectRoadH.github.io.git
             
             # 尝试 HTTPS 推送
-            if git push destination blog:blog --force; then
+            if git push destination HEAD:blog --force; then
                 echo "HTTPS 推送成功"
             else
                 echo "HTTPS 推送也失败了"
