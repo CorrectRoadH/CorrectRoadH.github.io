@@ -2,7 +2,7 @@
 title: "2025年终总结"
 description: 2025年终总结
 published:  2025-12-31
-tags: [总结]
+tags: [总结, AI, Logseq, IceWhale, Nas]
 category: 生活
 draft: false
 ---

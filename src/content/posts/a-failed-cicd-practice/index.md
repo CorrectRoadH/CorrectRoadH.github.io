@@ -4,7 +4,7 @@ description: 我尝试在 Gitee 的 CICD 添加自动化的测试，但是因为
 published: 2022-09-23
 category: 技术
 draft: false
-tags: [CICD] 
+tags: [] 
 ---
 
 ## 背景

@@ -4,6 +4,7 @@ description: 未来AI是否会带来编程范式上的改变?
 published: 2023-03-26
 category: 思考
 draft: false
+tags: [碎念念, AI] 
 ---
 
 ## AI是否会带来编程范式上的改变?
