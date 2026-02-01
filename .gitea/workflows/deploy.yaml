@@ -6,7 +6,7 @@ on:
       - blog
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,11 +26,7 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Login to Gitea Registry
-        run: echo "Muzriuzt8" | docker login gitea.nas.com -u ctrdh --password-stdin
-
-      - name: Build and push Docker image
+      - name: Trigger deployment
         run: |
-          docker build -t gitea.nas.com/ctrdh/blog:latest -t gitea.nas.com/ctrdh/blog:${{ github.sha }} .
-          docker push gitea.nas.com/ctrdh/blog:latest
-          docker push gitea.nas.com/ctrdh/blog:${{ github.sha }}
+          curl -s --connect-timeout 5 "http://blog-webhook.blog.svc.cluster.local" \
+            || echo "Deployment webhook triggered or not available"
