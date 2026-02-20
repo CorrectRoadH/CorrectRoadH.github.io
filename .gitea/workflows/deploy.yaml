@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Push
 
 on:
   push:
@@ -7,26 +7,16 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build
-        run: pnpm run build
-
-      - name: Trigger deployment
+      - name: Build and push image
         run: |
-          curl -s --connect-timeout 5 "http://blog-webhook.blog.svc.cluster.local" \
-            || echo "Deployment webhook triggered or not available"
+          docker build \
+            -t localhost:30500/blog:${{ github.sha }} \
+            -t localhost:30500/blog:latest \
+            .
+          docker push localhost:30500/blog:${{ github.sha }}
+          docker push localhost:30500/blog:latest
